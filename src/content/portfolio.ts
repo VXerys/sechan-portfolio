@@ -32,7 +32,8 @@ export type Project = {
   featured: boolean;
   imageHint: string;
 };
-export type Experience = { company: string; role: string; period: string; points: string[] };
+// legalName is shown small under the brand, so a reader can match the company on official records.
+export type Experience = { company: string; legalName?: string; role: string; period: string; points: string[] };
 export type Achievement = { title: string; issuer: string; year: string; note: string | null };
 export type SkillGroup = { group: string; items: string[] };
 // Availability copy follows the owner's positioning decision of 2026-10-16: freelance first, then full-time, then internships.
@@ -43,7 +44,7 @@ export const siteUrl = "https://www.sechanalfarisi.dev";
 
 export const profile: Profile = {
   name: "M Sechan Alfarisi",
-  shortName: "Sehan",
+  shortName: "Sechan",
   role: "Full-Stack Mobile Software Engineer and Applied AI Engineer",
   headline: "I build mobile and web products that real people use.",
   intro:
@@ -53,7 +54,7 @@ export const profile: Profile = {
     "Available for freelance mobile and web projects, from first spec to launch. Also open to full-time roles and 3 to 6 month internships, remote or hybrid (Sukabumi, Bandung, Jakarta).",
   about: [
     "I study Informatics Engineering at Universitas Nusa Putra (GPA 3.73/4.00, expected graduation 2027) and work across Flutter, React Native, Next.js and Supabase, with applied AI on top.",
-    "I'm Co-Founder and CTO of Marketiv, a marketplace that connects Indonesian MSMEs with local micro-creators. The team was funded by P2MW 2026 and received Juara Harapan 2 at KMI EXPO 2026. I'm also a Mobile Software Engineer Intern at PT Mangcoding, where I'm the main contributor to BookMate on Google Play, and I take freelance full-stack work for local businesses.",
+    "I'm Co-Founder and CTO of Marketiv, a marketplace that connects Indonesian MSMEs with local micro-creators. The team was funded by P2MW 2026 and received Juara Harapan 2 at KMI EXPO 2026. I'm also a Mobile Software Engineer Intern at Mangcoding, where I'm the main contributor to BookMate on Google Play, and I take freelance full-stack work for local businesses.",
     "On the AI side, I was first author of a SENTIMETER 2026 paper on a voice shopping assistant that runs speech recognition on the phone and sends only text to an LLM, so it stays usable on weak in-store signal. I'm currently in the Next-Gen AI Engineer path of Asah led by Dicoding.",
     "How I work: specs before code, tests on the logic that handles money or health data, and database rules that hold even when the UI is wrong.",
   ],
@@ -72,7 +73,7 @@ export const projects: Project[] = [
   {
     slug: "bookmate",
     title: "BookMate",
-    client: "PT Mangcoding",
+    client: "Mangcoding",
     year: "2026",
     role: "Mobile Software Engineer Intern, main contributor (Flutter and Supabase)",
     category: "Mobile app",
@@ -189,32 +190,65 @@ export const projects: Project[] = [
     imageHint: "Clinic dashboard with dummy data only, desktop browser; never real patient data",
   },
   {
-    slug: "mangkasir-ritel",
-    title: "MangKasir Ritel",
-    client: "PT Mangcoding (internal product)",
+    slug: "fluxa",
+    title: "Fluxa",
+    client: null,
     year: "2026",
-    role: "Mobile Software Engineer Intern, sole committer",
-    category: "Retail POS",
-    summary: "An offline-first, multi-tenant retail point-of-sale app in Flutter.",
+    role: "Lead mobile and machine learning engineer (solo project)",
+    category: "Mobile app, applied AI",
+    summary: "A personal finance app where a transaction is logged by voice or by scanning a receipt, and it keeps working offline.",
     problem:
-      "Mangcoding needed a retail edition of its MangKasir point-of-sale app that keeps working without a connection and serves multiple stores.",
+      "People stop tracking spending because every entry means typing an amount, a category, a wallet and a note. Cloud-only apps also fail where the signal is weak, such as a traditional market or a basement car park.",
     contribution: [
-      "Built the design system, a theme checked for WCAG contrast, and mobile-first barcode scanner support.",
-      "Built sessions and role-based access across about 45 routes.",
-      "Built Flutter modules for products, catalog master data, CRM, purchasing and an inventory ledger with stock opname and warehouse transfers.",
-      "Set up multi-tab cashier state with BLoC on a local drift database.",
+      "Built the Flutter app on Clean Architecture, with a domain layer free of Flutter and data-source code and Either<Failure, T> returns for predictable errors.",
+      "Designed an offline queue and local cache with sqflite and get_storage; transactions save locally first and sync to Supabase when the connection returns.",
+      "Built the voice pipeline as a FastAPI service on Hugging Face Spaces: faster-whisper speech-to-text, normalization, a transaction classifier, an amount parser and a title extractor that return structured JSON.",
+      "Added a Groq Llama 3.3 70B fallback that runs only when transcription confidence is low, with a guardrail that it never changes a parsed amount.",
+      "Added receipt scanning (OCR) that fills the transaction form from a photo, and designed Free and PRO tiers with monthly quotas for scans and voice notes.",
     ],
-    stack: ["Flutter", "flutter_bloc", "get_it", "go_router", "drift", "Supabase"],
+    stack: ["Flutter", "Dart", "GetX", "sqflite", "Supabase", "FastAPI", "faster-whisper", "Groq"],
     outcomes: [],
-    status: "In development, not yet released",
-    links: [],
+    status: "Functional MVP, in active development",
+    links: [
+      { label: "App repository", href: "https://github.com/VXerys/fluxa_app" },
+      { label: "Model API repository", href: "https://github.com/VXerys/fluxa-model" },
+      { label: "ML pipeline repository", href: "https://github.com/VXerys/fluxa-ml" },
+    ],
     featured: false,
-    imageHint: "Product catalog or cashier screen, phone or tablet frame",
+    imageHint: "Transaction list or voice entry screen, phone frame",
+  },
+  {
+    slug: "artconnect",
+    title: "ArtConnect",
+    client: null,
+    year: "2025",
+    role: "Lead full-stack developer (team of five, Universitas Nusa Putra course project)",
+    category: "Web app, CRM",
+    summary: "A CRM and workspace for visual artists to keep artworks, collectors and sales in one place.",
+    problem:
+      "Independent artists keep their inventory without proper metadata, collector and gallery contacts in personal chat apps, and sales in manual books, with no view of a work moving from concept to sold.",
+    contribution: [
+      "Led the architecture from database design to interface in a team of five.",
+      "Built the React 18, TypeScript, Tailwind and shadcn/ui front end, including a drag-and-drop Kanban (dnd-kit) that moves each artwork from concept to sold.",
+      "Made the Kanban optimistic: cards move instantly through the React Query cache and roll back automatically if the Supabase write fails.",
+      "Secured data with Supabase row-level security so each artist reads and edits only their own inventory, with Google OAuth and magic-link sign-in.",
+      "Built a standalone REST API alternative in Node.js, Express, Prisma and MySQL, plus sales charts with Recharts and PDF, CSV and Excel export.",
+    ],
+    stack: ["React 18", "TypeScript", "Tailwind CSS", "Supabase", "Node.js", "Express", "Prisma", "MySQL"],
+    outcomes: ["Live on Netlify"],
+    status: "Live",
+    links: [
+      { label: "Live demo", href: "https://artconnect-crm.netlify.app" },
+      { label: "Frontend repository", href: "https://github.com/VXerys/artconnect-crm" },
+      { label: "Backend repository", href: "https://github.com/VXerys/artconnect-backend" },
+    ],
+    featured: false,
+    imageHint: "Artwork Kanban board in a desktop browser",
   },
   {
     slug: "welling-ayah-hebat",
     title: "Welling and Ayah Hebat",
-    client: "PT Mangcoding clients",
+    client: "Mangcoding clients",
     year: "2026",
     role: "Mobile Software Engineer Intern (feature work)",
     category: "Client mobile apps",
@@ -284,6 +318,30 @@ export const projects: Project[] = [
     featured: false,
     imageHint: "Sales and margin chart view with placeholder data, desktop browser",
   },
+  {
+    slug: "webgis-gunung-puyuh",
+    title: "Gunung Puyuh WebGIS",
+    client: null,
+    year: "2026",
+    role: "Lead developer (team of five)",
+    category: "WebGIS, spatial analysis",
+    summary:
+      "An interactive map that shows which neighbourhoods of Gunung Puyuh, Sukabumi, sit too far from schools and health facilities.",
+    problem:
+      "Housing in Gunung Puyuh grew fast, but schools and clinics stayed concentrated in the old town centre, leaving newer neighbourhoods on the edge more than 15 minutes from basic services.",
+    contribution: [
+      "Led development and turned the team's field-survey GPS points into validated GeoJSON.",
+      "Built the map with Leaflet 1.9 on OpenStreetMap and Esri satellite imagery, in plain JavaScript split into seven single-purpose modules.",
+      "Added 5, 10 and 15 minute isochrone service areas and compliance ratios against national facility standards.",
+      "Built an analytics panel with animated counters and interactive layer controls.",
+    ],
+    stack: ["Leaflet", "JavaScript (ES6+)", "GeoJSON", "OpenStreetMap", "Esri World Imagery"],
+    outcomes: [],
+    status: "Released v2.0.0",
+    links: [{ label: "Repository", href: "https://github.com/VXerys/accessibility-gap-analysis-webgis" }],
+    featured: false,
+    imageHint: "Map with isochrone rings over Gunung Puyuh, desktop browser",
+  },
 ];
 
 export const experience: Experience[] = [
@@ -299,7 +357,9 @@ export const experience: Experience[] = [
     ],
   },
   {
-    company: "PT Mangcoding",
+    // Brand name per the owner (2026-10-16); the legal entity is PT Nugraha Kreasi Digital.
+    company: "Mangcoding",
+    legalName: "PT Nugraha Kreasi Digital",
     role: "Mobile Software Engineer Intern",
     period: "Feb 2026 - Present",
     points: [
@@ -307,7 +367,7 @@ export const experience: Experience[] = [
       "Built BookMate's reading activity tracker on an atomic Postgres function, the reflection studio and a badge system.",
       "Welling (React Native Expo, South Korean client): built the Community feature and fixed the test-strip scan flow with a teammate.",
       "Ayah Hebat (Flutter): updated the ranking screen and made the Kuttab zone and location dropdowns dynamic.",
-      "Full on-site Feb to Jun 2026; since Jul 2026 on-site 2 to 3 days a week, maintaining BookMate and building MangKasir Ritel, an offline-first POS.",
+      "Full on-site Feb to Jun 2026; since Jul 2026 on-site 2 to 3 days a week, maintaining BookMate.",
     ],
   },
   {
@@ -388,6 +448,6 @@ export const skills: SkillGroup[] = [
 export const contact: Contact = {
   ctaLabel: "Start a project",
   subject: "Project inquiry from your portfolio",
-  body: "Hi Sehan,\n\nI'd like to talk about:\n- Project or role:\n- Timeline:\n- Budget range (optional):\n\nThanks,\n",
+  body: "Hi Sechan,\n\nI'd like to talk about:\n- Project or role:\n- Timeline:\n- Budget range (optional):\n\nThanks,\n",
   hiringLabel: "Hiring? Find me on LinkedIn",
 };

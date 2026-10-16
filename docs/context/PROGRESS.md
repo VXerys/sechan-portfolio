@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 2b0790404337434d96af7c3a9175e667df11348cdf792bebe72499c937b965b2 -->
+source_hash: 8da7ab514ce2298d50bf7b3f0b83bb2a38e88e2dc16fae2de7c93fbf5040c1fe -->
 
 # Project Progress
 
@@ -67,3 +67,10 @@ source_hash: 2b0790404337434d96af7c3a9175e667df11348cdf792bebe72499c937b965b2 --
 |---|---|---|---|---|
 | T-025 Editorial band and motion | done | FR-020, FR-021 |  | EV-017, EV-018 |
 | T-026 Reduced-motion check | planned | FR-021 | T-025 |  |
+
+## F-008 — Content corrections: name, Mangcoding, project list (`implementing`, complete)
+
+| Task | Status | Requirements | Depends on | Evidence |
+|---|---|---|---|---|
+| T-027 Name and employer | done | FR-022, FR-023 |  | EV-019, EV-020 |
+| T-028 Project list | done | FR-024 |  | EV-019, EV-020 |

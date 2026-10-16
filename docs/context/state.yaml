@@ -359,6 +359,31 @@ features:
         depends_on:
           - T-025
         evidence: []
+  - id: F-008
+    title: "Content corrections: name, Mangcoding, project list"
+    status: implementing
+    phase: complete
+    spec_path: docs/specs/F-008-content-corrections
+    tasks:
+      - id: T-027
+        title: Name and employer
+        status: done
+        requirements:
+          - FR-022
+          - FR-023
+        depends_on: []
+        evidence:
+          - EV-019
+          - EV-020
+      - id: T-028
+        title: Project list
+        status: done
+        requirements:
+          - FR-024
+        depends_on: []
+        evidence:
+          - EV-019
+          - EV-020
 active:
   feature_id: F-001
   task_id: T-005
@@ -370,5 +395,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T05:20:03.700Z
-source_hash: 2b0790404337434d96af7c3a9175e667df11348cdf792bebe72499c937b965b2
+generated_at: 2026-10-16T06:11:02.325Z
+source_hash: 8da7ab514ce2298d50bf7b3f0b83bb2a38e88e2dc16fae2de7c93fbf5040c1fe

@@ -53,3 +53,19 @@ test("canonical site URL is the live https www origin (AC-027)", () => {
   assert.equal(siteUrl, "https://www.sechanalfarisi.dev");
   assert.equal(new URL(siteUrl).pathname, "/");
 });
+
+test("public copy uses the name Sechan (AC-033)", () => {
+  assert.doesNotMatch(allText, /\bSehan\b/);
+  assert.equal(profile.shortName, "Sechan");
+});
+
+test("Mangcoding is named by brand, with its legal entity alongside (AC-034)", () => {
+  assert.doesNotMatch(allText, /PT Mangcoding/);
+  const mangcoding = experience.find((entry) => entry.company === "Mangcoding");
+  assert.equal(mangcoding?.legalName, "PT Nugraha Kreasi Digital");
+});
+
+test("on-hold projects are not presented as work (AC-035)", () => {
+  assert.doesNotMatch(allText, /mangkasir/i);
+  for (const project of projects) for (const link of project.links) assert.match(link.href, /^https:\/\//);
+});

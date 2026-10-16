@@ -20,7 +20,7 @@ Aturan yang dipegang (BR-003, A-003):
 
 ## 1. Klinik: izin menampilkan nama dan minta testimoni
 
-> Assalamu'alaikum [dr./Bapak/Ibu] [Nama], semoga sehat selalu. Saya Sehan, yang mengerjakan Sistem Informasi Klinik [Nama Klinik].
+> Assalamu'alaikum [dr./Bapak/Ibu] [Nama], semoga sehat selalu. Saya Sechan, yang mengerjakan Sistem Informasi Klinik [Nama Klinik].
 >
 > Saya sedang menyusun portfolio online untuk melamar magang di perusahaan teknologi. Saya ingin menampilkan proyek sistem klinik ini sebagai salah satu karya utama. Sebelum itu saya mau izin dulu untuk dua hal:
 >
@@ -39,7 +39,7 @@ Aturan yang dipegang (BR-003, A-003):
 
 ## 2. InztaMoto, VisualKain, dan klien freelance lain: minta testimoni
 
-> Halo [Bapak/Ibu/Kak] [Nama], semoga lancar terus usahanya. Saya Sehan, yang mengerjakan [nama sistem, misalnya ERP InztaMoto / sistem keuangan VisualKain].
+> Halo [Bapak/Ibu/Kak] [Nama], semoga lancar terus usahanya. Saya Sechan, yang mengerjakan [nama sistem, misalnya ERP InztaMoto / sistem keuangan VisualKain].
 >
 > Saya sedang menyiapkan portfolio online dan proyek [nama proyek] akan saya tampilkan di sana. Kalau berkenan, saya ingin minta testimoni singkat, 2 sampai 4 kalimat, dari sudut pandang [Bapak/Ibu/Kak] sebagai pengguna.
 >
@@ -55,7 +55,7 @@ Aturan yang dipegang (BR-003, A-003):
 
 ## 3. Pembimbing atau atasan magang (PT Mangcoding)
 
-> Selamat [pagi/siang] [Bapak/Ibu] [Nama]. Saya Sehan, intern Mobile Engineer di Mangcoding.
+> Selamat [pagi/siang] [Bapak/Ibu] [Nama]. Saya Sechan, intern Mobile Engineer di Mangcoding.
 >
 > Saya sedang menyusun portfolio untuk melamar program magang lanjutan. Saya izin menampilkan BookMate dan MangKasir Ritel sebagai proyek yang saya kerjakan selama magang, sesuai bagian yang memang saya kerjakan.
 >
