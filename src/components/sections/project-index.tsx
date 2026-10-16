@@ -5,13 +5,17 @@ import { useEffect, useRef, useState } from "react";
 
 import { LineRows } from "@/components/motion/line-rows";
 import { ProjectPoster } from "@/components/sections/project-poster";
+import { ProjectQuote } from "@/components/sections/project-quote";
 import { projectMedia } from "@/content/media";
 import type { Project } from "@/content/portfolio";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
+import { quoteForProject, type TestimonialView } from "@/lib/testimonials";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export function ProjectIndex({ projects, offset }: { projects: Project[]; offset: number }) {
+type Props = { projects: Project[]; offset: number; quotes: TestimonialView[] };
+
+export function ProjectIndex({ projects, offset, quotes }: Props) {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const list = useRef<HTMLDivElement>(null);
@@ -79,6 +83,7 @@ export function ProjectIndex({ projects, offset }: { projects: Project[]; offset
         {projects.map((project, index) => {
           const open = openSlug === project.slug;
           const panelId = `${project.slug}-panel`;
+          const quote = quoteForProject(quotes, project.slug);
           return (
             <li key={project.slug} data-row className="relative overflow-hidden" onPointerEnter={() => setActiveSlug(project.slug)}>
               <span data-line className="absolute inset-x-0 top-0 h-px bg-line" />
@@ -135,6 +140,7 @@ export function ProjectIndex({ projects, offset }: { projects: Project[]; offset
                             </li>
                           ))}
                         </ul>
+                        {quote && <ProjectQuote quote={quote} className="mt-8 border-t border-line pt-6" />}
                       </div>
                     </div>
                   </div>

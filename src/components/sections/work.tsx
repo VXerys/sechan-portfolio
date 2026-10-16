@@ -5,7 +5,9 @@ import { RollText } from "@/components/motion/roll-text";
 import { Scramble } from "@/components/motion/scramble";
 import { ProjectIndex } from "@/components/sections/project-index";
 import { ProjectMedia } from "@/components/sections/project-media";
+import { ProjectQuote } from "@/components/sections/project-quote";
 import type { Project } from "@/content/portfolio";
+import { quoteForProject, type TestimonialView } from "@/lib/testimonials";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -25,7 +27,7 @@ function ExternalLinks({ project }: { project: Project }) {
   );
 }
 
-function CaseStudy({ project, index }: { project: Project; index: number }) {
+function CaseStudy({ project, index, quote }: { project: Project; index: number; quote: TestimonialView | null }) {
   const meta = [
     { term: "Role", value: project.role },
     { term: "Year", value: project.year },
@@ -113,12 +115,19 @@ function CaseStudy({ project, index }: { project: Project; index: number }) {
             )}
           </div>
         </div>
+
+        {quote && (
+          <div className="mt-12 grid gap-4 md:grid-cols-[8.5rem_1fr] md:gap-8">
+            <h4 className="label pt-2 text-accent">In their words</h4>
+            <ProjectQuote quote={quote} />
+          </div>
+        )}
       </div>
     </article>
   );
 }
 
-export function Work({ projects }: { projects: Project[] }) {
+export function Work({ projects, quotes }: { projects: Project[]; quotes: TestimonialView[] }) {
   const featured = projects.filter((project) => project.featured);
   const more = projects.filter((project) => !project.featured);
 
@@ -133,14 +142,14 @@ export function Work({ projects }: { projects: Project[] }) {
 
       <div className="space-y-32 md:space-y-48">
         {featured.map((project, index) => (
-          <CaseStudy key={project.slug} project={project} index={index} />
+          <CaseStudy key={project.slug} project={project} index={index} quote={quoteForProject(quotes, project.slug)} />
         ))}
       </div>
 
       {more.length > 0 && (
         <div className="mt-32 md:mt-48">
           <h3 className="label mb-6 text-muted">More work</h3>
-          <ProjectIndex projects={more} offset={featured.length} />
+          <ProjectIndex projects={more} offset={featured.length} quotes={quotes} />
         </div>
       )}
     </section>

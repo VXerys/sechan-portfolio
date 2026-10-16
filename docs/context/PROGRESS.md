@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 39f9b93f2423386ef3313e5379984df2d0215d259dd78ec2b050365ae046353f -->
+source_hash: 2b0790404337434d96af7c3a9175e667df11348cdf792bebe72499c937b965b2 -->
 
 # Project Progress
 
@@ -52,6 +52,14 @@ source_hash: 39f9b93f2423386ef3313e5379984df2d0215d259dd78ec2b050365ae046353f --
 | T-022 Site icon and dev badge | done | FR-018 |  | EV-015, EV-016 |
 | T-023 Canonical metadata | done | FR-019 | T-021 | EV-015, EV-016 |
 | T-024 Verify on production after merge | planned | FR-017, FR-018, FR-019 | T-022, T-023 |  |
+
+## F-006 — Testimonials with consent-aware attribution (`implementing`, in_progress)
+
+| Task | Status | Requirements | Depends on | Evidence |
+|---|---|---|---|---|
+| T-027 Testimonial content model and view logic | review | FR-022, FR-023, FR-024, FR-026 |  | EV-019, EV-020 |
+| T-028 Section and project quote | review | FR-022, FR-023, FR-024, FR-025 | T-027 | EV-020, EV-021 |
+| T-029 Verification | review | FR-022, FR-023, FR-024, FR-025, FR-026 | T-027, T-028 | EV-019, EV-020, EV-021 |
 
 ## F-007 — Stack marquee redesign (`implementing`, in_progress)
 
