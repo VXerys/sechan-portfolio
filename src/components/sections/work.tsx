@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/motion/reveal";
+import { Scramble } from "@/components/motion/scramble";
 import { ProjectIndex } from "@/components/sections/project-index";
 import { ProjectMedia } from "@/components/sections/project-media";
 import type { Project } from "@/content/portfolio";
@@ -34,12 +35,12 @@ function CaseStudy({ project, index }: { project: Project; index: number }) {
     <article aria-labelledby={`${project.slug}-title`} className="grid gap-8 border-t border-line pt-8 md:grid-cols-12 md:gap-10 md:pt-10">
       <div className="self-start md:sticky md:top-24 md:col-span-5">
         <p className="label text-muted">
-          {pad(index + 1)} <span aria-hidden="true">/</span> {project.category}
+          <Scramble text={`${pad(index + 1)} / ${project.category}`} />
         </p>
         <Reveal as="h3" id={`${project.slug}-title`} mode="words" className="display mt-4 text-[17vw] md:text-[6.2vw]">
           {project.title}
         </Reveal>
-        <p className="mt-6 max-w-md font-serif text-2xl italic leading-tight text-paper/90">{project.summary}</p>
+        <p className="statement mt-6 max-w-md text-[1.9rem] text-paper/90">{project.summary}</p>
         <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6">
           {meta.map((item) => (
             <div key={item.term}>
@@ -52,16 +53,22 @@ function CaseStudy({ project, index }: { project: Project; index: number }) {
       </div>
 
       <div className="md:col-span-7">
-        <ProjectMedia media={projectMedia[project.slug]} title={project.title} category={project.category} />
+        <ProjectMedia
+          media={projectMedia[project.slug]}
+          title={project.title}
+          category={project.category}
+          year={project.year}
+          href={project.links[0]?.href}
+        />
 
         <div className="mt-10 grid gap-10 lg:grid-cols-2">
           <Reveal>
             <h4 className="label text-accent">The problem</h4>
-            <p className="mt-4 text-[0.95rem] leading-relaxed text-paper/80">{project.problem}</p>
+            <p className="mt-4 text-[1.0625rem] leading-relaxed text-paper/80">{project.problem}</p>
           </Reveal>
           <Reveal delay={0.08}>
             <h4 className="label text-accent">What I built</h4>
-            <ul className="mt-4 space-y-3 text-[0.95rem] leading-relaxed text-paper/80">
+            <ul className="mt-4 space-y-3 text-[1.0625rem] leading-relaxed text-paper/80">
               {project.contribution.map((item) => (
                 <li key={item} className="grid grid-cols-[1rem_1fr] gap-2">
                   <span aria-hidden="true" className="text-muted">
@@ -110,7 +117,9 @@ export function Work({ projects }: { projects: Project[] }) {
         <Reveal as="h2" id="work-title" mode="words" className="display text-[20vw] md:text-[12vw]">
           Selected work
         </Reveal>
-        <p className="label hidden text-muted md:block">(02) {pad(projects.length)} projects</p>
+        <p className="label hidden text-muted md:block">
+          <Scramble text={`(02) ${pad(projects.length)} projects`} />
+        </p>
       </div>
 
       <div className="space-y-28 md:space-y-40">

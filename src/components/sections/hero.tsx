@@ -100,7 +100,7 @@ export function Hero({ profile }: { profile: Profile }) {
         <p data-rise className="font-serif text-3xl italic leading-[1.05] md:col-span-5 md:text-[2.6rem]">
           {profile.headline}
         </p>
-        <p data-rise className="max-w-md text-[0.95rem] leading-relaxed text-paper/75 md:col-span-4 md:col-start-7">
+        <p data-rise className="max-w-md text-[1.0625rem] leading-relaxed text-paper/75 md:col-span-4 md:col-start-7">
           {profile.intro}
         </p>
         <div data-rise className="flex items-end gap-6 md:col-span-2 md:col-start-11 md:flex-col md:items-end md:justify-between">

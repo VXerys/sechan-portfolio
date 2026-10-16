@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { scrollToTarget } from "@/components/motion/smooth-scroll";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 import { LocalTime } from "@/components/site/local-time";
+import { Scramble } from "@/components/motion/scramble";
 
 const NAV = [
   { href: "#work", label: "Work" },
@@ -61,7 +62,7 @@ export function Header({ name }: { name: string }) {
         <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
           {NAV.map((item) => (
             <a key={item.href} href={item.href} onClick={(event) => go(event, item.href)} className="label link-underline">
-              {item.label}
+              <Scramble on="hover" text={item.label} />
             </a>
           ))}
         </nav>

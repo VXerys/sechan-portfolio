@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: ac035dd3995d84854b4a74e8d43e93996002610fa5aff682d0a334e2e92d9a82 -->
+source_hash: 1c58c169a7a8b7eac9637f9bf42ec9f17b5e0eba9ec9fc6ac2d1f500fbe01940 -->
 
 # Brief
 
@@ -46,12 +46,11 @@ Frozen: none
 
 ## Open assumptions
 - A-001 — Client names may appear on the public site (F-001)
-- A-002 — Product screenshots may appear on the public site (F-001)
 
 ## Handoff
 Next step:
 
-Run the reduced-motion check: Chrome DevTools > Rendering > `prefers-reduced-motion: reduce`, reload `http://localhost:3000`, confirm all content is visible with no smooth scroll; record as EV-005 in `verification.md` covering AC-006, then set T-005 to done.
+Check reduced motion and desktop hover effects in Chrome DevTools (Rendering > `prefers-reduced-motion: reduce`, width 1440), record EV-008 for AC-006 and AC-010, then set T-005 and T-010 to done.
 
 ## Other open tasks
 - T-006 — Deploy to Vercel (`planned`)
@@ -60,3 +59,4 @@ Run the reduced-motion check: Chrome DevTools > Rendering > `prefers-reduced-mot
 | Feature | Status | Phase | Done/Total |
 |---|---|---|---|
 | F-001 Portfolio site | implementing | in_progress | 4/6 |
+| F-002 Visual refresh and testimonials | implementing | in_progress | 3/4 |

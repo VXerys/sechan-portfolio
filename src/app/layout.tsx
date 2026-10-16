@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Archivo, Host_Grotesk, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Cursor } from "@/components/site/cursor";
@@ -10,6 +10,12 @@ const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
   axes: ["wdth"],
+  display: "swap",
+});
+
+const hostGrotesk = Host_Grotesk({
+  variable: "--font-host",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -49,7 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${instrument.variable} ${jetbrains.variable}`}
+      className={`${archivo.variable} ${hostGrotesk.variable} ${instrument.variable} ${jetbrains.variable}`}
       suppressHydrationWarning
     >
       <head>

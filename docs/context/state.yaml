@@ -78,6 +78,57 @@ features:
         depends_on:
           - T-005
         evidence: []
+  - id: F-002
+    title: Visual refresh and testimonials
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-002-visual-refresh-testimonials
+    tasks:
+      - id: T-007
+        title: Type system
+        status: done
+        requirements:
+          - FR-006
+        depends_on: []
+        evidence:
+          - EV-006
+          - EV-007
+      - id: T-008
+        title: Reference-inspired motion
+        status: done
+        requirements:
+          - FR-007
+        depends_on:
+          - T-007
+        evidence:
+          - EV-006
+          - EV-007
+      - id: T-009
+        title: Testimonials and clinic naming
+        status: done
+        requirements:
+          - FR-008
+          - FR-009
+        depends_on: []
+        evidence:
+          - EV-005
+          - EV-006
+      - id: T-010
+        title: Verification
+        status: in_progress
+        requirements:
+          - FR-006
+          - FR-007
+          - FR-008
+          - FR-009
+        depends_on:
+          - T-007
+          - T-008
+          - T-009
+        evidence:
+          - EV-005
+          - EV-006
+          - EV-007
 active:
   feature_id: F-001
   task_id: T-005
@@ -85,9 +136,9 @@ assumptions_open:
   - id: A-001
     feature: F-001
     title: Client names may appear on the public site
-  - id: A-002
-    feature: F-001
-    title: Product screenshots may appear on the public site
+  - id: A-003
+    feature: F-002
+    title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T02:47:30.427Z
-source_hash: ac035dd3995d84854b4a74e8d43e93996002610fa5aff682d0a334e2e92d9a82
+generated_at: 2026-10-16T03:03:02.232Z
+source_hash: 1c58c169a7a8b7eac9637f9bf42ec9f17b5e0eba9ec9fc6ac2d1f500fbe01940

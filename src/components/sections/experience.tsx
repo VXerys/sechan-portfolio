@@ -20,7 +20,7 @@ export function Experience({ entries }: { entries: Entry[] }) {
                 <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">{entry.company}</h3>
                 <p className="mt-2 font-serif text-xl italic text-paper/80">{entry.role}</p>
               </div>
-              <ul className="space-y-3 text-[0.95rem] leading-relaxed text-paper/75 md:col-span-5">
+              <ul className="space-y-3 text-[1.0625rem] leading-relaxed text-paper/75 md:col-span-5">
                 {entry.points.map((point) => (
                   <li key={point} className="grid grid-cols-[1rem_1fr] gap-2">
                     <span aria-hidden="true" className="text-accent">

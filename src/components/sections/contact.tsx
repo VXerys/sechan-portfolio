@@ -8,7 +8,7 @@ import { LocalTime } from "@/components/site/local-time";
 import type { Profile } from "@/content/portfolio";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 
-export function Contact({ profile }: { profile: Profile }) {
+export function Contact({ profile, number }: { profile: Profile; number: string }) {
   const magnet = useRef<HTMLAnchorElement>(null);
 
   useGSAP(() => {
@@ -43,7 +43,7 @@ export function Contact({ profile }: { profile: Profile }) {
 
   return (
     <footer id="contact" aria-labelledby="contact-title" className="relative overflow-hidden px-4 pb-8 pt-28 md:px-8 md:pt-40">
-      <p className="label text-muted">(06) Contact</p>
+      <p className="label text-muted">({number}) Contact</p>
       <Reveal as="h2" id="contact-title" mode="words" className="display mt-6 text-[21vw] md:text-[15vw]">
         Let&apos;s build
       </Reveal>

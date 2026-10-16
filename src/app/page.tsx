@@ -4,9 +4,10 @@ import { Contact } from "@/components/sections/contact";
 import { Experience } from "@/components/sections/experience";
 import { Hero } from "@/components/sections/hero";
 import { Marquee } from "@/components/sections/marquee";
+import { Testimonials } from "@/components/sections/testimonials";
 import { Work } from "@/components/sections/work";
 import { Header } from "@/components/site/header";
-import { achievements, experience, profile, projects, skills } from "@/content/portfolio";
+import { achievements, experience, profile, projects, skills, testimonials } from "@/content/portfolio";
 
 const MARQUEE = ["Flutter", "Next.js", "Supabase", "React Native", "PostgreSQL", "Applied AI", "TypeScript", "Appwrite"];
 
@@ -24,8 +25,9 @@ export default function Home() {
         <Work projects={projects} />
         <Experience entries={experience} />
         <Capabilities skills={skills} achievements={achievements} />
+        <Testimonials testimonials={testimonials} projects={projects} />
       </main>
-      <Contact profile={profile} />
+      <Contact profile={profile} number={testimonials.length > 0 ? "07" : "06"} />
     </>
   );
 }

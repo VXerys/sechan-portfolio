@@ -47,13 +47,13 @@ export function ProjectIndex({ projects, offset }: { projects: Project[]; offset
                   <div className="hidden md:block" />
                   <div>
                     <p className="font-serif text-2xl italic leading-tight">{project.summary}</p>
-                    <p className="mt-4 text-[0.95rem] leading-relaxed text-paper/75">{project.problem}</p>
+                    <p className="mt-4 text-[1.0625rem] leading-relaxed text-paper/75">{project.problem}</p>
                     <p className="label mt-6 text-muted">
                       {project.role} <span aria-hidden="true">·</span> {project.status}
                     </p>
                   </div>
                   <div>
-                    <ul className="space-y-3 text-[0.95rem] leading-relaxed text-paper/80">
+                    <ul className="space-y-3 text-[1.0625rem] leading-relaxed text-paper/80">
                       {project.contribution.map((item) => (
                         <li key={item} className="grid grid-cols-[1rem_1fr] gap-2">
                           <span aria-hidden="true" className="text-muted">

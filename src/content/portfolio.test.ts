@@ -1,9 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { achievements, experience, profile, projects, skills } from "./portfolio.ts";
+import { achievements, experience, profile, projects, skills, testimonials } from "./portfolio.ts";
 
-const allText = JSON.stringify({ profile, projects, experience, achievements, skills });
+const allText = JSON.stringify({ profile, projects, experience, achievements, skills, testimonials });
 
 test("project slugs are unique (AC-002)", () => {
   const slugs = projects.map((project) => project.slug);
@@ -34,4 +34,18 @@ test("contact links use https and the expected hosts (AC-005)", () => {
 
 test("copy avoids hype words and em dashes", () => {
   assert.doesNotMatch(allText, /passionate|cutting-edge|seamless|leverage|award-winning|—/i);
+});
+
+test("clinic stays unnamed until it approves (AC-013)", () => {
+  assert.doesNotMatch(allText, /cikidang/i);
+});
+
+test("every testimonial is attributed, approved, and tied to a real project (AC-012)", () => {
+  const slugs = new Set(projects.map((project) => project.slug));
+  for (const item of testimonials) {
+    assert.ok(item.quote.trim().length > 0);
+    assert.ok(item.name.trim().length > 0);
+    assert.match(item.consentDate, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(slugs.has(item.projectSlug), `unknown project ${item.projectSlug}`);
+  }
 });

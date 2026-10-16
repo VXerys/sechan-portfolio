@@ -30,14 +30,22 @@ What was assumed, why it could not be verified, and what changes if it is wrong.
 - status: open
 - feature: F-001
 - raised: 2026-10-16
-- resolution:
+- resolution: 2026-10-16, owner in chat: every client may be named except Klinik Cikidang Medika, whose permission is being requested. The site shows "a primary care clinic in Sukabumi" until the clinic agrees; then this entry becomes confirmed.
 
 The project list names Klinik Cikidang Medika, VisualKain, InztaMoto, and PT Mangcoding client apps (Welling, Ayah Hebat). The `about-me` sources record the work but not explicit permission to name each client publicly. If any client objects, replace the name with a generic description ("a primary care clinic in Sukabumi") before deploy.
 
 ### A-002 — Product screenshots may appear on the public site
-- status: open
+- status: confirmed
 - feature: F-001
+- raised: 2026-10-16
+- resolution: 2026-10-16, owner in chat ("untuk seluruh client itu diperbolehkan"). Welling and Ayah Hebat screenshots stay out anyway: they show real end users' names and photos.
+
+`src/assets/images/` uses the BookMate Google Play listing frame (Mangcoding property, already public on the store) and Marketiv screenshots with demo data. The clinic dashboard design was not used because it shows a staff name and figures that may be real. Every other project uses a placeholder. If a screenshot is not cleared, swap it for the placeholder before deploy.
+
+### A-003 — Testimonials are real, attributed, and approved
+- status: open
+- feature: F-002
 - raised: 2026-10-16
 - resolution:
 
-`src/assets/images/` uses the BookMate Google Play listing frame (Mangcoding property, already public on the store) and Marketiv screenshots with demo data. The clinic dashboard design was not used because it shows a staff name and figures that may be real. Every other project uses a placeholder. If a screenshot is not cleared, swap it for the placeholder before deploy.
+The testimonials section renders only entries with a recorded consent date. No quote exists yet; the owner is requesting them with `docs/outreach/client-testimonial-templates.md`. A quote is never written or edited by the agent beyond typo fixes the client approves.

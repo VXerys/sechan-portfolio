@@ -14,7 +14,8 @@ Task status belongs in each feature's `tasks.md`; `docs/context/state.yaml` and 
 
 | Feature ID | Feature | Spec path | Product priority | Lifecycle gate | Related milestone |
 |---|---|---|---|---|---|
-| `F-XXX` | example: create todo | `docs/specs/F-XXX-create-todo/` | P0 | draft | M1 |
+| `F-001` | portfolio site | `docs/specs/F-001-portfolio-site/` | P0 | approved | M1 |
+| `F-002` | visual refresh and testimonials | `docs/specs/F-002-visual-refresh-testimonials/` | P1 | approved | M1 |
 
 ## Lifecycle gate meaning
 

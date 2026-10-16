@@ -11,6 +11,7 @@ export type Profile = {
   location: string;
   availability: string;
   about: string[]; // 2-4 short paragraphs
+  manifesto: { text: string; accent: string }; // the "How I work" line from about[3], split for typesetting
   email: string | null;
   links: Link[];
 };
@@ -34,6 +35,14 @@ export type Project = {
 export type Experience = { company: string; role: string; period: string; points: string[] };
 export type Achievement = { title: string; issuer: string; year: string; note: string | null };
 export type SkillGroup = { group: string; items: string[] };
+export type Testimonial = {
+  quote: string; // the client's own approved words (BR-003)
+  name: string;
+  role: string;
+  organization: string;
+  projectSlug: string;
+  consentDate: string; // YYYY-MM-DD when the client approved publishing this exact text
+};
 
 export const profile: Profile = {
   name: "M Sechan Alfarisi",
@@ -51,6 +60,10 @@ export const profile: Profile = {
     "On the AI side, I was first author of a SENTIMETER 2026 paper on a voice shopping assistant that runs speech recognition on the phone and sends only text to an LLM, so it stays usable on weak in-store signal. I'm currently in the Next-Gen AI Engineer path of Asah led by Dicoding.",
     "How I work: specs before code, tests on the logic that handles money or health data, and database rules that hold even when the UI is wrong.",
   ],
+  manifesto: {
+    text: "Specs before code, tests on the logic that handles money or health data, and database rules that hold",
+    accent: "even when the UI is wrong.",
+  },
   email: "sehanalfarisi9@gmail.com",
   links: [
     { label: "GitHub", href: "https://github.com/VXerys" },
@@ -152,9 +165,10 @@ export const projects: Project[] = [
     imageHint: "Cartify cart screen with budget bar and voice input, phone frame",
   },
   {
-    slug: "klinik-cikidang-medika",
+    slug: "clinic-information-system",
     title: "Clinic Information System",
-    client: "Klinik Cikidang Medika",
+    // Unnamed until the clinic approves being named (assumption A-001).
+    client: "A primary care clinic in Sukabumi",
     year: "2026",
     role: "Freelance full-stack developer (sole developer)",
     category: "Clinic system",
@@ -304,7 +318,7 @@ export const experience: Experience[] = [
     role: "Freelance Full-Stack Developer",
     period: "May 2026 - Present",
     points: [
-      "Klinik Cikidang Medika: sole developer of a clinic information system on Next.js 16 and Supabase, including a migration of 7,493 legacy rows.",
+      "A primary care clinic in Sukabumi: sole developer of a clinic information system on Next.js 16 and Supabase, including a migration of 7,493 legacy rows.",
       "VisualKain: built a finance system for a garment manufacturer with its money rules covered by 21 test files.",
       "InztaMoto: moved a JavaScript ERP into a Next.js 14 shell without stopping daily operations.",
       "Also built a wedding invitation site with a live RSVP guestbook and an admin panel (Next.js 16, Supabase).",
@@ -373,3 +387,6 @@ export const skills: SkillGroup[] = [
     items: ["Vitest", "Playwright", "flutter_test", "Sentry", "Git and GitHub", "Spec-driven development"],
   },
 ];
+
+// Filled only with quotes the client wrote and approved; the section stays hidden while this is empty (A-003).
+export const testimonials: Testimonial[] = [];

@@ -6,9 +6,9 @@ import { useRef } from "react";
 import type { ProjectMedia as Media } from "@/content/media";
 import { DESKTOP_MOTION, gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 
-type Props = { media: Media | undefined; title: string; category: string };
+type Props = { media: Media | undefined; title: string; category: string; year: string; href?: string };
 
-export function ProjectMedia({ media, title, category }: Props) {
+export function ProjectMedia({ media, title, category, year, href }: Props) {
   const frame = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -35,13 +35,14 @@ export function ProjectMedia({ media, title, category }: Props) {
     { scope: frame },
   );
 
-  return (
+  const visual = (
     <div
       ref={frame}
-      data-cursor
+      data-cursor-label={href ? "Open ↗" : undefined}
       className="relative aspect-[4/3] w-full overflow-hidden"
       style={{ background: media?.background ?? "var(--color-ink-2)" }}
     >
+      <span className="label absolute right-0 top-0 z-10 bg-paper px-2.5 py-1.5 text-ink">{year}</span>
       {media ? (
         <div data-parallax className="absolute inset-0">
           <Image
@@ -63,5 +64,12 @@ export function ProjectMedia({ media, title, category }: Props) {
         </div>
       )}
     </div>
+  );
+
+  if (!href) return visual;
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="block" aria-label={`${title} (opens in a new tab)`}>
+      {visual}
+    </a>
   );
 }
