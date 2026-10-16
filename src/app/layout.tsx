@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Host_Grotesk, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 
+import { Intro } from "@/components/motion/intro";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Cursor } from "@/components/site/cursor";
 import { profile } from "@/content/portfolio";
@@ -48,8 +49,9 @@ export const viewport: Viewport = {
   themeColor: "#0c0c0b",
 };
 
-// Marks JS as available before paint; if the intro never starts (script error), the class is removed so content shows.
-const bootScript = `document.documentElement.classList.add('js');setTimeout(function(){if(!document.documentElement.dataset.intro){document.documentElement.classList.remove('js')}},3000);`;
+// Runs before paint: marks JS as available, stops the browser restoring a mid-page scroll under the intro, and
+// removes the class again if the intro never starts (script error), so content always shows.
+const bootScript = `document.documentElement.classList.add('js');if('scrollRestoration' in history){history.scrollRestoration='manual'}setTimeout(function(){if(!document.documentElement.dataset.intro){document.documentElement.classList.remove('js')}},6000);`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -63,6 +65,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body>
         <SmoothScroll />
+        <Intro />
         <Cursor />
         <div className="grain" aria-hidden="true" />
         {children}

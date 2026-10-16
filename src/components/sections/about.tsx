@@ -45,7 +45,7 @@ export function About({ profile }: { profile: Profile }) {
   ];
 
   return (
-    <section ref={section} id="about" aria-labelledby="about-title" className="relative overflow-hidden px-4 py-28 md:px-8 md:py-40">
+    <section ref={section} id="about" aria-labelledby="about-title" className="relative overflow-hidden px-4 py-16 md:px-8 md:py-24">
       <span
         ref={glyph}
         aria-hidden="true"
@@ -64,8 +64,13 @@ export function About({ profile }: { profile: Profile }) {
 
       <div className="relative mt-20 grid gap-px overflow-hidden border border-line bg-line md:mt-28 md:grid-cols-3">
         {facts.map((fact, index) => (
-          <Reveal key={fact.label} delay={index * 0.08} className="bg-ink p-6 md:p-8">
-            <h3 className="label text-accent">{fact.label}</h3>
+          <Reveal key={fact.label} mode="clip" delay={index * 0.1} className="group relative bg-ink p-6 transition-colors duration-500 hover:bg-ink-2 md:p-8">
+            <h3 className="label flex items-center justify-between text-accent">
+              {fact.label}
+              <span aria-hidden="true" className="text-muted transition-transform duration-500 ease-[var(--ease-expo)] group-hover:rotate-90">
+                +
+              </span>
+            </h3>
             <p className="mt-4 text-[1.0625rem] leading-relaxed text-paper/80">{fact.body}</p>
           </Reveal>
         ))}

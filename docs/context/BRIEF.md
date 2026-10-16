@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 1c58c169a7a8b7eac9637f9bf42ec9f17b5e0eba9ec9fc6ac2d1f500fbe01940 -->
+source_hash: a3c2b4de161024d3ed9884499c6b6a9f94f99f59b56ad28e22ca31bb94dd9dc0 -->
 
 # Brief
 
@@ -50,7 +50,7 @@ Frozen: none
 ## Handoff
 Next step:
 
-Check reduced motion and desktop hover effects in Chrome DevTools (Rendering > `prefers-reduced-motion: reduce`, width 1440), record EV-008 for AC-006 and AC-010, then set T-005 and T-010 to done.
+In Chrome DevTools at 1440 px: Rendering > `prefers-reduced-motion: reduce`, reload, confirm no overlay and static sections; then scroll down and up to confirm the header hides and returns. Record EV-011 for AC-006, AC-010, AC-016, AC-020 and close T-005, T-010, T-014.
 
 ## Other open tasks
 - T-006 — Deploy to Vercel (`planned`)
@@ -60,3 +60,4 @@ Check reduced motion and desktop hover effects in Chrome DevTools (Rendering > `
 |---|---|---|---|
 | F-001 Portfolio site | implementing | in_progress | 4/6 |
 | F-002 Visual refresh and testimonials | implementing | in_progress | 3/4 |
+| F-003 Intro, cursor, and scroll choreography | implementing | in_progress | 5/6 |

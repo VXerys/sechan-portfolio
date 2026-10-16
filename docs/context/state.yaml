@@ -129,6 +129,75 @@ features:
           - EV-005
           - EV-006
           - EV-007
+  - id: F-003
+    title: Intro, cursor, and scroll choreography
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-003-intro-cursor-choreography
+    tasks:
+      - id: T-011
+        title: Opening sequence
+        status: done
+        requirements:
+          - FR-010
+        depends_on: []
+        evidence:
+          - EV-008
+          - EV-009
+      - id: T-012
+        title: Pointer feedback
+        status: done
+        requirements:
+          - FR-011
+        depends_on: []
+        evidence:
+          - EV-008
+          - EV-010
+      - id: T-013
+        title: Section choreography and layout fixes
+        status: done
+        requirements:
+          - FR-012
+          - FR-013
+        depends_on:
+          - T-011
+        evidence:
+          - EV-008
+          - EV-010
+      - id: T-014
+        title: Verification
+        status: in_progress
+        requirements:
+          - FR-010
+          - FR-011
+          - FR-012
+          - FR-013
+        depends_on:
+          - T-011
+          - T-012
+          - T-013
+        evidence:
+          - EV-008
+          - EV-009
+          - EV-010
+      - id: T-015
+        title: Intro consistency
+        status: done
+        requirements:
+          - FR-010
+        depends_on:
+          - T-011
+        evidence:
+          - EV-011
+      - id: T-016
+        title: Section spacing
+        status: done
+        requirements:
+          - FR-013
+        depends_on:
+          - T-013
+        evidence:
+          - EV-011
 active:
   feature_id: F-001
   task_id: T-005
@@ -140,5 +209,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T03:03:02.232Z
-source_hash: 1c58c169a7a8b7eac9637f9bf42ec9f17b5e0eba9ec9fc6ac2d1f500fbe01940
+generated_at: 2026-10-16T03:43:12.011Z
+source_hash: a3c2b4de161024d3ed9884499c6b6a9f94f99f59b56ad28e22ca31bb94dd9dc0

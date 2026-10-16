@@ -16,6 +16,7 @@ Task status belongs in each feature's `tasks.md`; `docs/context/state.yaml` and 
 |---|---|---|---|---|---|
 | `F-001` | portfolio site | `docs/specs/F-001-portfolio-site/` | P0 | approved | M1 |
 | `F-002` | visual refresh and testimonials | `docs/specs/F-002-visual-refresh-testimonials/` | P1 | approved | M1 |
+| `F-003` | intro, cursor, scroll choreography | `docs/specs/F-003-intro-cursor-choreography/` | P1 | approved | M1 |
 
 ## Lifecycle gate meaning
 

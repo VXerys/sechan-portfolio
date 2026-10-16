@@ -9,8 +9,8 @@ type RevealProps = {
   id?: string;
   className?: string;
   children: ReactNode;
-  // "words" rises headings word by word; "fade" lifts any block.
-  mode?: "words" | "fade";
+  // "words" rises headings word by word; "fade" lifts any block; "clip" wipes a card open from the bottom.
+  mode?: "words" | "fade" | "clip";
   delay?: number;
 };
 
@@ -26,6 +26,14 @@ export function Reveal({ as: Tag = "div", id, className, children, mode = "fade"
         const trigger = { trigger: el, start: "top 88%", once: true };
         if (mode === "fade") {
           gsap.from(el, { y: 40, autoAlpha: 0, duration: 1.2, ease: EASE_OUT, delay, scrollTrigger: trigger });
+          return;
+        }
+        if (mode === "clip") {
+          gsap.fromTo(
+            el,
+            { clipPath: "inset(100% 0% 0% 0%)", y: 60 },
+            { clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: 1.3, ease: "expo.out", delay, scrollTrigger: trigger },
+          );
           return;
         }
         const split = SplitText.create(el, {

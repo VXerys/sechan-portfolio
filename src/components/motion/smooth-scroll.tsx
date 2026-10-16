@@ -3,9 +3,20 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
+import { whenIntroDone } from "@/lib/motion/intro-state";
 import { gsap, MOTION_OK, ScrollTrigger } from "@/lib/motion/gsap";
 
 let instance: Lenis | null = null;
+let lockedBeforeStart = false;
+
+// The intro can ask for a lock before Lenis exists, so the request is remembered and applied on start.
+export function setScrollLocked(locked: boolean) {
+  lockedBeforeStart = locked;
+  document.documentElement.style.overflow = locked ? "hidden" : "";
+  if (!instance) return;
+  if (locked) instance.stop();
+  else instance.start();
+}
 
 export function scrollToTarget(target: string | HTMLElement | number) {
   if (instance) {
@@ -22,15 +33,16 @@ export function SmoothScroll() {
 
     const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
     instance = lenis;
+    if (lockedBeforeStart) lenis.stop();
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
-
-    // Webfonts change line heights after first paint, which shifts every trigger position.
-    document.fonts?.ready.then(() => ScrollTrigger.refresh());
+    // Lenis wants lag smoothing off so scroll and triggers stay in sync, but only after the intro: during it,
+    // smoothing keeps the curtain from skipping frames. The intro also refreshes triggers once fonts have settled.
+    const stopWaiting = whenIntroDone(() => gsap.ticker.lagSmoothing(0));
 
     return () => {
+      stopWaiting();
       gsap.ticker.remove(tick);
       lenis.destroy();
       instance = null;

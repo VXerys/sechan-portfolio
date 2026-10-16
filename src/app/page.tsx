@@ -20,12 +20,15 @@ export default function Home() {
       <Header name={profile.name} />
       <main id="main">
         <Hero profile={profile} />
-        <Marquee items={MARQUEE} />
-        <About profile={profile} />
-        <Work projects={projects} />
-        <Experience entries={experience} />
-        <Capabilities skills={skills} achievements={achievements} />
-        <Testimonials testimonials={testimonials} projects={projects} />
+        {/* One rounded sheet slides over the pinned hero and lifts off the footer; overflow-clip keeps sticky columns working. */}
+        <div className="relative z-10 overflow-clip rounded-[28px] bg-ink shadow-[0_-30px_60px_rgba(0,0,0,0.45)] md:rounded-[56px]">
+          <Marquee items={MARQUEE} />
+          <About profile={profile} />
+          <Work projects={projects} />
+          <Experience entries={experience} />
+          <Capabilities skills={skills} achievements={achievements} />
+          <Testimonials testimonials={testimonials} projects={projects} />
+        </div>
       </main>
       <Contact profile={profile} number={testimonials.length > 0 ? "07" : "06"} />
     </>

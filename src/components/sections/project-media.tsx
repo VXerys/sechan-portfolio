@@ -3,13 +3,15 @@
 import Image from "next/image";
 import { useRef } from "react";
 
-import type { ProjectMedia as Media } from "@/content/media";
+import { ProjectPoster } from "@/components/sections/project-poster";
+import type { Project } from "@/content/portfolio";
+import { projectMedia } from "@/content/media";
 import { DESKTOP_MOTION, gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 
-type Props = { media: Media | undefined; title: string; category: string; year: string; href?: string };
-
-export function ProjectMedia({ media, title, category, year, href }: Props) {
+export function ProjectMedia({ project }: { project: Project }) {
   const frame = useRef<HTMLDivElement>(null);
+  const media = projectMedia[project.slug];
+  const link = project.links[0];
 
   useGSAP(
     () => {
@@ -17,17 +19,26 @@ export function ProjectMedia({ media, title, category, year, href }: Props) {
       if (!el) return;
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
+        // The frame opens from a rounded window to full bleed while it travels up the viewport.
         gsap.fromTo(
           el,
-          { clipPath: "inset(18% 8% 18% 8%)" },
-          { clipPath: "inset(0% 0% 0% 0%)", ease: "none", scrollTrigger: { trigger: el, start: "top 95%", end: "top 35%", scrub: true } },
+          { clipPath: "inset(22% 14% 22% 14% round 28px)" },
+          { clipPath: "inset(0% 0% 0% 0% round 0px)", ease: "none", scrollTrigger: { trigger: el, start: "top 98%", end: "top 30%", scrub: true } },
         );
+        gsap.from(el.querySelector("[data-year]"), {
+          yPercent: -100,
+          duration: 0.8,
+          ease: "expo.out",
+          scrollTrigger: { trigger: el, start: "top 60%", once: true },
+        });
       });
       mm.add(DESKTOP_MOTION, () => {
+        const layer = el.querySelector("[data-parallax='image']");
+        if (!layer) return;
         gsap.fromTo(
-          el.querySelector("[data-parallax]"),
-          { yPercent: -6, scale: 1.12 },
-          { yPercent: 6, scale: 1.12, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } },
+          layer,
+          { yPercent: -7, scale: 1.14 },
+          { yPercent: 7, scale: 1.14, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } },
         );
       });
       return () => mm.revert();
@@ -38,37 +49,39 @@ export function ProjectMedia({ media, title, category, year, href }: Props) {
   const visual = (
     <div
       ref={frame}
-      data-cursor-label={href ? "Open ↗" : undefined}
-      className="relative aspect-[4/3] w-full overflow-hidden"
+      data-cursor-label={link ? "Open ↗" : undefined}
+      className="group relative aspect-[4/3] w-full overflow-hidden"
       style={{ background: media?.background ?? "var(--color-ink-2)" }}
     >
-      <span className="label absolute right-0 top-0 z-10 bg-paper px-2.5 py-1.5 text-ink">{year}</span>
+      <span className="absolute right-0 top-0 z-10 overflow-hidden">
+        <span data-year className="label block bg-paper px-2.5 py-1.5 text-ink">
+          {project.year}
+        </span>
+      </span>
       {media ? (
-        <div data-parallax className="absolute inset-0">
-          <Image
-            src={media.src}
-            alt={media.alt}
-            fill
-            sizes="(min-width: 768px) 58vw, 100vw"
-            placeholder="blur"
-            className={media.fit === "cover" ? "object-cover object-left-top" : "object-contain p-[6%]"}
-          />
+        <div data-parallax="image" className="absolute inset-0">
+          <div className="absolute inset-0 transition-transform duration-1000 ease-[var(--ease-expo)] group-hover:scale-[1.05]">
+            <Image
+              src={media.src}
+              alt={media.alt}
+              fill
+              sizes="(min-width: 768px) 58vw, 100vw"
+              placeholder="blur"
+              className={media.fit === "cover" ? "object-cover object-left-top" : "object-contain p-[6%]"}
+            />
+          </div>
         </div>
       ) : (
-        <div data-parallax className="absolute inset-0 flex flex-col justify-between p-6 md:p-10">
-          <span className="label text-muted">{category}</span>
-          <span className="display text-[18vw] text-transparent [-webkit-text-stroke:1px_var(--color-line)] md:text-[9vw]" aria-hidden="true">
-            {title}
-          </span>
-          <span className="label text-muted">Visual in preparation</span>
+        <div className="absolute inset-0 transition-transform duration-1000 ease-[var(--ease-expo)] group-hover:scale-[1.03]" aria-hidden="true">
+          <ProjectPoster project={project} />
         </div>
       )}
     </div>
   );
 
-  if (!href) return visual;
+  if (!link) return visual;
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="block" aria-label={`${title} (opens in a new tab)`}>
+    <a href={link.href} target="_blank" rel="noopener noreferrer" className="block" aria-label={`${project.title}: ${link.label} (opens in a new tab)`}>
       {visual}
     </a>
   );

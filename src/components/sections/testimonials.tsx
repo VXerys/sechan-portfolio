@@ -9,7 +9,7 @@ export function Testimonials({ testimonials, projects }: Props) {
   const titleFor = (slug: string) => projects.find((project) => project.slug === slug)?.title ?? slug;
 
   return (
-    <section aria-labelledby="testimonials-title" className="px-4 py-28 md:px-8 md:py-40">
+    <section aria-labelledby="testimonials-title" className="px-4 py-16 md:px-8 md:py-24">
       <div className="mb-16 grid gap-6 md:mb-20 md:grid-cols-12">
         <p className="label text-muted md:col-span-3">(06) Kind words</p>
         <Reveal as="h2" id="testimonials-title" mode="words" className="display text-[17vw] md:col-span-9 md:text-[9vw]">

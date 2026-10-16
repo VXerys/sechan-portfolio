@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 
+import { Magnetic } from "@/components/motion/magnetic";
+import { RollText } from "@/components/motion/roll-text";
 import { scrollToTarget } from "@/components/motion/smooth-scroll";
-import { gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
+import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
 import { LocalTime } from "@/components/site/local-time";
 import { Scramble } from "@/components/motion/scramble";
 
@@ -18,6 +20,32 @@ export function Header({ name }: { name: string }) {
   const [open, setOpen] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
+  const bar = useRef<HTMLElement>(null);
+  const openRef = useRef(open);
+
+  useEffect(() => {
+    openRef.current = open;
+    if (open && bar.current) gsap.to(bar.current, { yPercent: 0, duration: 0.4, ease: "expo.out" });
+  }, [open]);
+
+  // Hides on scroll down and returns on scroll up, so the blended header never sits on top of body copy while reading.
+  useGSAP(() => {
+    const el = bar.current;
+    if (!el) return;
+    const mm = gsap.matchMedia();
+    mm.add(MOTION_OK, () => {
+      const trigger = ScrollTrigger.create({
+        start: 0,
+        end: "max",
+        onUpdate: (self) => {
+          const hide = !openRef.current && self.scroll() > 160 && self.direction === 1;
+          gsap.to(el, { yPercent: hide ? -110 : 0, duration: 0.6, ease: "expo.out", overwrite: true });
+        },
+      });
+      return () => trigger.kill();
+    });
+    return () => mm.revert();
+  });
 
   const go = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (scrollToTarget(href)) event.preventDefault();
@@ -55,15 +83,20 @@ export function Header({ name }: { name: string }) {
   return (
     <>
       {/* Blend mode sits on the fixed element itself; on a child it would only blend inside the header's own stacking context. */}
-      <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 py-4 text-paper mix-blend-difference md:px-8 md:py-5">
+      <header
+        ref={bar}
+        className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 py-4 md:px-8 md:py-5 ${open ? "text-ink" : "text-paper mix-blend-difference"}`}
+      >
         <a href="#top" onClick={(event) => go(event, "#top")} className="label text-[0.8rem] tracking-[0.12em]" aria-label={`${name}, back to top`}>
-          Sechan<span className="text-muted">/</span>Alfarisi
+          Sechan<span className={open ? "text-ink/50" : "text-muted"}>/</span>Alfarisi
         </a>
         <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
           {NAV.map((item) => (
-            <a key={item.href} href={item.href} onClick={(event) => go(event, item.href)} className="label link-underline">
-              <Scramble on="hover" text={item.label} />
-            </a>
+            <Magnetic key={item.href} strength={0.45}>
+              <a href={item.href} onClick={(event) => go(event, item.href)} className="label link-underline block py-2">
+                <Scramble on="hover" text={item.label} />
+              </a>
+            </Magnetic>
           ))}
         </nav>
         <div className="hidden md:block">
@@ -77,7 +110,7 @@ export function Header({ name }: { name: string }) {
           aria-controls="mobile-menu"
           onClick={() => setOpen((value) => !value)}
         >
-          {open ? "Close" : "Menu"}
+          <RollText text={open ? "Close" : "Menu"} />
         </button>
       </header>
 
@@ -89,10 +122,11 @@ export function Header({ name }: { name: string }) {
       >
         <nav aria-label="Mobile">
           <ul className="space-y-1">
-            {NAV.map((item) => (
+            {NAV.map((item, index) => (
               <li key={item.href} className="overflow-hidden">
-                <a data-menu-item href={item.href} onClick={(event) => go(event, item.href)} className="display block text-[22vw]">
-                  {item.label}
+                <a data-menu-item href={item.href} onClick={(event) => go(event, item.href)} className="flex items-start gap-3">
+                  <span className="label mt-[2vw] text-ink/60">0{index + 1}</span>
+                  <span className="display text-[16.5vw]">{item.label}</span>
                 </a>
               </li>
             ))}

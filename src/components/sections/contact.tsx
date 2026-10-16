@@ -2,93 +2,115 @@
 
 import { useRef, type MouseEvent } from "react";
 
-import { Reveal } from "@/components/motion/reveal";
+import { DriftTitle } from "@/components/motion/drift-title";
+import { Magnetic } from "@/components/motion/magnetic";
+import { RollText } from "@/components/motion/roll-text";
 import { scrollToTarget } from "@/components/motion/smooth-scroll";
 import { LocalTime } from "@/components/site/local-time";
 import type { Profile } from "@/content/portfolio";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 
-export function Contact({ profile, number }: { profile: Profile; number: string }) {
-  const magnet = useRef<HTMLAnchorElement>(null);
+const RING = "Open to internships · 2026 · Sukabumi · ";
 
-  useGSAP(() => {
-    const el = magnet.current;
-    if (!el) return;
-    const mm = gsap.matchMedia();
-    mm.add(`${MOTION_OK} and (pointer: fine)`, () => {
-      const x = gsap.quickTo(el, "x", { duration: 0.6, ease: "power3" });
-      const y = gsap.quickTo(el, "y", { duration: 0.6, ease: "power3" });
-      const move = (event: PointerEvent) => {
-        const box = el.getBoundingClientRect();
-        x((event.clientX - (box.left + box.width / 2)) * 0.35);
-        y((event.clientY - (box.top + box.height / 2)) * 0.35);
-      };
-      const reset = () => {
-        x(0);
-        y(0);
-      };
-      el.addEventListener("pointermove", move);
-      el.addEventListener("pointerleave", reset);
-      return () => {
-        el.removeEventListener("pointermove", move);
-        el.removeEventListener("pointerleave", reset);
-      };
-    });
-    return () => mm.revert();
-  });
+function CircleText({ text }: { text: string }) {
+  const chars = text.split("");
+  const step = 360 / chars.length;
+  return (
+    <span aria-hidden="true" className="spin-slow pointer-events-none absolute inset-0">
+      {chars.map((char, index) => (
+        <span
+          key={`${char}-${index}`}
+          className="label absolute left-1/2 top-0 h-1/2 w-4 -ml-2 origin-bottom text-center text-paper/70"
+          style={{ transform: `rotate(${index * step}deg)` }}
+        >
+          {char}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+export function Contact({ profile, number }: { profile: Profile; number: string }) {
+  const footer = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const el = footer.current;
+      if (!el) return;
+      const mm = gsap.matchMedia();
+      mm.add(MOTION_OK, () => {
+        // The footer content starts lower and catches up, so it looks uncovered from beneath the page above.
+        gsap.fromTo(
+          el.querySelector("[data-footer-inner]"),
+          { yPercent: -30 },
+          { yPercent: 0, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom bottom", scrub: true } },
+        );
+      });
+      return () => mm.revert();
+    },
+    { scope: footer },
+  );
 
   const toTop = (event: MouseEvent<HTMLAnchorElement>) => {
     if (scrollToTarget(0)) event.preventDefault();
   };
 
   return (
-    <footer id="contact" aria-labelledby="contact-title" className="relative overflow-hidden px-4 pb-8 pt-28 md:px-8 md:pt-40">
-      <p className="label text-muted">({number}) Contact</p>
-      <Reveal as="h2" id="contact-title" mode="words" className="display mt-6 text-[21vw] md:text-[15vw]">
-        Let&apos;s build
-      </Reveal>
+    <footer ref={footer} id="contact" aria-labelledby="contact-title" className="relative z-0 -mt-16 overflow-hidden bg-ink-2 md:-mt-24">
+      <div data-footer-inner className="px-4 pb-8 pt-44 md:px-8 md:pt-56">
+        <p className="label mb-6 text-muted">({number}) Contact</p>
+        <DriftTitle id="contact-title" lines={["Let's", "build"]} accentLine={1} className="display text-[26vw] md:text-[17vw]" />
 
-      <div className="mt-12 grid items-end gap-12 md:grid-cols-12">
-        <div className="md:col-span-7">
-          <p className="max-w-lg font-serif text-3xl italic leading-tight text-paper/90">{profile.availability}</p>
-          {profile.email && (
-            <a href={`mailto:${profile.email}`} className="link-underline mt-8 inline-block break-all text-2xl font-medium tracking-tight md:text-4xl">
-              {profile.email}
-            </a>
-          )}
-        </div>
-        <div className="flex md:col-span-5 md:justify-end">
-          {profile.email && (
-            <a
-              ref={magnet}
-              href={`mailto:${profile.email}`}
-              className="label flex size-40 items-center justify-center rounded-full bg-accent text-center text-ink transition-colors hover:bg-paper md:size-48"
-            >
-              Start a
-              <br />
-              conversation
-            </a>
-          )}
-        </div>
-      </div>
-
-      <div className="mt-24 flex flex-col gap-6 border-t border-line pt-6 md:flex-row md:items-center md:justify-between">
-        <ul className="flex flex-wrap gap-6">
-          {profile.links.map((link) => (
-            <li key={link.href}>
-              <a href={link.href} target="_blank" rel="noopener noreferrer" className="label link-underline">
-                {link.label} <span aria-hidden="true">↗</span>
-                <span className="sr-only"> (opens in a new tab)</span>
+        <div className="mt-16 grid items-end gap-16 md:grid-cols-12">
+          <div className="md:col-span-7">
+            <p className="statement max-w-xl text-3xl italic text-paper/90 md:text-4xl">{profile.availability}</p>
+            {profile.email && (
+              <a href={`mailto:${profile.email}`} className="mt-10 inline-block text-2xl font-medium tracking-tight md:text-4xl">
+                <RollText text={profile.email} />
               </a>
-            </li>
-          ))}
-        </ul>
-        <LocalTime className="label text-muted" />
-        <div className="label flex items-center gap-6 text-muted">
-          <span>© 2026 {profile.name}</span>
-          <a href="#top" onClick={toTop} className="link-underline text-paper">
-            Back to top <span aria-hidden="true">↑</span>
-          </a>
+            )}
+          </div>
+          <div className="flex md:col-span-5 md:justify-end">
+            {profile.email && (
+              <div className="relative grid size-64 place-items-center md:size-72">
+                <CircleText text={RING} />
+                <Magnetic strength={0.4}>
+                  <a
+                    href={`mailto:${profile.email}`}
+                    className="label flex size-40 items-center justify-center rounded-full bg-accent text-center text-ink transition-[background-color,scale] duration-500 ease-[var(--ease-expo)] hover:scale-110 hover:bg-paper md:size-44"
+                  >
+                    Start a
+                    <br />
+                    conversation
+                  </a>
+                </Magnetic>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-24 flex flex-col gap-6 border-t border-line pt-6 lg:flex-row lg:items-center lg:justify-between">
+          <ul className="flex flex-wrap gap-6">
+            {profile.links.map((link) => (
+              <li key={link.href}>
+                <Magnetic>
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="label flex items-center gap-1.5 py-2">
+                    <RollText text={link.label} /> <span aria-hidden="true">↗</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </Magnetic>
+              </li>
+            ))}
+          </ul>
+          <LocalTime className="label text-muted" />
+          <div className="label flex items-center gap-6 text-muted">
+            <span>© 2026 {profile.name}</span>
+            <Magnetic>
+              <a href="#top" onClick={toTop} className="flex items-center gap-1.5 py-2 text-paper">
+                <RollText text="Back to top" /> <span aria-hidden="true">↑</span>
+              </a>
+            </Magnetic>
+          </div>
         </div>
       </div>
     </footer>
