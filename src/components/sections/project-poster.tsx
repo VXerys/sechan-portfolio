@@ -6,7 +6,9 @@ type PosterTone = { background: string; foreground: string; muted: string };
 const TONES: Record<string, PosterTone> = {
   cartify: { background: "#d4ff3a", foreground: "#0c0c0b", muted: "rgba(12,12,11,0.6)" },
   "clinic-information-system": { background: "#efede6", foreground: "#0c0c0b", muted: "rgba(12,12,11,0.55)" },
-  "mangkasir-ritel": { background: "#d4ff3a", foreground: "#0c0c0b", muted: "rgba(12,12,11,0.6)" },
+  fluxa: { background: "#d4ff3a", foreground: "#0c0c0b", muted: "rgba(12,12,11,0.6)" },
+  artconnect: { background: "#2a2a27", foreground: "#efede6", muted: "rgba(239,237,230,0.55)" },
+  "webgis-gunung-puyuh": { background: "#efede6", foreground: "#0c0c0b", muted: "rgba(12,12,11,0.55)" },
   "welling-ayah-hebat": { background: "#efede6", foreground: "#0c0c0b", muted: "rgba(12,12,11,0.55)" },
   "visualkain-finance": { background: "#1d1d1a", foreground: "#efede6", muted: "rgba(239,237,230,0.55)" },
   "inztamoto-erp": { background: "#2a2a27", foreground: "#d4ff3a", muted: "rgba(239,237,230,0.55)" },

@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 2b0790404337434d96af7c3a9175e667df11348cdf792bebe72499c937b965b2 -->
+source_hash: 8da7ab514ce2298d50bf7b3f0b83bb2a38e88e2dc16fae2de7c93fbf5040c1fe -->
 
 # Brief
 
@@ -65,3 +65,4 @@ None.
 | F-005 Site identity and production deploy | implementing | in_progress | 3/4 |
 | F-006 Testimonials with consent-aware attribution | implementing | in_progress | 0/3 |
 | F-007 Stack marquee redesign | implementing | in_progress | 1/2 |
+| F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 2/2 |

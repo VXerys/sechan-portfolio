@@ -27,9 +27,12 @@ export function Experience({ entries }: { entries: Entry[] }) {
             <div data-row-content className="relative py-10 md:px-4 md:py-14">
               <div className="grid gap-2 md:grid-cols-12 md:items-baseline md:gap-8">
                 <p className="label text-muted transition-colors duration-500 group-hover:text-paper md:col-span-3">{entry.period}</p>
-                <h3 className="display text-[13vw] transition-[color,translate] duration-700 ease-[var(--ease-expo)] group-hover:translate-x-2 group-hover:text-accent md:col-span-5 md:text-[5vw]">
-                  {entry.company}
-                </h3>
+                <div className="md:col-span-5">
+                  <h3 className="display text-[13vw] transition-[color,translate] duration-700 ease-[var(--ease-expo)] group-hover:translate-x-2 group-hover:text-accent md:text-[5vw]">
+                    {entry.company}
+                  </h3>
+                  {entry.legalName && <p className="label mt-3 text-muted">{entry.legalName}</p>}
+                </div>
                 <p className="statement text-2xl italic text-paper/80 md:col-span-4 md:text-right md:text-3xl">{entry.role}</p>
               </div>
               <ol className="mt-8 grid gap-x-10 gap-y-4 text-[1.0625rem] leading-relaxed text-paper/75 md:ml-[25%] md:grid-cols-2">
