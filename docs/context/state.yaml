@@ -288,6 +288,53 @@ features:
           - T-022
           - T-023
         evidence: []
+  - id: F-006
+    title: Testimonials with consent-aware attribution
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-006-testimonial-attribution
+    tasks:
+      - id: T-027
+        title: Testimonial content model and view logic
+        status: review
+        requirements:
+          - FR-022
+          - FR-023
+          - FR-024
+          - FR-026
+        depends_on: []
+        evidence:
+          - EV-019
+          - EV-020
+      - id: T-028
+        title: Section and project quote
+        status: review
+        requirements:
+          - FR-022
+          - FR-023
+          - FR-024
+          - FR-025
+        depends_on:
+          - T-027
+        evidence:
+          - EV-020
+          - EV-021
+      - id: T-029
+        title: Verification
+        status: review
+        requirements:
+          - FR-022
+          - FR-023
+          - FR-024
+          - FR-025
+          - FR-026
+        depends_on:
+          - T-027
+          - T-028
+        evidence:
+          - EV-019
+          - EV-020
+          - EV-021
   - id: F-007
     title: Stack marquee redesign
     status: implementing
@@ -323,5 +370,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T04:43:29.411Z
-source_hash: 39f9b93f2423386ef3313e5379984df2d0215d259dd78ec2b050365ae046353f
+generated_at: 2026-10-16T05:20:03.700Z
+source_hash: 2b0790404337434d96af7c3a9175e667df11348cdf792bebe72499c937b965b2

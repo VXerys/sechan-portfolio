@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 39f9b93f2423386ef3313e5379984df2d0215d259dd78ec2b050365ae046353f -->
+source_hash: 2b0790404337434d96af7c3a9175e667df11348cdf792bebe72499c937b965b2 -->
 
 # Brief
 
@@ -50,7 +50,7 @@ Frozen: none
 ## Handoff
 Next step:
 
-After the F-005 PR merges and Vercel redeploys, run `curl -s https://www.sechanalfarisi.dev | grep -o 'rel="icon"[^>]*'` and record EV-017 for T-024.
+Owner reviews and merges the F-006 pull request. When the first quote is approved, add it to `src/content/testimonials.ts` following `docs/outreach/client-testimonial-templates.md`, run `npm test` and `npm run build`, and re-check the layout with the real wording. Separately, T-024: `curl -s https://www.sechanalfarisi.dev | grep -o 'rel="icon"[^>]*'` and record the next free EV id.
 
 ## Other open tasks
 None.
@@ -63,4 +63,5 @@ None.
 | F-003 Intro, cursor, and scroll choreography | implementing | in_progress | 5/6 |
 | F-004 Freelance-first copy, greeting intro, contact CTA | implementing | in_progress | 3/4 |
 | F-005 Site identity and production deploy | implementing | in_progress | 3/4 |
+| F-006 Testimonials with consent-aware attribution | implementing | in_progress | 0/3 |
 | F-007 Stack marquee redesign | implementing | in_progress | 1/2 |

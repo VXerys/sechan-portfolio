@@ -13,7 +13,9 @@ Template WhatsApp untuk meminta izin menampilkan proyek dan meminta testimoni. G
 Aturan yang dipegang (BR-003, A-003):
 
 - Testimoni harus kata-kata klien sendiri. Kamu boleh merapikan ejaan atau menggabungkan jawaban mereka, tapi teks final wajib mereka setujui dulu.
-- Catat tanggal persetujuan. Tanggal itu diisi di `consentDate` pada `src/content/portfolio.ts`.
+- Catat tanggal persetujuan. Tanggal itu diisi di `consentDate` pada `src/content/testimonials.ts`.
+- Izin menampilkan nama terpisah dari izin testimoni. Kalau klien tidak mau namanya tampil, jangan simpan namanya di repo sama sekali; cukup label anonim (BR-006).
+- Terjemahan Inggris dan potongan kutipan (`excerpt`) juga harus mereka setujui, sama seperti teks aslinya (BR-007).
 - Untuk klinik, jangan minta atau menampilkan data pasien, angka keuangan, atau nama staf tanpa izin terpisah.
 
 ## 1. Klinik: izin menampilkan nama dan minta testimoni
@@ -81,6 +83,12 @@ Aturan yang dipegang (BR-003, A-003):
 
 ## Setelah disetujui
 
-1. Tambahkan entri ke `testimonials` di `src/content/portfolio.ts`: `quote`, `name`, `role`, `organization`, `projectSlug`, `consentDate`.
-2. Untuk klinik, jika nama boleh tampil: ubah `client` proyek `clinic-information-system`, hapus test "clinic stays unnamed", dan ubah A-001 menjadi `confirmed`.
+1. Tambahkan entri ke `testimonials` di `src/content/testimonials.ts` (F-006):
+   - `quote`: teks final persis seperti yang disetujui, dalam bahasa aslinya; `language`: `"id"` atau `"en"`.
+   - `translation`: versi Inggris yang juga disetujui, atau `null` kalau kutipannya sudah bahasa Inggris atau terjemahannya belum disetujui.
+   - `attribution`: `{ showName: true, name, role, organization }` kalau nama boleh tampil (`organization` boleh `null`), atau `{ showName: false, label: "Owner of a primary care clinic in Sukabumi" }` kalau tidak.
+   - `projectSlug`: slug proyek di `portfolio.ts`, atau `null` untuk pekerjaan yang tidak ada di daftar proyek (misalnya situs undangan pernikahan).
+   - `excerpt`: potongan pendek yang persis ada di teks yang tampil (terjemahan kalau ada) untuk ditampilkan di kartu proyek, atau `null`.
+   - `consentDate`: tanggal persetujuan `YYYY-MM-DD`. Selama masih `null`, entri tidak tampil di situs.
+2. Untuk klinik, jika nama boleh tampil: ubah `client` proyek `clinic-information-system`, hapus test "clinic stays unnamed" di `portfolio.test.ts` dan pemeriksaan `cikidang` di `testimonials.test.ts`, lalu ubah A-001 menjadi `confirmed`.
 3. Jalankan `npm test` dan `npm run build`.

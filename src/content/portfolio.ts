@@ -37,14 +37,6 @@ export type Achievement = { title: string; issuer: string; year: string; note: s
 export type SkillGroup = { group: string; items: string[] };
 // Availability copy follows the owner's positioning decision of 2026-10-16: freelance first, then full-time, then internships.
 export type Contact = { ctaLabel: string; subject: string; body: string; hiringLabel: string };
-export type Testimonial = {
-  quote: string; // the client's own approved words (BR-003)
-  name: string;
-  role: string;
-  organization: string;
-  projectSlug: string;
-  consentDate: string; // YYYY-MM-DD when the client approved publishing this exact text
-};
 
 // Canonical origin. The apex sechanalfarisi.dev 308-redirects here (Vercel domain setting, 2026-10-16).
 export const siteUrl = "https://www.sechanalfarisi.dev";
@@ -399,6 +391,3 @@ export const contact: Contact = {
   body: "Hi Sehan,\n\nI'd like to talk about:\n- Project or role:\n- Timeline:\n- Budget range (optional):\n\nThanks,\n",
   hiringLabel: "Hiring? Find me on LinkedIn",
 };
-
-// Filled only with quotes the client wrote and approved; the section stays hidden while this is empty (A-003).
-export const testimonials: Testimonial[] = [];
