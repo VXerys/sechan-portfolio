@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sechan Portfolio
 
-## Getting Started
+Personal portfolio of M Sechan Alfarisi, Full-Stack Mobile Software Engineer and Applied AI Engineer. One static page built with Next.js 16, Tailwind CSS v4, GSAP (ScrollTrigger, SplitText) and Lenis.
 
-First, run the development server:
+## Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Purpose | Command |
+|---|---|
+| Lint | `npm run lint` |
+| Typecheck | `npm run typecheck` |
+| Content tests | `npm test` |
+| Build | `npm run build` |
+| SDD context | `npm run context:render`, then `npm run context:validate` |
 
-## Learn More
+## Where things are
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Content: `src/content/portfolio.ts`. It mirrors VERIFIED facts from the `about-me` knowledge base, so update that first.
+- Screenshots: `src/assets/images/`, mapped per project in `src/content/media.ts`. A project without an entry shows a placeholder.
+- Motion: `src/lib/motion/gsap.ts` (plugin registration) and `src/components/motion/` (Lenis, reveals). Every animation has a reduced-motion path.
+- Spec-driven docs: start at `docs/context/BRIEF.md`. The active feature is `docs/specs/F-001-portfolio-site/`. This project uses the AI-Assisted SDD template v2.0.0.

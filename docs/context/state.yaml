@@ -1,0 +1,93 @@
+# GENERATED FILE. Rendered by `npm run context:render`. Do not edit by hand.
+# Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
+
+schema_version: 2
+project: Sechan Portfolio
+tier: lite
+features:
+  - id: F-001
+    title: Portfolio site
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-001-portfolio-site
+    tasks:
+      - id: T-001
+        title: Scaffold, SDD v2 init, motion foundation
+        status: done
+        requirements:
+          - FR-005
+        depends_on: []
+        evidence:
+          - EV-002
+      - id: T-002
+        title: Typed content and invariants test
+        status: done
+        requirements:
+          - FR-002
+          - FR-003
+        depends_on:
+          - T-001
+        evidence:
+          - EV-001
+      - id: T-003
+        title: Sections and motion
+        status: done
+        requirements:
+          - FR-001
+          - FR-002
+          - FR-003
+          - FR-004
+          - FR-005
+        depends_on:
+          - T-002
+        evidence:
+          - EV-002
+          - EV-003
+          - EV-004
+      - id: T-004
+        title: Images and placeholders
+        status: done
+        requirements:
+          - FR-002
+        depends_on:
+          - T-003
+        evidence:
+          - EV-004
+      - id: T-005
+        title: Verification and handoff
+        status: in_progress
+        requirements:
+          - FR-001
+          - FR-002
+          - FR-003
+          - FR-004
+          - FR-005
+        depends_on:
+          - T-003
+          - T-004
+        evidence:
+          - EV-001
+          - EV-002
+          - EV-003
+          - EV-004
+      - id: T-006
+        title: Deploy to Vercel
+        status: planned
+        requirements:
+          - FR-001
+        depends_on:
+          - T-005
+        evidence: []
+active:
+  feature_id: F-001
+  task_id: T-005
+assumptions_open:
+  - id: A-001
+    feature: F-001
+    title: Client names may appear on the public site
+  - id: A-002
+    feature: F-001
+    title: Product screenshots may appear on the public site
+blockers: []
+generated_at: 2026-10-16T02:47:30.427Z
+source_hash: ac035dd3995d84854b4a74e8d43e93996002610fa5aff682d0a334e2e92d9a82
