@@ -4,6 +4,19 @@ import { useRef } from "react";
 
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
 
+const pad = (n: number) => String(n).padStart(2, "0");
+
+// The site mark (also the favicon): three rounded bars at 0, 60, and 120 degrees.
+function Asterisk() {
+  return (
+    <svg data-spin viewBox="-32 -32 64 64" aria-hidden="true" className="size-[0.55em] shrink-0 text-accent">
+      {[0, 60, 120].map((angle) => (
+        <rect key={angle} x="-4.5" y="-21" width="9" height="42" rx="4.5" fill="currentColor" transform={`rotate(${angle})`} />
+      ))}
+    </svg>
+  );
+}
+
 export function Marquee({ items }: { items: string[] }) {
   const root = useRef<HTMLDivElement>(null);
 
@@ -11,35 +24,50 @@ export function Marquee({ items }: { items: string[] }) {
     () => {
       const el = root.current;
       if (!el) return;
+      const track = el.querySelector<HTMLElement>("[data-track]");
+      if (!track) return;
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
-        const tracks = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-track]"));
-        const loops = tracks.map((track, index) =>
-          index === 0
-            ? gsap.to(track, { xPercent: -50, duration: 40, ease: "none", repeat: -1 })
-            : gsap.fromTo(track, { xPercent: -50 }, { xPercent: 0, duration: 48, ease: "none", repeat: -1 }),
-        );
-        const skew = gsap.quickTo(tracks, "skewX", { duration: 0.6, ease: "power3" });
+        const loop = gsap.to(track, { xPercent: -50, duration: 36, ease: "none", repeat: -1 });
+        const marks = gsap.utils.toArray<SVGElement>(el.querySelectorAll("[data-spin]"));
+        const spin = gsap.to(marks, { rotate: 360, duration: 8, ease: "none", repeat: -1, transformOrigin: "50% 50%" });
+        let direction = 1;
+        let hovering = false;
+        const settle = () => {
+          const base = hovering ? 0.25 : 1;
+          gsap.to([loop, spin], { timeScale: direction * base, duration: 1.2, ease: "power2.out", overwrite: true });
+        };
 
-        // Scroll speed accelerates both rows, flips them with the scroll direction, and leans the type into the motion.
+        // Scroll speed pushes the band and spins the marks faster in the scroll direction, then both ease back.
         const trigger = ScrollTrigger.create({
           trigger: el,
           start: "top bottom",
           end: "bottom top",
           onUpdate: (self) => {
-            const velocity = self.getVelocity();
-            const boost = gsap.utils.clamp(1, 6, 1 + Math.abs(velocity) / 400);
-            loops.forEach((loop) => {
-              gsap.to(loop, { timeScale: self.direction * boost, duration: 0.2, overwrite: true });
-              gsap.to(loop, { timeScale: self.direction, duration: 1.2, delay: 0.2, ease: "power2.out" });
-            });
-            skew(gsap.utils.clamp(-12, 12, velocity / -250));
-            gsap.delayedCall(0.25, () => skew(0));
+            direction = self.direction;
+            const boost = gsap.utils.clamp(1, 5, 1 + Math.abs(self.getVelocity()) / 450);
+            gsap.to([loop, spin], { timeScale: direction * boost * (hovering ? 0.25 : 1), duration: 0.2, overwrite: true });
+            gsap.delayedCall(0.25, settle);
           },
         });
+
+        // Hover slows the band so a word can be read; the word itself turns lime in CSS.
+        const enter = () => {
+          hovering = true;
+          settle();
+        };
+        const leave = () => {
+          hovering = false;
+          settle();
+        };
+        el.addEventListener("pointerenter", enter);
+        el.addEventListener("pointerleave", leave);
         return () => {
+          el.removeEventListener("pointerenter", enter);
+          el.removeEventListener("pointerleave", leave);
           trigger.kill();
-          loops.forEach((loop) => loop.kill());
+          loop.kill();
+          spin.kill();
         };
       });
       return () => mm.revert();
@@ -47,32 +75,41 @@ export function Marquee({ items }: { items: string[] }) {
     { scope: root },
   );
 
-  const row = (hidden: boolean, outline: boolean) => (
+  // Display caps and serif italics alternate so the band reads as typesetting, not a shouting banner.
+  const row = (hidden: boolean) => (
     <ul className="flex shrink-0 items-center" aria-hidden={hidden || undefined}>
-      {items.map((item) => (
-        <li key={item} className="flex items-center whitespace-nowrap">
+      {items.map((item, index) => (
+        <li key={item} className="flex items-center gap-[0.45em] whitespace-nowrap px-[0.45em]">
           <span
-            className={`display px-6 text-[9vw] md:text-[5.5vw] ${outline ? "text-transparent [-webkit-text-stroke:1px_var(--color-muted)]" : ""}`}
+            className={`transition-colors duration-300 hover:text-accent ${
+              index % 2 === 0 ? "display tracking-tight" : "statement italic normal-case text-paper/80"
+            }`}
           >
             {item}
           </span>
-          <span className="statement text-[7vw] italic text-accent md:text-[4vw]" aria-hidden="true">
-            &amp;
-          </span>
+          <Asterisk />
         </li>
       ))}
     </ul>
   );
 
   return (
-    <div ref={root} className="overflow-hidden border-y border-line py-4" role="region" aria-label="Tools I work with">
-      <div data-track className="flex w-max will-change-transform">
-        {row(false, false)}
-        {row(true, false)}
-      </div>
-      <div data-track className="flex w-max will-change-transform" aria-hidden="true">
-        {row(true, true)}
-        {row(true, true)}
+    <div
+      ref={root}
+      role="region"
+      aria-label="Stack I ship with"
+      className="flex flex-col gap-3 border-y border-line py-5 md:flex-row md:items-center md:gap-0 md:py-6"
+    >
+      <p className="label flex shrink-0 items-center gap-3 px-4 text-muted md:w-56 md:flex-col md:items-start md:gap-1 md:border-r md:border-line md:px-8">
+        <span>Stack I ship with</span>
+        <span className="text-paper">{pad(items.length)} tools</span>
+      </p>
+      {/* Faded edges let words enter and leave instead of being cut by the viewport. */}
+      <div className="min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <div data-track className="flex w-max items-center text-[9vw] leading-none will-change-transform md:text-[3.6vw]">
+          {row(false)}
+          {row(true)}
+        </div>
       </div>
     </div>
   );
