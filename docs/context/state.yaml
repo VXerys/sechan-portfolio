@@ -1,0 +1,259 @@
+# GENERATED FILE. Rendered by `npm run context:render`. Do not edit by hand.
+# Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
+
+schema_version: 2
+project: Sechan Portfolio
+tier: lite
+features:
+  - id: F-001
+    title: Portfolio site
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-001-portfolio-site
+    tasks:
+      - id: T-001
+        title: Scaffold, SDD v2 init, motion foundation
+        status: done
+        requirements:
+          - FR-005
+        depends_on: []
+        evidence:
+          - EV-002
+      - id: T-002
+        title: Typed content and invariants test
+        status: done
+        requirements:
+          - FR-002
+          - FR-003
+        depends_on:
+          - T-001
+        evidence:
+          - EV-001
+      - id: T-003
+        title: Sections and motion
+        status: done
+        requirements:
+          - FR-001
+          - FR-002
+          - FR-003
+          - FR-004
+          - FR-005
+        depends_on:
+          - T-002
+        evidence:
+          - EV-002
+          - EV-003
+          - EV-004
+      - id: T-004
+        title: Images and placeholders
+        status: done
+        requirements:
+          - FR-002
+        depends_on:
+          - T-003
+        evidence:
+          - EV-004
+      - id: T-005
+        title: Verification and handoff
+        status: in_progress
+        requirements:
+          - FR-001
+          - FR-002
+          - FR-003
+          - FR-004
+          - FR-005
+        depends_on:
+          - T-003
+          - T-004
+        evidence:
+          - EV-001
+          - EV-002
+          - EV-003
+          - EV-004
+      - id: T-006
+        title: Deploy to Vercel
+        status: planned
+        requirements:
+          - FR-001
+        depends_on:
+          - T-005
+        evidence: []
+  - id: F-002
+    title: Visual refresh and testimonials
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-002-visual-refresh-testimonials
+    tasks:
+      - id: T-007
+        title: Type system
+        status: done
+        requirements:
+          - FR-006
+        depends_on: []
+        evidence:
+          - EV-006
+          - EV-007
+      - id: T-008
+        title: Reference-inspired motion
+        status: done
+        requirements:
+          - FR-007
+        depends_on:
+          - T-007
+        evidence:
+          - EV-006
+          - EV-007
+      - id: T-009
+        title: Testimonials and clinic naming
+        status: done
+        requirements:
+          - FR-008
+          - FR-009
+        depends_on: []
+        evidence:
+          - EV-005
+          - EV-006
+      - id: T-010
+        title: Verification
+        status: in_progress
+        requirements:
+          - FR-006
+          - FR-007
+          - FR-008
+          - FR-009
+        depends_on:
+          - T-007
+          - T-008
+          - T-009
+        evidence:
+          - EV-005
+          - EV-006
+          - EV-007
+  - id: F-003
+    title: Intro, cursor, and scroll choreography
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-003-intro-cursor-choreography
+    tasks:
+      - id: T-011
+        title: Opening sequence
+        status: done
+        requirements:
+          - FR-010
+        depends_on: []
+        evidence:
+          - EV-008
+          - EV-009
+      - id: T-012
+        title: Pointer feedback
+        status: done
+        requirements:
+          - FR-011
+        depends_on: []
+        evidence:
+          - EV-008
+          - EV-010
+      - id: T-013
+        title: Section choreography and layout fixes
+        status: done
+        requirements:
+          - FR-012
+          - FR-013
+        depends_on:
+          - T-011
+        evidence:
+          - EV-008
+          - EV-010
+      - id: T-014
+        title: Verification
+        status: in_progress
+        requirements:
+          - FR-010
+          - FR-011
+          - FR-012
+          - FR-013
+        depends_on:
+          - T-011
+          - T-012
+          - T-013
+        evidence:
+          - EV-008
+          - EV-009
+          - EV-010
+      - id: T-015
+        title: Intro consistency
+        status: done
+        requirements:
+          - FR-010
+        depends_on:
+          - T-011
+        evidence:
+          - EV-011
+      - id: T-016
+        title: Section spacing
+        status: done
+        requirements:
+          - FR-013
+        depends_on:
+          - T-013
+        evidence:
+          - EV-011
+  - id: F-004
+    title: Freelance-first copy, greeting intro, contact CTA
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-004-freelance-copy-contact
+    tasks:
+      - id: T-017
+        title: Freelance-first copy
+        status: done
+        requirements:
+          - FR-014
+        depends_on: []
+        evidence:
+          - EV-012
+      - id: T-018
+        title: Greeting intro
+        status: done
+        requirements:
+          - FR-015
+        depends_on: []
+        evidence:
+          - EV-013
+      - id: T-019
+        title: Contact CTA
+        status: done
+        requirements:
+          - FR-016
+        depends_on:
+          - T-017
+        evidence:
+          - EV-012
+          - EV-013
+      - id: T-020
+        title: Verification
+        status: in_progress
+        requirements:
+          - FR-014
+          - FR-015
+          - FR-016
+        depends_on:
+          - T-017
+          - T-018
+          - T-019
+        evidence:
+          - EV-012
+          - EV-013
+active:
+  feature_id: F-001
+  task_id: T-005
+assumptions_open:
+  - id: A-001
+    feature: F-001
+    title: Client names may appear on the public site
+  - id: A-003
+    feature: F-002
+    title: Testimonials are real, attributed, and approved
+blockers: []
+generated_at: 2026-10-16T03:48:49.396Z
+source_hash: 22309e222e20bcfbecaf2db383ef3041770d27bc3b99cc62454a3556b4f5617b

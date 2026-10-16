@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude Code: personal settings and per-session hook state (SDD template)
+.claude/settings.local.json
+.claude/.sdd-session/
+
+# Temporary context tooling (SDD template)
+.context-cache/

@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // AGENTS.md is rendered by the SDD adapters (`npm run adapters:sync`); next dev must not append to it.
+  agentRules: false,
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
