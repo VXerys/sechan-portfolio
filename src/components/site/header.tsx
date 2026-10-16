@@ -141,11 +141,13 @@ export function Header({ name }: { name: string }) {
           <ul className="space-y-1">
             {NAV.map((item, index) => (
               <li key={item.href} className="overflow-hidden">
+                {/* Only `scale` transitions here: GSAP owns this link's transform for the reveal, and a CSS transform
+                    transition makes GSAP read a mid-transition position as the end and stop the line half-masked. */}
                 <a
                   data-menu-item
                   href={item.href}
                   onClick={(event) => go(event, item.href)}
-                  className="flex origin-left items-start gap-3 transition-transform duration-200 active:scale-[0.97]"
+                  className="flex origin-left items-start gap-3 transition-[scale] duration-200 active:scale-[0.97]"
                 >
                   <span className="label mt-[2vw] text-ink/60">0{index + 1}</span>
                   <span className="display text-[16.5vw]">{item.label}</span>

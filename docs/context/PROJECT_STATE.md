@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5 -->
+source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c -->
 
 # Project State
 
-- Generated at: 2026-10-16T07:10:21.636Z
+- Generated at: 2026-10-16T07:54:16.654Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 2
@@ -27,15 +27,15 @@ source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5 --
 <!-- GENERATED:GIT_FACTS:START -->
 ## Git
 
-- Branch: `feat/F-009-mobile-indicator-motion`
-- HEAD: `fa7a7cf`
+- Branch: `fix/F-009-mobile-menu`
+- HEAD: `d1713ef`
 - Worktree: dirty
 
 Recent commits:
 
+- `d1713ef Merge pull request #9 from VXerys/feat/F-009-mobile-indicator-motion`
+- `d5545b7 feat(F-009): mobile polish, section indicator, motion set 2`
 - `fa7a7cf Merge pull request #8 from VXerys/feat/F-008-content-corrections`
 - `8b7573c fix(F-008): correct name, employer, and project list`
 - `8b06c5b Merge pull request #7 from VXerys/feat/F-006-testimonial-attribution`
-- `77da5bb feat(F-006): consent-aware testimonials`
-- `09a1d9a Merge pull request #6 from VXerys/feat/F-007-marquee-redesign`
 <!-- GENERATED:GIT_FACTS:END -->

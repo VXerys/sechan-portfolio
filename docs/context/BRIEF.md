@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5 -->
+source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c -->
 
 # Brief
 
@@ -50,7 +50,7 @@ Frozen: none
 ## Handoff
 Next step:
 
-Owner reviews and merges the F-009 pull request, then checks on a real phone (tap feedback, inline visuals, Contact landing) and once with reduced motion on (DevTools > Rendering). Separately: renumber F-008's ids so they no longer collide with F-006, and T-024's production favicon check.
+Owner merges the BUG-001 pull request and opens the menu on a phone. The F-008 id renumbering runs in its own session on `chore/F-008-renumber-ids`; whichever merges second re-runs `npm run context:render`. Then T-024's production favicon check.
 
 ## Other open tasks
 None.

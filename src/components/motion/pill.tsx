@@ -5,7 +5,7 @@ import { useRef, type ComponentPropsWithoutRef, type ReactNode, type Ref } from 
 import { gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 
 const BASE =
-  "pill group relative inline-flex items-center gap-2 overflow-hidden rounded-full border px-5 py-3 label transition-[transform,border-color] duration-300 active:scale-[0.97]";
+  "pill group relative inline-flex items-center gap-2 overflow-hidden rounded-full border px-5 py-3 label transition-[scale,border-color] duration-300 active:scale-[0.97]";
 const TONES = { default: "border-line text-paper hover:border-accent", accent: "border-accent/60 text-accent hover:border-accent" };
 type Tone = keyof typeof TONES;
 

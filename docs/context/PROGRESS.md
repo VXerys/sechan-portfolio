@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5 -->
+source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c -->
 
 # Project Progress
 
@@ -80,7 +80,7 @@ source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5 --
 | Task | Status | Requirements | Depends on | Evidence |
 |---|---|---|---|---|
 | T-030 Section indicator | done | FR-027 |  | EV-023, EV-024 |
-| T-031 Touch experience | done | FR-028 |  | EV-024 |
+| T-031 Touch experience | done | FR-028 |  | EV-024, EV-028 |
 | T-032 Slice transition and pill buttons | done | FR-029 | T-030 | EV-023, EV-024 |
 | T-033 Horizontal Proof, footer scale | done | FR-029 |  | EV-023, EV-024 |
-| T-034 Verification | review | FR-027, FR-028, FR-029 | T-030, T-031, T-032, T-033 | EV-022, EV-023, EV-024 |
+| T-034 Verification | review | FR-027, FR-028, FR-029 | T-030, T-031, T-032, T-033 | EV-022, EV-023, EV-024, EV-028 |
