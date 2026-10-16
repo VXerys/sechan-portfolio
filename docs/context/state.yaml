@@ -288,6 +288,30 @@ features:
           - T-022
           - T-023
         evidence: []
+  - id: F-007
+    title: Stack marquee redesign
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-007-marquee-redesign
+    tasks:
+      - id: T-025
+        title: Editorial band and motion
+        status: done
+        requirements:
+          - FR-020
+          - FR-021
+        depends_on: []
+        evidence:
+          - EV-017
+          - EV-018
+      - id: T-026
+        title: Reduced-motion check
+        status: planned
+        requirements:
+          - FR-021
+        depends_on:
+          - T-025
+        evidence: []
 active:
   feature_id: F-001
   task_id: T-005
@@ -299,5 +323,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T04:23:32.702Z
-source_hash: bc38c54b462bbfcc118c318ea89646b5a2dcd187f2fbbfbb04bb0206eac13a53
+generated_at: 2026-10-16T04:43:29.411Z
+source_hash: 39f9b93f2423386ef3313e5379984df2d0215d259dd78ec2b050365ae046353f
