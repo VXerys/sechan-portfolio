@@ -7,10 +7,12 @@ import { Magnetic } from "@/components/motion/magnetic";
 import { RollText } from "@/components/motion/roll-text";
 import { scrollToTarget } from "@/components/motion/smooth-scroll";
 import { LocalTime } from "@/components/site/local-time";
-import type { Profile } from "@/content/portfolio";
+import { CopyEmail } from "@/components/site/copy-email";
+import { contact, type Profile } from "@/content/portfolio";
+import { mailtoHref } from "@/lib/mailto";
 import { gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 
-const RING = "Open to internships · 2026 · Sukabumi · ";
+const RING = "Available for freelance · Open to work · 2026 · ";
 
 function CircleText({ text }: { text: string }) {
   const chars = text.split("");
@@ -51,6 +53,9 @@ export function Contact({ profile, number }: { profile: Profile; number: string 
     { scope: footer },
   );
 
+  const mailto = profile.email ? mailtoHref(profile.email, contact.subject, contact.body) : null;
+  const linkedIn = profile.links.find((link) => link.label === "LinkedIn");
+
   const toTop = (event: MouseEvent<HTMLAnchorElement>) => {
     if (scrollToTarget(0)) event.preventDefault();
   };
@@ -64,24 +69,37 @@ export function Contact({ profile, number }: { profile: Profile; number: string 
         <div className="mt-16 grid items-end gap-16 md:grid-cols-12">
           <div className="md:col-span-7">
             <p className="statement max-w-xl text-3xl italic text-paper/90 md:text-4xl">{profile.availability}</p>
-            {profile.email && (
-              <a href={`mailto:${profile.email}`} className="mt-10 inline-block text-2xl font-medium tracking-tight md:text-4xl">
-                <RollText text={profile.email} />
-              </a>
+            {profile.email && mailto && (
+              <>
+                <a href={mailto} className="mt-10 inline-block text-2xl font-medium tracking-tight md:text-4xl">
+                  <RollText text={profile.email} />
+                </a>
+                <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-muted">
+                  <CopyEmail email={profile.email} className="text-paper" />
+                  {linkedIn && (
+                    <a href={linkedIn.href} target="_blank" rel="noopener noreferrer" className="label flex items-center gap-1.5 py-2">
+                      <RollText text={contact.hiringLabel} /> <span aria-hidden="true">↗</span>
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  )}
+                </div>
+              </>
             )}
           </div>
           <div className="flex md:col-span-5 md:justify-end">
-            {profile.email && (
+            {mailto && (
               <div className="relative grid size-64 place-items-center md:size-72">
                 <CircleText text={RING} />
                 <Magnetic strength={0.4}>
+                  {/* The big button already reacts to the pointer, so the cursor ring hides instead of covering its label. */}
                   <a
-                    href={`mailto:${profile.email}`}
+                    href={mailto}
+                    data-cursor="hide"
+                    aria-label={`${contact.ctaLabel}: email ${profile.email}`}
                     className="label flex size-40 items-center justify-center rounded-full bg-accent text-center text-ink transition-[background-color,scale] duration-500 ease-[var(--ease-expo)] hover:scale-110 hover:bg-paper md:size-44"
                   >
-                    Start a
-                    <br />
-                    conversation
+                    {contact.ctaLabel}
+                    <span aria-hidden="true" className="ml-1">↗</span>
                   </a>
                 </Magnetic>
               </div>

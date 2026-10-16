@@ -6,7 +6,8 @@ import { useRef, type MouseEvent } from "react";
 import { Magnetic } from "@/components/motion/magnetic";
 import { RollText } from "@/components/motion/roll-text";
 import { scrollToTarget } from "@/components/motion/smooth-scroll";
-import type { Profile } from "@/content/portfolio";
+import { contact, type Profile } from "@/content/portfolio";
+import { mailtoHref } from "@/lib/mailto";
 import { portraitImage } from "@/content/media";
 import { whenIntroDone } from "@/lib/motion/intro-state";
 import { DESKTOP_MOTION, EASE_OUT, gsap, MOTION_OK, ScrollTrigger, SplitText, useGSAP } from "@/lib/motion/gsap";
@@ -74,7 +75,7 @@ export function Hero({ profile }: { profile: Profile }) {
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
             <span className="relative inline-flex size-2 rounded-full bg-accent" />
           </span>
-          Open to internships
+          Available for freelance
         </span>
       </div>
 
@@ -128,7 +129,7 @@ export function Hero({ profile }: { profile: Profile }) {
           </Magnetic>
           {profile.email && (
             <Magnetic>
-              <a href={`mailto:${profile.email}`} className="label flex items-center gap-2 text-accent">
+              <a href={mailtoHref(profile.email, contact.subject, contact.body)} className="label flex items-center gap-2 text-accent">
                 <RollText text="Email me" /> <span aria-hidden="true">↗</span>
               </a>
             </Magnetic>

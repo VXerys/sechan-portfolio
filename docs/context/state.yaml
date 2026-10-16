@@ -198,6 +198,52 @@ features:
           - T-013
         evidence:
           - EV-011
+  - id: F-004
+    title: Freelance-first copy, greeting intro, contact CTA
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-004-freelance-copy-contact
+    tasks:
+      - id: T-017
+        title: Freelance-first copy
+        status: done
+        requirements:
+          - FR-014
+        depends_on: []
+        evidence:
+          - EV-012
+      - id: T-018
+        title: Greeting intro
+        status: done
+        requirements:
+          - FR-015
+        depends_on: []
+        evidence:
+          - EV-013
+      - id: T-019
+        title: Contact CTA
+        status: done
+        requirements:
+          - FR-016
+        depends_on:
+          - T-017
+        evidence:
+          - EV-012
+          - EV-013
+      - id: T-020
+        title: Verification
+        status: in_progress
+        requirements:
+          - FR-014
+          - FR-015
+          - FR-016
+        depends_on:
+          - T-017
+          - T-018
+          - T-019
+        evidence:
+          - EV-012
+          - EV-013
 active:
   feature_id: F-001
   task_id: T-005
@@ -209,5 +255,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T03:43:12.011Z
-source_hash: a3c2b4de161024d3ed9884499c6b6a9f94f99f59b56ad28e22ca31bb94dd9dc0
+generated_at: 2026-10-16T03:48:49.396Z
+source_hash: 22309e222e20bcfbecaf2db383ef3041770d27bc3b99cc62454a3556b4f5617b

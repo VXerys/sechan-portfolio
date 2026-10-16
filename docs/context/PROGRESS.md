@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: a3c2b4de161024d3ed9884499c6b6a9f94f99f59b56ad28e22ca31bb94dd9dc0 -->
+source_hash: 22309e222e20bcfbecaf2db383ef3041770d27bc3b99cc62454a3556b4f5617b -->
 
 # Project Progress
 
@@ -34,3 +34,12 @@ source_hash: a3c2b4de161024d3ed9884499c6b6a9f94f99f59b56ad28e22ca31bb94dd9dc0 --
 | T-014 Verification | in_progress | FR-010, FR-011, FR-012, FR-013 | T-011, T-012, T-013 | EV-008, EV-009, EV-010 |
 | T-015 Intro consistency | done | FR-010 | T-011 | EV-011 |
 | T-016 Section spacing | done | FR-013 | T-013 | EV-011 |
+
+## F-004 — Freelance-first copy, greeting intro, contact CTA (`implementing`, in_progress)
+
+| Task | Status | Requirements | Depends on | Evidence |
+|---|---|---|---|---|
+| T-017 Freelance-first copy | done | FR-014 |  | EV-012 |
+| T-018 Greeting intro | done | FR-015 |  | EV-013 |
+| T-019 Contact CTA | done | FR-016 | T-017 | EV-012, EV-013 |
+| T-020 Verification | in_progress | FR-014, FR-015, FR-016 | T-017, T-018, T-019 | EV-012, EV-013 |

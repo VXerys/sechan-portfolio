@@ -6,12 +6,13 @@ import { setScrollLocked } from "@/components/motion/smooth-scroll";
 import { finishIntro } from "@/lib/motion/intro-state";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
 
-const NAME = "SECHAN";
-const LOADING_WORDS = ["Mobile", "Applied AI", "Full-stack"];
-const FINAL_WORD = "Alfarisi";
+// Greets whoever opened the link, cycling through who that might be, then introduces Sehan by name.
+const GREETING = "HELLO,";
+const LOADING_WORDS = ["client", "recruiter", "founder", "friend"];
+const FINAL_WORD = "I'm Sehan.";
 const CHARS = "abcdefghijklmnopqrstuvwxyz";
 // The loading phase always lasts at least this long so the morph reads as intentional, and never longer than the cap.
-const MIN_LOADING_MS = 1600;
+const MIN_LOADING_MS = 2600;
 const MAX_LOADING_MS = 4500;
 const SAFETY_MS = 10000;
 
@@ -70,7 +71,7 @@ export function Intro() {
       if (counter.current) counter.current.textContent = String(Math.round(progress.value)).padStart(3, "0");
     };
 
-    // Loading phase: the name already rose in CSS before hydration; here the word cycles and the counter creeps
+    // Loading phase: the greeting already rose in CSS before hydration; here the word cycles and the counter creeps
     // toward 90 for as long as the page needs.
     const counting = gsap.to(progress, { value: 90, duration: MAX_LOADING_MS / 1000, ease: "power2.out", onUpdate: renderCount });
     const morph = gsap.timeline({ repeat: -1, delay: 0.5 });
@@ -122,9 +123,9 @@ export function Intro() {
       <div data-exit-lip className="absolute left-[-15%] top-full h-[14vh] w-[130%] origin-top rounded-b-[50%_100%] bg-accent" />
 
       <div data-intro-text className="relative z-10 flex h-full flex-col items-center justify-center text-ink">
-        {/* The name and labels animate in pure CSS, so text is on screen from the first paint, before JavaScript runs. */}
+        {/* The greeting and labels animate in pure CSS, so text is on screen from the first paint, before JavaScript runs. */}
         <p className="display flex overflow-hidden text-[26vw] md:text-[15vw]">
-          {NAME.split("").map((char, index) => (
+          {GREETING.split("").map((char, index) => (
             <span key={`${char}-${index}`} className="intro-char inline-block" style={{ animationDelay: `${0.1 + index * 0.05}s` }}>
               {char}
             </span>

@@ -1,9 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { achievements, experience, profile, projects, skills, testimonials } from "./portfolio.ts";
+import { achievements, contact, experience, profile, projects, skills, testimonials } from "./portfolio.ts";
 
-const allText = JSON.stringify({ profile, projects, experience, achievements, skills, testimonials });
+const allText = JSON.stringify({ profile, projects, experience, achievements, skills, testimonials, contact });
 
 test("project slugs are unique (AC-002)", () => {
   const slugs = projects.map((project) => project.slug);
@@ -47,5 +47,14 @@ test("every testimonial is attributed, approved, and tied to a real project (AC-
     assert.ok(item.name.trim().length > 0);
     assert.match(item.consentDate, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(slugs.has(item.projectSlug), `unknown project ${item.projectSlug}`);
+  }
+});
+
+test("availability leads with freelance, then internships (AC-023)", () => {
+  for (const text of [profile.availability, profile.intro]) {
+    const freelance = text.toLowerCase().indexOf("freelance");
+    const internship = text.toLowerCase().indexOf("internship");
+    assert.ok(freelance >= 0, `no freelance mention in: ${text}`);
+    assert.ok(internship === -1 || freelance < internship, `internships come first in: ${text}`);
   }
 });

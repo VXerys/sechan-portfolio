@@ -10,24 +10,24 @@ Short, always-loaded product context. The full product requirements live in `doc
 
 Sechan Portfolio is a motion-led personal website that shows recruiters and clients M Sechan Alfarisi's mobile and applied-AI work, with verified project evidence and a direct contact path.
 
-It exists now because Sehan is applying for 3 to 6 month internships positioned as "Full-Stack Mobile Software Engineer & Applied AI Engineer". "Working" means a reviewer understands the positioning within the hero, opens at least one project, and finds the contact links without hunting. Project content (specs, product docs, UI copy) is written in English; the framework text stays English.
+Sehan shares it with clients, recruiters, and anyone else he meets. Availability is freelance first, then full-time roles, then 3 to 6 month internships (owner decision, 2026-10-16), under the positioning "Full-Stack Mobile Software Engineer & Applied AI Engineer". "Working" means a visitor understands what he builds within the hero, opens at least one project, and can start a conversation without hunting. Project content (specs, product docs, UI copy) is written in English; the framework text stays English.
 
 ## Personas
 
+- Prospective client: a business owner who wants proof of delivered apps and a quick way to start a project.
 - Recruiter: screens many candidates, spends under two minutes, scans for role fit, shipped work, and a contact link.
 - Engineering reviewer: opens projects to judge scope, stack, and what Sehan personally built.
-- Prospective client: wants proof of delivered apps and a way to start a conversation.
 
 ## Core use cases
 
 - UC-001: A recruiter lands on the home page and reads the positioning, role, and availability in the hero.
 - UC-002: A reviewer scrolls the selected work and reads a project's problem, contribution, stack, and verified outcomes.
-- UC-003: A visitor reaches the contact section and opens email, LinkedIn, or GitHub.
+- UC-003: A visitor reaches the contact section and opens a prefilled email draft, copies the address, or opens LinkedIn or GitHub.
 
 ## Non-goals
 
 - No CMS, blog, admin panel, or database in the first milestone.
-- No contact form; links only.
+- No contact form or message backend; email (prefilled draft plus copy) is the contact path. See F-004 design for when a form is worth it.
 - No metrics or claims that are not labelled VERIFIED in the `about-me` knowledge base.
 
 ## Success signals

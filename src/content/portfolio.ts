@@ -35,6 +35,8 @@ export type Project = {
 export type Experience = { company: string; role: string; period: string; points: string[] };
 export type Achievement = { title: string; issuer: string; year: string; note: string | null };
 export type SkillGroup = { group: string; items: string[] };
+// Availability copy follows the owner's positioning decision of 2026-10-16: freelance first, then full-time, then internships.
+export type Contact = { ctaLabel: string; subject: string; body: string; hiringLabel: string };
 export type Testimonial = {
   quote: string; // the client's own approved words (BR-003)
   name: string;
@@ -50,10 +52,10 @@ export const profile: Profile = {
   role: "Full-Stack Mobile Software Engineer and Applied AI Engineer",
   headline: "I build mobile and web products that real people use.",
   intro:
-    "A reading app on Google Play, a clinic system that replaced spreadsheets, and a marketplace that won national startup funding. I'm an Informatics student looking for a 3 to 6 month mobile or applied AI internship.",
+    "A reading app on Google Play, a clinic system that replaced spreadsheets, and a marketplace that won national startup funding. I take on freelance builds for businesses, and I'm open to full-time roles and internships.",
   location: "Sukabumi, West Java, Indonesia",
   availability:
-    "Open to 3 to 6 month mobile or applied AI internships. Flexible start, remote or hybrid (Sukabumi, Bandung, Jakarta).",
+    "Available for freelance mobile and web projects, from first spec to launch. Also open to full-time roles and 3 to 6 month internships, remote or hybrid (Sukabumi, Bandung, Jakarta).",
   about: [
     "I study Informatics Engineering at Universitas Nusa Putra (GPA 3.73/4.00, expected graduation 2027) and work across Flutter, React Native, Next.js and Supabase, with applied AI on top.",
     "I'm Co-Founder and CTO of Marketiv, a marketplace that connects Indonesian MSMEs with local micro-creators. The team was funded by P2MW 2026 and received Juara Harapan 2 at KMI EXPO 2026. I'm also a Mobile Software Engineer Intern at PT Mangcoding, where I'm the main contributor to BookMate on Google Play, and I take freelance full-stack work for local businesses.",
@@ -387,6 +389,13 @@ export const skills: SkillGroup[] = [
     items: ["Vitest", "Playwright", "flutter_test", "Sentry", "Git and GitHub", "Spec-driven development"],
   },
 ];
+
+export const contact: Contact = {
+  ctaLabel: "Start a project",
+  subject: "Project inquiry from your portfolio",
+  body: "Hi Sehan,\n\nI'd like to talk about:\n- Project or role:\n- Timeline:\n- Budget range (optional):\n\nThanks,\n",
+  hiringLabel: "Hiring? Find me on LinkedIn",
+};
 
 // Filled only with quotes the client wrote and approved; the section stays hidden while this is empty (A-003).
 export const testimonials: Testimonial[] = [];
