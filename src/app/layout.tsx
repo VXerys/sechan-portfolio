@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, Host_Grotesk, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 
 import { Intro } from "@/components/motion/intro";
+import { SliceTransition } from "@/components/motion/slice-transition";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Cursor } from "@/components/site/cursor";
 import { profile, siteUrl } from "@/content/portfolio";
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <SmoothScroll />
         <Intro />
+        <SliceTransition />
         <Cursor />
         <div className="grain" aria-hidden="true" />
         {children}

@@ -94,7 +94,7 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
                     aria-expanded={open}
                     aria-controls={panelId}
                     onClick={() => setOpenSlug(open ? null : project.slug)}
-                    className="group grid w-full grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 py-6 text-left md:grid-cols-[3.5rem_1fr_12rem_4rem_2rem] md:py-8"
+                    className="group grid w-full origin-left grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 py-6 text-left transition-transform duration-200 active:scale-[0.985] md:grid-cols-[3.5rem_1fr_12rem_4rem_2rem] md:py-8"
                   >
                     <span className="label text-muted transition-colors duration-300 group-hover:text-accent">{pad(offset + index + 1)}</span>
                     <span className="display text-[11vw] transition-[color,translate] duration-500 ease-[var(--ease-expo)] group-hover:translate-x-3 group-hover:text-accent md:text-[4.4vw]">
@@ -117,6 +117,14 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
                   <div className="overflow-hidden" inert={!open}>
                     <div className="grid gap-8 pb-10 md:grid-cols-[3.5rem_1fr_1fr] md:gap-10">
                       <div className="hidden md:block" />
+                      {/* Touch screens never see the floating preview, so the visual sits inside the open panel. */}
+                      <div className="relative aspect-[4/3] w-full overflow-hidden md:hidden" aria-hidden="true">
+                        {projectMedia[project.slug] ? (
+                          <Image src={projectMedia[project.slug]!.src} alt="" fill sizes="100vw" className="object-cover" />
+                        ) : (
+                          <ProjectPoster project={project} size="sm" />
+                        )}
+                      </div>
                       <div>
                         <p className="statement text-[1.7rem]">{project.summary}</p>
                         <p className="mt-4 text-[1.0625rem] leading-relaxed text-paper/75">{project.problem}</p>

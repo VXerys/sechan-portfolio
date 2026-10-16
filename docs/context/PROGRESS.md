@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 8da7ab514ce2298d50bf7b3f0b83bb2a38e88e2dc16fae2de7c93fbf5040c1fe -->
+source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5 -->
 
 # Project Progress
 
@@ -74,3 +74,13 @@ source_hash: 8da7ab514ce2298d50bf7b3f0b83bb2a38e88e2dc16fae2de7c93fbf5040c1fe --
 |---|---|---|---|---|
 | T-027 Name and employer | done | FR-022, FR-023 |  | EV-019, EV-020 |
 | T-028 Project list | done | FR-024 |  | EV-019, EV-020 |
+
+## F-009 — Mobile polish, section indicator, motion set 2 (`implementing`, in_progress)
+
+| Task | Status | Requirements | Depends on | Evidence |
+|---|---|---|---|---|
+| T-030 Section indicator | done | FR-027 |  | EV-023, EV-024 |
+| T-031 Touch experience | done | FR-028 |  | EV-024 |
+| T-032 Slice transition and pill buttons | done | FR-029 | T-030 | EV-023, EV-024 |
+| T-033 Horizontal Proof, footer scale | done | FR-029 |  | EV-023, EV-024 |
+| T-034 Verification | review | FR-027, FR-028, FR-029 | T-030, T-031, T-032, T-033 | EV-022, EV-023, EV-024 |

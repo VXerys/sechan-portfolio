@@ -4,10 +4,10 @@ import { useRef, type ReactNode } from "react";
 
 import { gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 
-type ClipSheetProps = { className?: string; children: ReactNode; labelledBy?: string; id?: string };
+type ClipSheetProps = { className?: string; children: ReactNode; labelledBy?: string; id?: string; section?: string; sectionLabel?: string };
 
 // A section that opens from an inset rounded card to full bleed as it scrolls in, then narrows again on the way out.
-export function ClipSheet({ className, children, labelledBy, id }: ClipSheetProps) {
+export function ClipSheet({ className, children, labelledBy, id, section, sectionLabel }: ClipSheetProps) {
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -28,7 +28,7 @@ export function ClipSheet({ className, children, labelledBy, id }: ClipSheetProp
   );
 
   return (
-    <section ref={ref} id={id} aria-labelledby={labelledBy} className={className}>
+    <section ref={ref} id={id} data-section={section} data-section-label={sectionLabel} aria-labelledby={labelledBy} className={className}>
       {children}
     </section>
   );

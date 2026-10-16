@@ -159,6 +159,22 @@ html.lenis body {
   animation: intro-fade 0.7s ease-out both;
 }
 
+/* Pills: animated fill on fine pointers with motion; elsewhere hover and press show the filled state at once. */
+.pill:hover .pill-label,
+.pill:focus-visible .pill-label,
+.pill:active .pill-label {
+  color: var(--color-ink);
+}
+.pill:focus-visible .pill-fill,
+.pill:not([data-animated]):is(:hover, :active) .pill-fill {
+  clip-path: circle(150% at 50% 50%) !important;
+}
+
+/* Touch devices get their own press feedback instead of the grey tap flash. */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Rolling label: the parent link or button drives it, so the hover state stays pure CSS. */
 .roll > span {
   transition: transform 0.6s var(--ease-expo);

@@ -384,6 +384,64 @@ features:
         evidence:
           - EV-019
           - EV-020
+  - id: F-009
+    title: Mobile polish, section indicator, motion set 2
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-009-mobile-indicator-motion
+    tasks:
+      - id: T-030
+        title: Section indicator
+        status: done
+        requirements:
+          - FR-027
+        depends_on: []
+        evidence:
+          - EV-023
+          - EV-024
+      - id: T-031
+        title: Touch experience
+        status: done
+        requirements:
+          - FR-028
+        depends_on: []
+        evidence:
+          - EV-024
+      - id: T-032
+        title: Slice transition and pill buttons
+        status: done
+        requirements:
+          - FR-029
+        depends_on:
+          - T-030
+        evidence:
+          - EV-023
+          - EV-024
+      - id: T-033
+        title: Horizontal Proof, footer scale
+        status: done
+        requirements:
+          - FR-029
+        depends_on: []
+        evidence:
+          - EV-023
+          - EV-024
+      - id: T-034
+        title: Verification
+        status: review
+        requirements:
+          - FR-027
+          - FR-028
+          - FR-029
+        depends_on:
+          - T-030
+          - T-031
+          - T-032
+          - T-033
+        evidence:
+          - EV-022
+          - EV-023
+          - EV-024
 active:
   feature_id: F-001
   task_id: T-005
@@ -395,5 +453,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T06:11:02.325Z
-source_hash: 8da7ab514ce2298d50bf7b3f0b83bb2a38e88e2dc16fae2de7c93fbf5040c1fe
+generated_at: 2026-10-16T07:10:21.636Z
+source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5

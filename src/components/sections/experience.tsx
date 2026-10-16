@@ -7,7 +7,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 export function Experience({ entries }: { entries: Entry[] }) {
   return (
-    <section id="experience" aria-labelledby="experience-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
+    <section id="experience" data-section="03" data-section-label="Experience" aria-labelledby="experience-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
       <div className="mb-16 md:mb-24">
         <p className="label mb-6 text-muted">
           <Scramble text="(03) Experience" />

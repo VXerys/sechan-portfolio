@@ -5,12 +5,13 @@ import { useRef, type MouseEvent } from "react";
 import { DriftTitle } from "@/components/motion/drift-title";
 import { Magnetic } from "@/components/motion/magnetic";
 import { RollText } from "@/components/motion/roll-text";
-import { scrollToTarget } from "@/components/motion/smooth-scroll";
+import { PillLink } from "@/components/motion/pill";
+import { jumpTo } from "@/components/motion/slice-transition";
 import { LocalTime } from "@/components/site/local-time";
 import { CopyEmail } from "@/components/site/copy-email";
 import { contact, type Profile } from "@/content/portfolio";
 import { mailtoHref } from "@/lib/mailto";
-import { gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
+import { DESKTOP_MOTION, gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
 
 const RING = "Available for freelance · Open to work · 2026 · ";
 
@@ -40,12 +41,22 @@ export function Contact({ profile, number }: { profile: Profile; number: string 
       const el = footer.current;
       if (!el) return;
       const mm = gsap.matchMedia();
-      mm.add(MOTION_OK, () => {
-        // The footer content starts lower and catches up, so it looks uncovered from beneath the page above.
+      // The footer content starts lower and catches up, so it looks uncovered from beneath the page above. Phones skip
+      // it: there the footer is about two screens tall, the shift runs to hundreds of pixels, and the label and the
+      // first title line stay hidden under the sheet until they have already left the top of the screen.
+      mm.add(DESKTOP_MOTION, () => {
         gsap.fromTo(
           el.querySelector("[data-footer-inner]"),
           { yPercent: -30 },
           { yPercent: 0, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom bottom", scrub: true } },
+        );
+      });
+      mm.add(MOTION_OK, () => {
+        // The closing line grows into place as the footer is uncovered, so the page ends on its biggest type.
+        gsap.fromTo(
+          el.querySelector("[data-footer-title]"),
+          { scale: 0.78, transformOrigin: "0% 100%" },
+          { scale: 1, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "top 20%", scrub: true } },
         );
       });
       return () => mm.revert();
@@ -57,14 +68,16 @@ export function Contact({ profile, number }: { profile: Profile; number: string 
   const linkedIn = profile.links.find((link) => link.label === "LinkedIn");
 
   const toTop = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (scrollToTarget(0)) event.preventDefault();
+    if (jumpTo(0)) event.preventDefault();
   };
 
   return (
-    <footer ref={footer} id="contact" aria-labelledby="contact-title" className="relative z-0 -mt-16 overflow-hidden bg-ink-2 md:-mt-24">
+    <footer ref={footer} id="contact" data-section={number} data-section-label="Contact" aria-labelledby="contact-title" className="relative z-0 -mt-16 overflow-hidden bg-ink-2 md:-mt-24">
       <div data-footer-inner className="px-4 pb-8 pt-44 md:px-8 md:pt-56">
         <p className="label mb-6 text-muted">({number}) Contact</p>
-        <DriftTitle id="contact-title" lines={["Let's", "build"]} accentLine={1} className="display text-[26vw] md:text-[17vw]" />
+        <div data-footer-title>
+          <DriftTitle id="contact-title" lines={["Let's", "build"]} accentLine={1} className="display text-[26vw] md:text-[17vw]" />
+        </div>
 
         <div className="mt-16 grid items-end gap-16 md:grid-cols-12">
           <div className="md:col-span-7">
@@ -74,13 +87,17 @@ export function Contact({ profile, number }: { profile: Profile; number: string 
                 <a href={mailto} className="mt-10 inline-block text-2xl font-medium tracking-tight md:text-4xl">
                   <RollText text={profile.email} />
                 </a>
-                <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-muted">
-                  <CopyEmail email={profile.email} className="text-paper" />
+                <div className="mt-6 flex flex-wrap items-center gap-3">
+                  <Magnetic strength={0.25}>
+                    <CopyEmail email={profile.email} />
+                  </Magnetic>
                   {linkedIn && (
-                    <a href={linkedIn.href} target="_blank" rel="noopener noreferrer" className="label flex items-center gap-1.5 py-2">
-                      <RollText text={contact.hiringLabel} /> <span aria-hidden="true">↗</span>
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    </a>
+                    <Magnetic strength={0.25}>
+                      <PillLink href={linkedIn.href} target="_blank" rel="noopener noreferrer">
+                        {contact.hiringLabel} <span aria-hidden="true">↗</span>
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </PillLink>
+                    </Magnetic>
                   )}
                 </div>
               </>

@@ -15,7 +15,7 @@ export function Testimonials({ testimonials, projects, number }: Props) {
   const count = `${pad(testimonials.length)} ${testimonials.length === 1 ? "quote" : "quotes"}`;
 
   return (
-    <section id="testimonials" aria-labelledby="testimonials-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
+    <section id="testimonials" data-section={number} data-section-label="Kind words" aria-labelledby="testimonials-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
       <div className="mb-16 md:mb-24">
         <p className="label mb-6 text-muted">
           <Scramble text={`(${number}) Kind words · ${count}`} />

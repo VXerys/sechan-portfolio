@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useRef, type MouseEvent } from "react";
 
 import { Magnetic } from "@/components/motion/magnetic";
-import { RollText } from "@/components/motion/roll-text";
-import { scrollToTarget } from "@/components/motion/smooth-scroll";
+import { PillLink } from "@/components/motion/pill";
+import { jumpTo } from "@/components/motion/slice-transition";
 import { contact, type Profile } from "@/content/portfolio";
 import { mailtoHref } from "@/lib/mailto";
 import { portraitImage } from "@/content/media";
@@ -61,7 +61,7 @@ export function Hero({ profile }: { profile: Profile }) {
   );
 
   const toWork = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (scrollToTarget("#work")) event.preventDefault();
+    if (jumpTo("#work")) event.preventDefault();
   };
 
   return (
@@ -121,17 +121,17 @@ export function Hero({ profile }: { profile: Profile }) {
         <p data-rise className="max-w-md text-[1.0625rem] leading-relaxed text-paper/75 md:col-span-4 md:col-start-7">
           {profile.intro}
         </p>
-        <div data-rise className="flex items-end gap-6 md:col-span-2 md:col-start-11 md:flex-col md:items-end md:justify-between">
+        <div data-rise className="flex flex-wrap items-end gap-3 md:col-span-2 md:col-start-11 md:flex-col md:items-end md:justify-between">
           <Magnetic>
-            <a href="#work" onClick={toWork} className="label flex items-center gap-2">
-              <RollText text="Selected work" /> <span aria-hidden="true">↓</span>
-            </a>
+            <PillLink href="#work" onClick={toWork}>
+              Selected work <span aria-hidden="true">↓</span>
+            </PillLink>
           </Magnetic>
           {profile.email && (
             <Magnetic>
-              <a href={mailtoHref(profile.email, contact.subject, contact.body)} className="label flex items-center gap-2 text-accent">
-                <RollText text="Email me" /> <span aria-hidden="true">↗</span>
-              </a>
+              <PillLink href={mailtoHref(profile.email, contact.subject, contact.body)} tone="accent">
+                Email me <span aria-hidden="true">↗</span>
+              </PillLink>
             </Magnetic>
           )}
         </div>
