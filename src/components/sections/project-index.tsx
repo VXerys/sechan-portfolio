@@ -94,7 +94,7 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
                     aria-expanded={open}
                     aria-controls={panelId}
                     onClick={() => setOpenSlug(open ? null : project.slug)}
-                    className="group grid w-full origin-left grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 py-6 text-left transition-transform duration-200 active:scale-[0.985] md:grid-cols-[3.5rem_1fr_12rem_4rem_2rem] md:py-8"
+                    className="group grid w-full origin-left grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 py-6 text-left transition-[scale] duration-200 active:scale-[0.985] md:grid-cols-[3.5rem_1fr_12rem_4rem_2rem] md:py-8"
                   >
                     <span className="label text-muted transition-colors duration-300 group-hover:text-accent">{pad(offset + index + 1)}</span>
                     <span className="display text-[11vw] transition-[color,translate] duration-500 ease-[var(--ease-expo)] group-hover:translate-x-3 group-hover:text-accent md:text-[4.4vw]">

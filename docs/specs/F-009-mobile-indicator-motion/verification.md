@@ -20,9 +20,7 @@ supersedes: null
 - command: `npm test && npm run lint && npm run typecheck && npm run build`
 - output:
   ```text
-  ℹ tests 23  ℹ pass 23  ℹ fail 0; eslint: no findings; ✓ Types generated successfully; tsc: no errors
-  ✓ Compiled successfully; ┌ ○ /  (Static) prerendered as static content
-  rerun after removing the liquid hover: same results; "liquid" in src and built index.html: 0 matches
+  tests 23/23 pass; eslint and tsc clean; build ○ / static; rerun without the liquid hover: same, 0 "liquid" matches
   ```
 - date: 2026-10-16
 - commit: fa7a7cf (uncommitted working tree on top)
@@ -32,11 +30,8 @@ supersedes: null
 - command: `npx next dev -p 3002` + in-app browser at 1440x900; DOM queries and screenshots
 - output:
   ```text
-  hero "Selected work": lime fill from the entry point, three-dot trail; slices show "WORK" and land on #work
-  header "SECHAN/ALFARISI (02) WORK", nav "• Work" active; Contact link: label at 127 px, sheet ends at 96 px
-  BookMate visual: cursor label "Open ↗" on hover
-  Proof pinned at top 0; track x -1324 = -(2685 - 1361); last card right edge 1393; progress scaleX 1
-  footer title scale 0.92 mid-way, 1 at the end
+  hero pill fill from the entry point + trail; slices "WORK" land on #work; header "(02) WORK", nav "• Work"; Contact label 127 px, sheet 96 px
+  Proof pinned at top 0, track x -1324 = -(2685 - 1361), progress scaleX 1; footer title scale 0.92 mid-way, 1 at the end
   ```
 - date: 2026-10-16
 - commit: fa7a7cf (uncommitted working tree on top)
@@ -47,22 +42,28 @@ supersedes: null
 - output:
   ```text
   live narrow: Proof track transform identity, grid layout, no pin spacer, no horizontal overflow
-  header indicator display none; pills have no data-animated (CSS fill only); rows and pills carry active:scale
-  Fluxa row open: poster visual 343x258 inside the panel; overflow 0
-  Menu > Contact: slices show "CONTACT"; label at 176 px, title at 217 px, sheet ends at 64 px, footer not shifted
-  before the footer fix the label sat under the sheet at every scroll position
+  indicator hidden; pills use the CSS fill; Fluxa poster 343x258, overflow 0; Menu > Contact: label 176 px, sheet 64 px
   ```
 - date: 2026-10-16
 - commit: fa7a7cf (uncommitted working tree on top)
 - covers: [AC-041, AC-042, AC-043, AC-044, AC-047, AC-050]
 
+### EV-028 — Mobile menu reveal after the BUG-001 fix
+- command: `npm run build && npx next start -p 3004` + in-app browser at 375x812; same probe on production
+- output:
+  ```text
+  production: links transition "transform, ..." and a set transform lags (0 vs 40 px); fix: "scale" only (pills "scale, border-color"), it applies at once, 4/4 lines end at offset 0
+  ```
+- date: 2026-10-16
+- commit: d1713ef (uncommitted working tree on top)
+- covers: [AC-043, AC-044]
+
 ## Coverage
 
 | Criterion | Evidence | Result |
 |---|---|---|
-| AC-041, AC-044, AC-047 | EV-023, EV-024 | pass |
-| AC-042, AC-043, AC-050 | EV-024 | pass (emulated touch) |
-| AC-045, AC-048 | EV-023 | pass |
+| AC-041, AC-045, AC-047, AC-048 | EV-023 (AC-041, AC-047 also EV-024) | pass |
+| AC-042, AC-043, AC-044, AC-050 | EV-024 (AC-043 also EV-028; AC-044 also EV-023, EV-028) | pass, touch emulated |
 | AC-049 | EV-022 + code review | partial |
 
 ## Not run
@@ -70,10 +71,9 @@ supersedes: null
 | Check | Reason | Residual risk |
 |---|---|---|
 | Reduced motion | the in-app browser cannot emulate it | every effect is added inside `gsap.matchMedia(MOTION_OK)`; the slice runner is absent, so links fall back to native anchors |
-| Real touch device | emulation only | `active:` feedback and the inline visual need a check on a phone |
-| 768 to 1023 px | not measured | Proof stays a grid there; footer parallax is on from 768 px |
-| Lighthouse | not run for this change | the Proof pin and the pill trail add work on scroll and hover only |
+| Real touch device after BUG-001 | emulation only | the owner's phone found BUG-001; recheck the menu, tap feedback, and inline visuals there |
+| 768 to 1023 px, Lighthouse | not measured | Proof stays a grid there and footer parallax starts at 768 px; the pin and pill trail add work on scroll and hover only |
 
 ## Result
 
-`pass_with_limitations`: every effect works at 1440 and 375 px; reduced motion, a real phone, and the tablet range still need a check.
+`pass_with_limitations`: every effect works at 1440 and 375 px and the menu reveal completes again; reduced motion, a real phone, and the tablet range still need a check.

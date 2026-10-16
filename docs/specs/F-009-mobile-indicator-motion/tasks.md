@@ -30,9 +30,9 @@ This file is the master for task status. `state.yaml`, `BRIEF.md`, and the progr
 - status: done
 - requirements: [FR-028]
 - depends_on: []
-- evidence: [EV-024]
+- evidence: [EV-024, EV-028]
 
-Inline visual in an open More work row under 768 px; `active:` scale on rows, pills, and menu links; no tap highlight; footer parallax limited to 768 px and up. Acceptance: AC-042, AC-043, AC-050.
+Inline visual in an open More work row under 768 px; `active:` scale on rows, pills, and menu links, transitioning `scale` only (BUG-001); no tap highlight; footer parallax limited to 768 px and up. Acceptance: AC-042, AC-043, AC-050.
 
 ### T-032 — Slice transition and pill buttons
 - status: done
@@ -54,7 +54,7 @@ Inline visual in an open More work row under 768 px; `active:` scale on rows, pi
 - status: review
 - requirements: [FR-027, FR-028, FR-029]
 - depends_on: [T-030, T-031, T-032, T-033]
-- evidence: [EV-022, EV-023, EV-024]
+- evidence: [EV-022, EV-023, EV-024, EV-028]
 
 Lint, typecheck, test, build; browser checks at 1440 and 375 px, including the live narrow-screen revert of the Proof pin.
 

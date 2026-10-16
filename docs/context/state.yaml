@@ -407,6 +407,7 @@ features:
         depends_on: []
         evidence:
           - EV-024
+          - EV-028
       - id: T-032
         title: Slice transition and pill buttons
         status: done
@@ -442,6 +443,7 @@ features:
           - EV-022
           - EV-023
           - EV-024
+          - EV-028
 active:
   feature_id: F-001
   task_id: T-005
@@ -453,5 +455,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T07:10:21.636Z
-source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5
+generated_at: 2026-10-16T07:54:16.654Z
+source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c
