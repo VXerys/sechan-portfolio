@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 8da7ab514ce2298d50bf7b3f0b83bb2a38e88e2dc16fae2de7c93fbf5040c1fe -->
+source_hash: f153e41d30963a81e0438936fb453feafcc546ac3f875cc0b41560c89b5060b5 -->
 
 # Brief
 
@@ -50,7 +50,7 @@ Frozen: none
 ## Handoff
 Next step:
 
-Owner reviews and merges the F-006 pull request. When the first quote is approved, add it to `src/content/testimonials.ts` following `docs/outreach/client-testimonial-templates.md`, run `npm test` and `npm run build`, and re-check the layout with the real wording. Separately, T-024: `curl -s https://www.sechanalfarisi.dev | grep -o 'rel="icon"[^>]*'` and record the next free EV id.
+Owner reviews and merges the F-009 pull request, then checks on a real phone (tap feedback, inline visuals, Contact landing) and once with reduced motion on (DevTools > Rendering). Separately: renumber F-008's ids so they no longer collide with F-006, and T-024's production favicon check.
 
 ## Other open tasks
 None.
@@ -66,3 +66,4 @@ None.
 | F-006 Testimonials with consent-aware attribution | implementing | in_progress | 0/3 |
 | F-007 Stack marquee redesign | implementing | in_progress | 1/2 |
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 2/2 |
+| F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 4/5 |

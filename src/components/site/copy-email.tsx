@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-import { RollText } from "@/components/motion/roll-text";
+import { PillButton } from "@/components/motion/pill";
 
 type Status = "idle" | "copied" | "failed";
 
 // For visitors without a mail app, where a mailto link silently does nothing.
-export function CopyEmail({ email, className }: { email: string; className?: string }) {
+export function CopyEmail({ email }: { email: string }) {
   const [status, setStatus] = useState<Status>("idle");
 
   useEffect(() => {
@@ -28,12 +28,12 @@ export function CopyEmail({ email, className }: { email: string; className?: str
   const label = status === "copied" ? "Copied" : status === "failed" ? email : "Copy email";
 
   return (
-    <button type="button" onClick={copy} className={`label flex items-center gap-1.5 py-2 ${className ?? ""}`}>
-      <RollText text={label} />
+    <PillButton onClick={copy}>
+      {label}
       <span aria-hidden="true">{status === "copied" ? "✓" : "⧉"}</span>
       <span className="sr-only" aria-live="polite">
         {status === "copied" ? "Email address copied" : status === "failed" ? `Copy failed, the address is ${email}` : ""}
       </span>
-    </button>
+    </PillButton>
   );
 }

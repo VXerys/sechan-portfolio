@@ -132,7 +132,7 @@ export function Work({ projects, quotes }: { projects: Project[]; quotes: Testim
   const more = projects.filter((project) => !project.featured);
 
   return (
-    <section id="work" aria-labelledby="work-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
+    <section id="work" data-section="02" data-section-label="Work" aria-labelledby="work-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
       <div className="mb-16 md:mb-24">
         <p className="label mb-6 text-muted">
           <Scramble text={`(02) Selected work · ${pad(projects.length)} projects`} />

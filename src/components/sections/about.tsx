@@ -45,7 +45,7 @@ export function About({ profile }: { profile: Profile }) {
   ];
 
   return (
-    <section ref={section} id="about" aria-labelledby="about-title" className="relative overflow-hidden px-4 py-16 md:px-8 md:py-24">
+    <section ref={section} id="about" data-section="01" data-section-label="About" aria-labelledby="about-title" className="relative overflow-hidden px-4 py-16 md:px-8 md:py-24">
       <span
         ref={glyph}
         aria-hidden="true"

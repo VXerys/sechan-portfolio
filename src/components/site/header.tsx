@@ -4,14 +4,16 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 
 import { Magnetic } from "@/components/motion/magnetic";
 import { RollText } from "@/components/motion/roll-text";
-import { scrollToTarget } from "@/components/motion/smooth-scroll";
+import { jumpTo } from "@/components/motion/slice-transition";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
 import { LocalTime } from "@/components/site/local-time";
 import { Scramble } from "@/components/motion/scramble";
+import { SectionIndicator, useCurrentSection } from "@/components/site/section-indicator";
 
+// Page order, so the menu numbers match the section labels.
 const NAV = [
-  { href: "#work", label: "Work" },
   { href: "#about", label: "About" },
+  { href: "#work", label: "Work" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ];
@@ -22,6 +24,7 @@ export function Header({ name }: { name: string }) {
   const toggle = useRef<HTMLButtonElement>(null);
   const bar = useRef<HTMLElement>(null);
   const openRef = useRef(open);
+  const current = useCurrentSection();
 
   useEffect(() => {
     openRef.current = open;
@@ -48,7 +51,7 @@ export function Header({ name }: { name: string }) {
   });
 
   const go = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (scrollToTarget(href)) event.preventDefault();
+    if (jumpTo(href)) event.preventDefault();
     setOpen(false);
   };
 
@@ -87,19 +90,33 @@ export function Header({ name }: { name: string }) {
         ref={bar}
         className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 py-4 md:px-8 md:py-5 ${open ? "text-ink" : "text-paper mix-blend-difference"}`}
       >
-        <a href="#top" onClick={(event) => go(event, "#top")} className="label text-[0.8rem] tracking-[0.12em]" aria-label={`${name}, back to top`}>
-          Sechan<span className={open ? "text-ink/50" : "text-muted"}>/</span>Alfarisi
-        </a>
+        <div className="flex items-center gap-4 md:w-72">
+          <a href="#top" onClick={(event) => go(event, "#top")} className="label text-[0.8rem] tracking-[0.12em]" aria-label={`${name}, back to top`}>
+            Sechan<span className={open ? "text-ink/50" : "text-muted"}>/</span>Alfarisi
+          </a>
+          <SectionIndicator current={open ? null : current} className="label hidden text-muted sm:block" />
+        </div>
         <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
           {NAV.map((item) => (
             <Magnetic key={item.href} strength={0.45}>
-              <a href={item.href} onClick={(event) => go(event, item.href)} className="label link-underline block py-2">
+              <a
+                href={item.href}
+                onClick={(event) => go(event, item.href)}
+                aria-current={current && item.href === `#${current.id}` ? "location" : undefined}
+                className="label link-underline flex items-center gap-2 py-2 opacity-60 transition-opacity duration-300 hover:opacity-100 aria-[current=location]:opacity-100"
+              >
+                <span
+                  aria-hidden="true"
+                  className={`size-1.5 rounded-full bg-current transition-transform duration-500 ease-[var(--ease-expo)] ${
+                    current && item.href === `#${current.id}` ? "scale-100" : "scale-0"
+                  }`}
+                />
                 <Scramble on="hover" text={item.label} />
               </a>
             </Magnetic>
           ))}
         </nav>
-        <div className="hidden md:block">
+        <div className="hidden md:block md:w-72 md:text-right">
           <LocalTime className="label text-muted" />
         </div>
         <button
@@ -124,7 +141,12 @@ export function Header({ name }: { name: string }) {
           <ul className="space-y-1">
             {NAV.map((item, index) => (
               <li key={item.href} className="overflow-hidden">
-                <a data-menu-item href={item.href} onClick={(event) => go(event, item.href)} className="flex items-start gap-3">
+                <a
+                  data-menu-item
+                  href={item.href}
+                  onClick={(event) => go(event, item.href)}
+                  className="flex origin-left items-start gap-3 transition-transform duration-200 active:scale-[0.97]"
+                >
                   <span className="label mt-[2vw] text-ink/60">0{index + 1}</span>
                   <span className="display text-[16.5vw]">{item.label}</span>
                 </a>

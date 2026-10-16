@@ -26,6 +26,16 @@ export function scrollToTarget(target: string | HTMLElement | number) {
   return false;
 }
 
+// Instant jump, used behind the slice transition so the visitor never watches a long scroll.
+export function jumpToTarget(target: string | HTMLElement | number) {
+  if (instance) {
+    instance.scrollTo(target, { immediate: true, force: true });
+    return;
+  }
+  if (typeof target === "number") window.scrollTo(0, target);
+  else (typeof target === "string" ? document.querySelector(target) : target)?.scrollIntoView();
+}
+
 export function SmoothScroll() {
   useEffect(() => {
     // Under reduced motion the browser's native scroll is the final state; Lenis never starts.
