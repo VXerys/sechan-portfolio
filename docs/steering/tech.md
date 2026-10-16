@@ -17,7 +17,7 @@ Stack and commands. `npm run init` fills every `PRESET_` placeholder from the ch
 | Smooth scroll | Lenis, driven by the GSAP ticker | one scroll engine; disabled under `prefers-reduced-motion` |
 | Data store | none | portfolio content is typed data in `src/content/` |
 | Test framework | Node test runner with type stripping (`node --test`) | content invariants; no browser test runner yet |
-| Deployment target | Vercel (not yet configured) | |
+| Deployment target | Vercel Hobby, project `sechan-portfolio`, production branch `main` | canonical https://www.sechanalfarisi.dev; apex 308-redirects to www; DNS at name.com (A `@`, CNAME `www`) |
 | Source and test paths | `src/**`, `public/**` | globs used by `fileMatch` steering rules |
 
 ## Commands

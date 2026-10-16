@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { achievements, contact, experience, profile, projects, skills, testimonials } from "./portfolio.ts";
+import { achievements, contact, experience, profile, projects, siteUrl, skills, testimonials } from "./portfolio.ts";
 
 const allText = JSON.stringify({ profile, projects, experience, achievements, skills, testimonials, contact });
 
@@ -57,4 +57,9 @@ test("availability leads with freelance, then internships (AC-023)", () => {
     assert.ok(freelance >= 0, `no freelance mention in: ${text}`);
     assert.ok(internship === -1 || freelance < internship, `internships come first in: ${text}`);
   }
+});
+
+test("canonical site URL is the live https www origin (AC-027)", () => {
+  assert.equal(siteUrl, "https://www.sechanalfarisi.dev");
+  assert.equal(new URL(siteUrl).pathname, "/");
 });
