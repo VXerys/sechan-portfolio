@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run adapters:sync`.
 Source: docs/steering/, sdd.config.json.
-source_hash: bd654077804f380be3dbb8266e7775cafb9020a16f847125c857a0c31aa6ec74 -->
+source_hash: 9d87b5a36418a22b3155ea5f61c91d45d53b8d597e9e257e96a4d8541b5002a5 -->
 
 # Repository contract: Sechan Portfolio
 
@@ -135,6 +135,7 @@ Run these before claiming any task done. Report a command that cannot run; never
 - Secrets are read in server code only; a variable reaches the browser only with the `NEXT_PUBLIC_` prefix.
 - Route handlers validate every request body at the boundary and return typed errors.
 - `npm run typecheck` at 0 errors and `npm run lint` clean before a task is done.
+- `npm run typecheck` runs `next typegen` first: `next-env.d.ts` and `.next/types` (route props such as `LayoutProps`, static image modules) are generated, not committed, so a clean checkout has to create them before `tsc`.
 - Next.js 16 differs from older versions; read the matching guide in `node_modules/next/dist/docs/` before using an unfamiliar API. `agentRules: false` in `next.config.ts` stops `next dev` from appending its own block to the rendered `AGENTS.md`.
 - Every GSAP animation lives in a client component inside `useGSAP` (scoped, auto-reverted). Register plugins once in `src/lib/motion/`.
 - Every animation has a `prefers-reduced-motion` path built with `gsap.matchMedia()`; content is readable with JavaScript disabled.
