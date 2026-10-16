@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run adapters:sync`.
 Source: docs/steering/, sdd.config.json.
-source_hash: bd654077804f380be3dbb8266e7775cafb9020a16f847125c857a0c31aa6ec74 -->
+source_hash: 9d87b5a36418a22b3155ea5f61c91d45d53b8d597e9e257e96a4d8541b5002a5 -->
 
 @AGENTS.md
 

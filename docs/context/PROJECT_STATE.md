@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 22309e222e20bcfbecaf2db383ef3041770d27bc3b99cc62454a3556b4f5617b -->
+source_hash: d675929414da0310eab67abb244c41bf2c13fd30d17e330e98a1ba13b367eb44 -->
 
 # Project State
 
-- Generated at: 2026-10-16T03:48:49.396Z
+- Generated at: 2026-10-16T03:53:12.395Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 2
@@ -22,14 +22,15 @@ source_hash: 22309e222e20bcfbecaf2db383ef3041770d27bc3b99cc62454a3556b4f5617b --
 <!-- GENERATED:GIT_FACTS:START -->
 ## Git
 
-- Branch: `feat/F-004-freelance-copy-contact`
-- HEAD: `156091c`
+- Branch: `fix/ci-typegen`
+- HEAD: `4856497`
 - Worktree: dirty
 
 Recent commits:
 
+- `4856497 Merge pull request #1 from VXerys/feat/F-004-freelance-copy-contact`
+- `a05fa01 feat(F-004): freelance-first copy, greeting intro, contact CTA`
 - `156091c feat(F-003): opening sequence, pointer feedback, scroll choreography`
 - `4e41b7f feat(F-002): type refresh, reference-inspired motion, testimonials`
 - `46bf411 feat(F-001): motion-led portfolio site on SDD template v2.0.0`
-- `b3ab30f Initial commit from Create Next App`
 <!-- GENERATED:GIT_FACTS:END -->
