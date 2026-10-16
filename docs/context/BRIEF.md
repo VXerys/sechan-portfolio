@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: d675929414da0310eab67abb244c41bf2c13fd30d17e330e98a1ba13b367eb44 -->
+source_hash: bc38c54b462bbfcc118c318ea89646b5a2dcd187f2fbbfbb04bb0206eac13a53 -->
 
 # Brief
 
@@ -50,10 +50,10 @@ Frozen: none
 ## Handoff
 Next step:
 
-Click "Copy email" once in the contact section and record EV-014 for AC-026; run the reduced-motion check from F-003 (DevTools > Rendering), then open a PR from `feat/F-004-freelance-copy-contact` into `main`.
+After the F-005 PR merges and Vercel redeploys, run `curl -s https://www.sechanalfarisi.dev | grep -o 'rel="icon"[^>]*'` and record EV-017 for T-024.
 
 ## Other open tasks
-- T-006 — Deploy to Vercel (`planned`)
+None.
 
 ## Features
 | Feature | Status | Phase | Done/Total |
@@ -62,3 +62,4 @@ Click "Copy email" once in the contact section and record EV-014 for AC-026; run
 | F-002 Visual refresh and testimonials | implementing | in_progress | 3/4 |
 | F-003 Intro, cursor, and scroll choreography | implementing | in_progress | 5/6 |
 | F-004 Freelance-first copy, greeting intro, contact CTA | implementing | in_progress | 3/4 |
+| F-005 Site identity and production deploy | implementing | in_progress | 3/4 |

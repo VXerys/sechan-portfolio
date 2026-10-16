@@ -72,7 +72,7 @@ features:
           - EV-004
       - id: T-006
         title: Deploy to Vercel
-        status: planned
+        status: deferred
         requirements:
           - FR-001
         depends_on:
@@ -244,6 +244,50 @@ features:
         evidence:
           - EV-012
           - EV-013
+  - id: F-005
+    title: Site identity and production deploy
+    status: implementing
+    phase: in_progress
+    spec_path: docs/specs/F-005-site-identity-deploy
+    tasks:
+      - id: T-021
+        title: Deploy to Vercel on sechanalfarisi.dev
+        status: done
+        requirements:
+          - FR-017
+        depends_on: []
+        evidence:
+          - EV-014
+      - id: T-022
+        title: Site icon and dev badge
+        status: done
+        requirements:
+          - FR-018
+        depends_on: []
+        evidence:
+          - EV-015
+          - EV-016
+      - id: T-023
+        title: Canonical metadata
+        status: done
+        requirements:
+          - FR-019
+        depends_on:
+          - T-021
+        evidence:
+          - EV-015
+          - EV-016
+      - id: T-024
+        title: Verify on production after merge
+        status: planned
+        requirements:
+          - FR-017
+          - FR-018
+          - FR-019
+        depends_on:
+          - T-022
+          - T-023
+        evidence: []
 active:
   feature_id: F-001
   task_id: T-005
@@ -255,5 +299,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T03:53:12.395Z
-source_hash: d675929414da0310eab67abb244c41bf2c13fd30d17e330e98a1ba13b367eb44
+generated_at: 2026-10-16T04:23:32.702Z
+source_hash: bc38c54b462bbfcc118c318ea89646b5a2dcd187f2fbbfbb04bb0206eac13a53

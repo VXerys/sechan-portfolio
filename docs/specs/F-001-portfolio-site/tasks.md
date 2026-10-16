@@ -59,12 +59,12 @@ Portrait and cleared screenshots into `src/assets/images/` as WebP; placeholders
 Lint, typecheck, test, build, browser check at 360, 768, 1280 px and with reduced motion; `verification.md` and handoff updated.
 
 ### T-006 — Deploy to Vercel
-- status: planned
+- status: deferred
 - requirements: [FR-001]
 - depends_on: [T-005]
 - evidence: []
 
-Needs owner go-ahead, A-001 and A-002 resolved, and a Vercel project. Out of scope for the first session.
+Moved to F-005 (T-021) on 2026-10-16 so the deploy, domain, and site identity work share one spec. Deployed that day: Vercel project `sechan-portfolio`, live at https://www.sechanalfarisi.dev; A-002 confirmed and the clinic is unnamed (A-001), so nothing blocked it.
 
 ## Deferred
 

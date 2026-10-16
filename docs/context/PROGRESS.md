@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: d675929414da0310eab67abb244c41bf2c13fd30d17e330e98a1ba13b367eb44 -->
+source_hash: bc38c54b462bbfcc118c318ea89646b5a2dcd187f2fbbfbb04bb0206eac13a53 -->
 
 # Project Progress
 
@@ -13,7 +13,7 @@ source_hash: d675929414da0310eab67abb244c41bf2c13fd30d17e330e98a1ba13b367eb44 --
 | T-003 Sections and motion | done | FR-001, FR-002, FR-003, FR-004, FR-005 | T-002 | EV-002, EV-003, EV-004 |
 | T-004 Images and placeholders | done | FR-002 | T-003 | EV-004 |
 | T-005 Verification and handoff | in_progress | FR-001, FR-002, FR-003, FR-004, FR-005 | T-003, T-004 | EV-001, EV-002, EV-003, EV-004 |
-| T-006 Deploy to Vercel | planned | FR-001 | T-005 |  |
+| T-006 Deploy to Vercel | deferred | FR-001 | T-005 |  |
 
 ## F-002 — Visual refresh and testimonials (`implementing`, in_progress)
 
@@ -43,3 +43,12 @@ source_hash: d675929414da0310eab67abb244c41bf2c13fd30d17e330e98a1ba13b367eb44 --
 | T-018 Greeting intro | done | FR-015 |  | EV-013 |
 | T-019 Contact CTA | done | FR-016 | T-017 | EV-012, EV-013 |
 | T-020 Verification | in_progress | FR-014, FR-015, FR-016 | T-017, T-018, T-019 | EV-012, EV-013 |
+
+## F-005 — Site identity and production deploy (`implementing`, in_progress)
+
+| Task | Status | Requirements | Depends on | Evidence |
+|---|---|---|---|---|
+| T-021 Deploy to Vercel on sechanalfarisi.dev | done | FR-017 |  | EV-014 |
+| T-022 Site icon and dev badge | done | FR-018 |  | EV-015, EV-016 |
+| T-023 Canonical metadata | done | FR-019 | T-021 | EV-015, EV-016 |
+| T-024 Verify on production after merge | planned | FR-017, FR-018, FR-019 | T-022, T-023 |  |

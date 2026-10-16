@@ -4,7 +4,7 @@ import { Archivo, Host_Grotesk, Instrument_Serif, JetBrains_Mono } from "next/fo
 import { Intro } from "@/components/motion/intro";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Cursor } from "@/components/site/cursor";
-import { profile } from "@/content/portfolio";
+import { profile, siteUrl } from "@/content/portfolio";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -35,12 +35,17 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  // Resolves relative metadata URLs (icons, Open Graph) to the live domain instead of localhost or a preview URL.
+  metadataBase: new URL(siteUrl),
   title: `${profile.name} | ${profile.role}`,
   description: profile.intro,
-  authors: [{ name: profile.name }],
+  authors: [{ name: profile.name, url: siteUrl }],
+  alternates: { canonical: "/" },
   openGraph: {
     title: `${profile.name} | Portfolio`,
     description: profile.intro,
+    url: "/",
+    siteName: profile.name,
     type: "website",
   },
 };

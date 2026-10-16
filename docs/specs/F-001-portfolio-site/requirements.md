@@ -70,7 +70,7 @@ The site shall use smooth scroll and scroll-linked reveals, and shall disable th
 
 - GSAP, `@gsap/react`, Lenis approved by the owner on 2026-10-16 (chat request "library nya juga sesuai rekomendasi kamu").
 
-Out of scope: deployment and custom domain (T-006, after A-001 and A-002).
+Out of scope: deployment and custom domain (moved to F-005).
 
 ## Open questions
 

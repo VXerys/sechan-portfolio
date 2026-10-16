@@ -46,6 +46,9 @@ export type Testimonial = {
   consentDate: string; // YYYY-MM-DD when the client approved publishing this exact text
 };
 
+// Canonical origin. The apex sechanalfarisi.dev 308-redirects here (Vercel domain setting, 2026-10-16).
+export const siteUrl = "https://www.sechanalfarisi.dev";
+
 export const profile: Profile = {
   name: "M Sechan Alfarisi",
   shortName: "Sehan",
