@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c -->
+source_hash: fb448afeb0e62fa4424561c56100877ffb3c9719194961d98101c944d3a133f9 -->
 
 # Project Progress
 
@@ -84,3 +84,19 @@ source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c --
 | T-032 Slice transition and pill buttons | done | FR-029 | T-030 | EV-023, EV-024 |
 | T-033 Horizontal Proof, footer scale | done | FR-029 |  | EV-023, EV-024 |
 | T-034 Verification | review | FR-027, FR-028, FR-029 | T-030, T-031, T-032, T-033 | EV-022, EV-023, EV-024, EV-028 |
+
+## F-010 — Project listing images (`implementing`, blocked)
+
+| Task | Status | Requirements | Depends on | Evidence |
+|---|---|---|---|---|
+| T-040 Listing kit | planned | FR-036 |  |  |
+| T-041 Gunung Puyuh WebGIS listing | planned | FR-037 | T-040 |  |
+| T-042 ArtConnect listing | planned | FR-037 | T-040 |  |
+| T-043 Klinik Cikidang Medika listing | planned | FR-037 | T-040 |  |
+| T-044 VisualKain Finance listing | planned | FR-037 | T-040 |  |
+| T-045 InztaMoto ERP listing | planned | FR-037 | T-044 |  |
+| T-046 BookMate listing | planned | FR-038 | T-040 |  |
+| T-047 Welling and Ayah Hebat listing | blocked | FR-038 | T-040 |  |
+| T-048 Site gallery and notice | planned | FR-039 | T-041 |  |
+| T-049 Verification | planned | FR-036, FR-037, FR-038, FR-039 | T-042, T-043, T-045, T-046, T-048 |  |
+| T-050 Marketiv listing | deferred | FR-037 | T-040 |  |

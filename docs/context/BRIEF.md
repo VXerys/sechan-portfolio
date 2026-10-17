@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c -->
+source_hash: fb448afeb0e62fa4424561c56100877ffb3c9719194961d98101c944d3a133f9 -->
 
 # Brief
 
@@ -50,7 +50,7 @@ Frozen: none
 ## Handoff
 Next step:
 
-Owner merges the BUG-001 pull request and opens the menu on a phone. The F-008 id renumbering runs in its own session on `chore/F-008-renumber-ids`; whichever merges second re-runs `npm run context:render`. Then T-024's production favicon check.
+On approval: execute F-011 with subagent-driven development (T-037, T-038, T-039), then F-010 from T-040. Merging order: F-008 renumber, F-011, F-010; each later merge re-runs `npm run context:render` and resolves the `_index.md` row conflict.
 
 ## Other open tasks
 None.
@@ -67,3 +67,4 @@ None.
 | F-007 Stack marquee redesign | implementing | in_progress | 1/2 |
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 2/2 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 4/5 |
+| F-010 Project listing images | implementing | blocked | 0/11 |

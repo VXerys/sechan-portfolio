@@ -1,54 +1,54 @@
 ---
 status: active
 owner: "M Sechan Alfarisi"
-session_date: "2026-10-16"
-branch: "fix/F-009-mobile-menu"
-base_commit: "d1713ef"
-current_commit: "d1713ef"
-feature_id: "F-009"
-task_id: "T-034"
-expires_after: "2026-10-23"
+session_date: "2026-10-17"
+branch: "feat/F-010-listing-images"
+base_commit: "0733e02"
+current_commit: "0733e02"
+feature_id: "F-010"
+task_id: "T-040"
+expires_after: "2026-10-24"
 ---
 
 # Session Handoff
 
 ## Session objective
 
-BUG-001: on phones the menu links stopped half-masked after F-009 shipped (PR #9, merged). Fix it and record the evidence against F-009.
+Plan two features from a grilling session with the owner (2026-10-17): F-010 listing images for every in-scope project, built from the real apps with sample data, and F-011 Experience highlights (Asah fellowship, Universitas Nusa Putra with projects built while studying) plus naming Klinik Cikidang Medika.
 
 ## Completed
 
-- Root cause in `docs/quality/bugs/BUG-001-mobile-menu-links-stop-half-masked.md`: `transition-transform` on the menu links made GSAP's reveal read a mid-transition position as its end.
-- Menu links and More work rows now transition `scale` only, pills `scale, border-color`. EV-028 in F-009 `verification.md`; T-031 and T-034 cite it.
-- F-009 itself: T-030 to T-033 `done`, T-034 in `review`, EV-022 to EV-024 and EV-028. EV-025 to EV-027 are taken by F-008 on `chore/F-008-renumber-ids` (commit d91ca59, not pushed).
+- F-010 spec (full tier) on `feat/F-010-listing-images` in this worktree: T-040 to T-049, T-050 Marketiv deferred, A-004 logged (Mangcoding permission for Welling and Ayah Hebat; T-047 blocked).
+- F-011 spec (lite) on `feat/F-011-experience-highlights` in the `sechan-portfolio-f011` worktree, with A-001 confirmed there.
+- Owner decisions: composed images (real UI, code-drawn frames and ornaments, no AI UI); cover plus four slides; strip gallery in case studies and More work; sample-data tag and notice line; emulator or route stubs only, never production or staging; Asah as a highlight card; Nusa Putra row with GPA 3.73 and "Built while studying" chips (Fluxa independent, built during his studies; Cartify stays in Work); `playwright-core` approved as a dev dependency.
+- Id ranges: F-011 uses FR-033 to FR-035, AC-054 to AC-060, T-037 to T-039, EV-029 to EV-039; F-010 uses FR-036 onward, AC-061 onward, T-040 onward, EV-040 onward. Both start above `chore/F-008-renumber-ids` (FR-032, AC-053, T-036, EV-027), which is still unpushed.
 
 ## Changed files
 
-`src/components/site/header.tsx`, `src/components/motion/pill.tsx`, `src/components/sections/project-index.tsx`, F-009 `tasks.md` and `verification.md`, `docs/quality/bugs/BUG-001-*.md` (new), rendered context views.
+F-010 spec folder, `docs/specs/_index.md`, `docs/context/ASSUMPTIONS.md` (A-004), rendered context views. F-011 changes live in its own worktree.
 
 ## Commands executed
 
-`npm run lint`, `npm run typecheck`, `npm test` (23 pass), `npm run build`, `npx next start -p 3004` + in-app browser at 375x812 against the fix and against production, `npm run context:render`, `npm run context:validate -- --strict`.
+`npm run context:render`, `npm run context:validate -- --strict` (0 errors) in both worktrees.
 
 ## Uncommitted work
 
-None after the BUG-001 commit on `fix/F-009-mobile-menu`.
+Both spec sets are uncommitted, waiting for the owner's review of the plan.
 
 ## Blockers
 
-- A-001 (clinic naming) and A-003 (no quote collected yet) stay open; neither blocks the code.
+- A-004 blocks T-047 only. A-003 (testimonials) stays open; the owner is holding the clinic's review until the others arrive.
 
 ## Exact next step
 
-Owner merges the BUG-001 pull request and opens the menu on a phone. The F-008 id renumbering runs in its own session on `chore/F-008-renumber-ids`; whichever merges second re-runs `npm run context:render`. Then T-024's production favicon check.
+On approval: execute F-011 with subagent-driven development (T-037, T-038, T-039), then F-010 from T-040. Merging order: F-008 renumber, F-011, F-010; each later merge re-runs `npm run context:render` and resolves the `_index.md` row conflict.
 
 ## Do not do next
 
-- Do not put a Tailwind `transition-transform` (or `transition-all`) on an element GSAP animates; transition the specific property instead.
-- Do not kill tweens inside a `gsap.matchMedia` cleanup; `mm.revert()` restores the start values only for tweens it still owns.
-- Do not commit placeholder or sample testimonials; the list stays empty until a real approval.
-- Do not change DNS at name.com without reading the current records on Vercel's Domains page first.
+- Never run a client app with its real env files, its `predev` script, or `dev:prod`; never use VisualKain's `seed-data.ts`.
+- Do not put a Tailwind `transition-transform` on an element GSAP animates.
+- Do not commit placeholder testimonials.
 
 ## Validity
 
-Valid until 2026-10-23 or the next commit.
+Valid until 2026-10-24 or the next commit.

@@ -444,6 +444,106 @@ features:
           - EV-023
           - EV-024
           - EV-028
+  - id: F-010
+    title: Project listing images
+    status: implementing
+    phase: blocked
+    spec_path: docs/specs/F-010-listing-images
+    tasks:
+      - id: T-040
+        title: Listing kit
+        status: planned
+        requirements:
+          - FR-036
+        depends_on: []
+        evidence: []
+      - id: T-041
+        title: Gunung Puyuh WebGIS listing
+        status: planned
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence: []
+      - id: T-042
+        title: ArtConnect listing
+        status: planned
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence: []
+      - id: T-043
+        title: Klinik Cikidang Medika listing
+        status: planned
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence: []
+      - id: T-044
+        title: VisualKain Finance listing
+        status: planned
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence: []
+      - id: T-045
+        title: InztaMoto ERP listing
+        status: planned
+        requirements:
+          - FR-037
+        depends_on:
+          - T-044
+        evidence: []
+      - id: T-046
+        title: BookMate listing
+        status: planned
+        requirements:
+          - FR-038
+        depends_on:
+          - T-040
+        evidence: []
+      - id: T-047
+        title: Welling and Ayah Hebat listing
+        status: blocked
+        requirements:
+          - FR-038
+        depends_on:
+          - T-040
+        evidence: []
+      - id: T-048
+        title: Site gallery and notice
+        status: planned
+        requirements:
+          - FR-039
+        depends_on:
+          - T-041
+        evidence: []
+      - id: T-049
+        title: Verification
+        status: planned
+        requirements:
+          - FR-036
+          - FR-037
+          - FR-038
+          - FR-039
+        depends_on:
+          - T-042
+          - T-043
+          - T-045
+          - T-046
+          - T-048
+        evidence: []
+      - id: T-050
+        title: Marketiv listing
+        status: deferred
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence: []
 active:
   feature_id: F-001
   task_id: T-005
@@ -454,6 +554,12 @@ assumptions_open:
   - id: A-003
     feature: F-002
     title: Testimonials are real, attributed, and approved
-blockers: []
-generated_at: 2026-10-16T07:54:16.654Z
-source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c
+  - id: A-004
+    feature: F-010
+    title: Mangcoding allows Welling and Ayah Hebat listing images
+blockers:
+  - feature_id: F-010
+    task_id: T-047
+    title: Welling and Ayah Hebat listing
+generated_at: 2026-10-17T10:38:27.930Z
+source_hash: fb448afeb0e62fa4424561c56100877ffb3c9719194961d98101c944d3a133f9
