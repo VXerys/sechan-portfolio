@@ -399,7 +399,7 @@ export const experience: Experience[] = [
 
 // The Asah achievement below stays as the certificate line in Proof; this is the Experience highlight.
 export const program: Program = {
-  name: "Asah 2026 led by Dicoding, supported by GoTo",
+  name: "Asah 2026 led by Dicoding supported by GoTo",
   path: "Next-Gen AI Engineer path",
   role: "Fellow",
   period: "Aug 2026 - Jan 2027",
@@ -409,7 +409,7 @@ export const program: Program = {
 export const education: Education = {
   label: "Education",
   institution: "Universitas Nusa Putra",
-  degree: "S.Kom. Informatics",
+  degree: "S.Kom. Informatics Engineering",
   period: "Sep 2023 - 2027 (expected)",
   gpa: "3.73",
   projectsLabel: "Built while studying",
