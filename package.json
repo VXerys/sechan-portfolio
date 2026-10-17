@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "node --test \"src/**/*.test.ts\"",
+    "test": "node --test \"src/**/*.test.ts\" \"scripts/listing/**/*.test.mjs\"",
     "listing:capture": "node scripts/listing/capture.mjs",
     "listing:compose": "node scripts/listing/compose.mjs",
     "context:render": "node scripts/context/render.mjs",

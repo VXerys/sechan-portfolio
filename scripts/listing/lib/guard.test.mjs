@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { classify, createGuard, isLoopback, validateAllowHosts } from './guard.mjs';
+import { BlockedRequestError, classify, createGuard, guardNodeRequests, isLoopback, validateAllowHosts } from './guard.mjs';
 
 const allowed = new Set(['localhost', '127.0.0.1', '::1', 'fonts.gstatic.com']);
 
@@ -36,7 +36,7 @@ test('allowHosts accepts exact names only, so nothing can allow every host', () 
 test('the guard log counts allowed and blocked hosts separately', () => {
   const guard = createGuard(['fonts.gstatic.com']);
   const handlers = [];
-  guard.watch({ on: (event, handler) => handlers.push([event, handler]) });
+  guard.watch({ on: (event, handler) => handlers.push([event, handler]), request: { _innerFetch: async () => null } });
   const [[event, onRequest]] = handlers;
   assert.equal(event, 'request');
   for (const url of ['http://localhost:5173/', 'https://fonts.gstatic.com/a.woff2', 'https://example.com/', 'https://example.com/b']) {
@@ -44,4 +44,29 @@ test('the guard log counts allowed and blocked hosts separately', () => {
   }
   assert.deepEqual(guard.log, { allowed: { localhost: 1, 'fonts.gstatic.com': 1 }, blocked: { 'example.com': 2 } });
   assert.deepEqual(guard.blockedHosts(), ['example.com']);
+});
+
+test('the Node-side hook refuses to start when the Playwright funnel is missing', () => {
+  assert.throws(() => guardNodeRequests({}, () => ({ ok: true })), /_innerFetch/);
+  assert.throws(() => guardNodeRequests(undefined, () => ({ ok: true })), /_innerFetch/);
+});
+
+test('the Node-side hook blocks before the driver is called and never follows redirects', async () => {
+  const calls = [];
+  const api = { _innerFetch: async (options) => calls.push(options) };
+  const guard = createGuard([]);
+  guard.watch({ on: () => {}, request: api });
+
+  await assert.rejects(api._innerFetch({ url: 'https://example.com/rest/v1/patients' }), BlockedRequestError);
+  await assert.rejects(api._innerFetch({ request: { url: () => 'https://staging.example.org/' } }), /staging\.example\.org/);
+  await assert.rejects(api._innerFetch({ url: '/relative/path' }), /unparsable-url/);
+  assert.equal(calls.length, 0);
+
+  await api._innerFetch({ url: 'http://127.0.0.1:4317/seed', maxRedirects: 5 });
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].maxRedirects, 0);
+  assert.deepEqual(guard.log, {
+    allowed: { '127.0.0.1': 1 },
+    blocked: { 'example.com': 1, 'staging.example.org': 1, 'unparsable-url': 1 },
+  });
 });

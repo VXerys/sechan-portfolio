@@ -3,10 +3,15 @@ import { chromium } from 'playwright-core';
 
 import { createGuard } from './guard.mjs';
 
-const DEFAULT_CHROME = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
+// Windows is the owner's machine; the others are where Chrome sits on CI runners, so the guard tests in npm test run there too.
+const DEFAULT_CHROME = {
+  win32: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+  linux: '/usr/bin/google-chrome',
+  darwin: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+};
 
 export function chromePath() {
-  return process.env.CHROME_PATH || DEFAULT_CHROME;
+  return process.env.CHROME_PATH || DEFAULT_CHROME[process.platform] || DEFAULT_CHROME.win32;
 }
 
 // The resolver rule is a second, browser-wide wall behind the route guard: a page route that continues a request,
@@ -26,7 +31,8 @@ async function launchChrome(hosts) {
   return chromium.launch({ executablePath, headless: true, args: launchArgs(hosts) });
 }
 
-// The only way the kit opens a browser, so every run gets the same guard order: audit, project stubs, then the guard routes.
+// The only way the kit opens a browser, so every run gets the same guard order: audit and Node-side hook, project
+// stubs, then the guard routes.
 export async function openGuardedSession({ allowHosts = [], contextOptions = {}, setup } = {}) {
   const guard = createGuard(allowHosts);
   const browser = await launchChrome(guard.hosts);

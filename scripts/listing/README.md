@@ -8,10 +8,10 @@ Captures a project's real UI from an app running on localhost, then composes a 1
 npm run listing:capture -- --selfcheck   # guard check: exits 1 with example.com under "blocked"
 npm run listing:capture -- <slug>        # .listing-cache/<slug>/<shot>.png + hosts.json
 npm run listing:compose -- <slug>        # src/assets/images/listings/<slug>/cover.webp, 01.webp, ...
-node --test "scripts/listing/**/*.test.mjs"   # guard unit tests
+npm test                                 # includes the guard tests, which launch Chrome
 ```
 
-- Chrome comes from `CHROME_PATH`, default `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe`. `playwright-core` never downloads a browser.
+- Chrome comes from `CHROME_PATH`, default `C:\Program Files (x86)\Google\Chrome\Application\chrome.exe` (`/usr/bin/google-chrome` on Linux). `playwright-core` never downloads a browser.
 - Slugs starting with `_` are kit demos (`_kit-demo`, `_kit-demo-mobile`): they serve `fixtures/kit-demo/` themselves and compose into `.listing-cache/<slug>/out/`, never into `src/assets`.
 - Compose fails, and writes no image, when the last capture log shows a blocked host, a web font does not load, a caption does not fit, or a file stays over budget at WebP quality 70 (cover 250 KB, slide 200 KB).
 
@@ -49,7 +49,8 @@ Each shot waits for network idle, `document.fonts.ready`, its `waitFor` selector
 
 - BR-012: a capture never talks to production or staging. The guard aborts every request, websocket, or service worker fetch to a host outside loopback and `allowHosts`, and Chrome's resolver refuses those names as a second wall. Any blocked host fails the run (exit 1), and no PNG from it is kept.
 - Every run writes `.listing-cache/<slug>/hosts.json` (`{ allowed, blocked }`); it is the task evidence for NFR-002. Compose writes its own `compose-hosts.json`.
-- Requests made from Node (for example seeding an emulator in `setup`) are outside the browser guard: target loopback only.
+- Node-side Playwright requests (`context.request`, `page.request`, `route.fetch()`) are checked against the same allowlist and logged in the same `hosts.json`; one to an outside host throws and fails the run. They never follow redirects: a 3xx comes back to the caller.
+- Plain Node `fetch`, `http`, or a separate `request.newContext()` cannot be guarded. Seed emulators and call upstreams only through `context.request` in `setup`.
 - Do not add `page.route` in `before`; put stubs in `setup`. A page route that lets a request through is still counted as blocked and fails the run.
 - BR-013: sample data is invented and lives in the project file; never copy production, staging, exports, or fixtures that hold real people.
 - BR-014: client repositories are used only through a temporary worktree from the production branch; nothing is committed or pushed there, and the worktree is removed after capture.

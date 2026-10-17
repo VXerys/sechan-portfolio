@@ -43,6 +43,32 @@ export function classify(url, allowed) {
   return { host, ok: allowed.has(host) };
 }
 
+export class BlockedRequestError extends Error {
+  constructor(host) {
+    super(`listing guard blocked a Node-side request to ${host}`);
+    this.name = 'BlockedRequestError';
+    this.host = host;
+  }
+}
+
+// context.request, page.request (the same object), and route.fetch() run in the Playwright driver over Node http:
+// Chrome never sees them, so the route, the request event, and the resolver rule all miss them. Every one of them
+// goes through APIRequestContext._innerFetch, a private method, so the guard wraps that single funnel and refuses to
+// start when it is missing rather than run blind. Redirects are not followed, because the driver would follow a
+// Location to any host without asking; a 3xx comes back to the caller instead (route.fulfill hands it to Chrome,
+// where the next hop meets the browser guard).
+export function guardNodeRequests(apiRequest, judge) {
+  const innerFetch = apiRequest?._innerFetch;
+  if (typeof innerFetch !== 'function') {
+    throw new Error('playwright-core no longer exposes APIRequestContext._innerFetch, so Node-side requests cannot be guarded; update scripts/listing/lib/guard.mjs before capturing');
+  }
+  apiRequest._innerFetch = async function guardedInnerFetch(options = {}) {
+    const verdict = judge(String(options.url ?? options.request?.url() ?? ''));
+    if (!verdict.ok) throw new BlockedRequestError(verdict.host);
+    return innerFetch.call(this, { ...options, maxRedirects: 0 });
+  };
+}
+
 export function createGuard(allowHosts) {
   const allowed = new Set([...LOOPBACK_HOSTS, ...validateAllowHosts(allowHosts)]);
   const log = { allowed: {}, blocked: {} };
@@ -57,10 +83,17 @@ export function createGuard(allowHosts) {
     blockedHosts: () => Object.keys(log.blocked),
 
     // Counts from the request event, not the route, so a request that some later route let through still fails the run.
+    // Runs before the project's setup, so the Node-side hook is in place before setup can seed or stub anything.
     watch(context) {
       context.on('request', (request) => {
         const verdict = classify(request.url(), allowed);
         if (verdict) count(verdict);
+      });
+      guardNodeRequests(context.request, (url) => {
+        // data:, blob:, and about: are harmless in Chrome but meaningless to the driver, so here they count as blocked.
+        const verdict = classify(url, allowed) ?? { host: new URL(url).protocol, ok: false };
+        count(verdict);
+        return verdict;
       });
     },
 

@@ -23,7 +23,8 @@ export async function settle(page, ms = DEFAULT_SETTLE_MS) {
 
 async function attempt(page, url, shot, timeout) {
   const response = await page.goto(url, { waitUntil: 'networkidle', timeout });
-  if (response && !response.ok()) {
+  // Only errors fail the shot: a dev server answers a repeat load in the same context with 304, which is a good page.
+  if (response && response.status() >= 400) {
     throw new Error(`${url} answered ${response.status()}`);
   }
   await waitForFonts(page);

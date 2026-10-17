@@ -73,12 +73,14 @@ async function capture(slug) {
   return 0;
 }
 
-// Runs the same guard a real capture uses: a loopback page must pass, a host outside the allowlist must not (AC-062).
+// Runs the same guard a real capture uses: a loopback page must pass, and a host outside the allowlist must be refused
+// both from the browser and from the Node-side request context (AC-062).
 async function selfcheck() {
   const dir = cacheDir(SELFCHECK_SLUG);
   const server = await serveDir(path.join(kitDir, 'fixtures'), { host: '127.0.0.1' });
   let session = null;
   let reached = false;
+  let nodeReached = false;
   try {
     session = await openGuardedSession();
     const page = await session.context.newPage();
@@ -88,7 +90,14 @@ async function selfcheck() {
       .goto(SELFCHECK_TARGET, { waitUntil: 'load', timeout: 15_000 })
       .then(() => true)
       .catch((error) => {
-        console.log(`request to ${SELFCHECK_TARGET} refused: ${error.message.split('\n')[0]}`);
+        console.log(`browser request to ${SELFCHECK_TARGET} refused: ${error.message.split('\n')[0]}`);
+        return false;
+      });
+    nodeReached = await session.context.request
+      .get(SELFCHECK_TARGET, { timeout: 15_000 })
+      .then(() => true)
+      .catch((error) => {
+        console.log(`Node-side request to ${SELFCHECK_TARGET} refused: ${error.message.split('\n')[0]}`);
         return false;
       });
   } finally {
@@ -97,7 +106,7 @@ async function selfcheck() {
   }
 
   const blocked = reportHosts(dir, session.guard);
-  if (reached || !blocked.includes('example.com')) {
+  if (reached || nodeReached || session.guard.log.blocked['example.com'] !== 2) {
     console.error('GUARD FAILURE: example.com was not blocked; do not capture anything until this is fixed');
     return GUARD_LEAK_EXIT;
   }
