@@ -103,8 +103,8 @@ export function Experience({ entries, program, education, projects }: Props) {
           <Point index={0}>{`GPA ${education.gpa}`}</Point>
           {/* Spans both columns so each chip keeps its context on one line from md up. */}
           <Point index={1} className="md:col-span-2">
-            <p>{education.projectsLabel}</p>
-            <ul aria-label={education.projectsLabel} className="mt-4 flex flex-wrap gap-2">
+            <p id="education-projects">{education.projectsLabel}</p>
+            <ul aria-labelledby="education-projects" className="mt-4 flex flex-wrap gap-2">
               {chips.map((chip) => (
                 <li key={chip.slug}>
                   <ProjectChip slug={chip.slug} title={chip.title} context={chip.context} />

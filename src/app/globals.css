@@ -44,6 +44,11 @@
     border-radius: 2px;
   }
 
+  /* Sections and case studies take focus only so an in-page jump moves the reading position; they are not controls. */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

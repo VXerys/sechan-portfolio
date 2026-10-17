@@ -22,10 +22,16 @@ export function ProjectChip({ slug, title, context }: Props) {
     <a
       href={href}
       onClick={open}
-      className="label flex flex-wrap items-baseline gap-x-2 rounded-full border border-line px-4 py-2 text-paper/80 transition-colors duration-300 hover:border-accent hover:text-accent"
+      className="label flex flex-wrap items-baseline gap-x-2 rounded-2xl border border-line px-4 py-2 text-paper/80 transition-colors duration-300 hover:border-accent hover:text-accent sm:rounded-full"
     >
       <span>{title}</span>
-      {context && <span className="text-muted">{context}</span>}
+      {/* The flex gap only spaces the layout; the space keeps title and context apart in the link's text and name. */}
+      {context && (
+        <>
+          {" "}
+          <span className="text-muted">{context}</span>
+        </>
+      )}
     </a>
   );
 }
