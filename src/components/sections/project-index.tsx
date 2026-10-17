@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { LineRows } from "@/components/motion/line-rows";
 import { ProjectPoster } from "@/components/sections/project-poster";
 import { ProjectQuote } from "@/components/sections/project-quote";
+import { PROJECT_OPEN } from "@/components/site/project-chip";
 import { projectMedia } from "@/content/media";
 import type { Project } from "@/content/portfolio";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
@@ -32,6 +33,16 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
     const id = window.setTimeout(() => ScrollTrigger.refresh(), 750);
     return () => window.clearTimeout(id);
   }, [openSlug]);
+
+  // A project chip in Experience asks for its row before jumping here; only ever opens, so a second click keeps it open.
+  useEffect(() => {
+    const onOpen = (event: Event) => {
+      const slug = (event as CustomEvent<unknown>).detail;
+      if (typeof slug === "string" && projects.some((project) => project.slug === slug)) setOpenSlug(slug);
+    };
+    window.addEventListener(PROJECT_OPEN, onOpen);
+    return () => window.removeEventListener(PROJECT_OPEN, onOpen);
+  }, [projects]);
 
   useGSAP(
     () => {
@@ -85,7 +96,15 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
           const panelId = `${project.slug}-panel`;
           const quote = quoteForProject(quotes, project.slug);
           return (
-            <li key={project.slug} data-row className="relative overflow-hidden" onPointerEnter={() => setActiveSlug(project.slug)}>
+            // Same jump target contract as a case study: the id for chips, the label for the slice transition, no data-section.
+            <li
+              key={project.slug}
+              id={project.slug}
+              data-section-label={project.title}
+              data-row
+              className="relative scroll-mt-24 overflow-hidden"
+              onPointerEnter={() => setActiveSlug(project.slug)}
+            >
               <span data-line className="absolute inset-x-0 top-0 h-px bg-line" />
               <div data-row-content>
                 <h4>

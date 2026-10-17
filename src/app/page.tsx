@@ -7,7 +7,7 @@ import { Marquee } from "@/components/sections/marquee";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Work } from "@/components/sections/work";
 import { Header } from "@/components/site/header";
-import { achievements, experience, profile, projects, skills } from "@/content/portfolio";
+import { achievements, education, experience, profile, program, projects, skills } from "@/content/portfolio";
 import { testimonials } from "@/content/testimonials";
 import { showTestimonials } from "@/lib/testimonials";
 
@@ -31,7 +31,7 @@ export default function Home() {
           <Marquee items={MARQUEE} />
           <About profile={profile} />
           <Work projects={projects} quotes={quotes} />
-          <Experience entries={experience} />
+          <Experience entries={experience} program={program} education={education} projects={projects} />
           <Capabilities skills={skills} achievements={achievements} />
           <Testimonials testimonials={quotes} projects={projects} number="06" />
         </div>
