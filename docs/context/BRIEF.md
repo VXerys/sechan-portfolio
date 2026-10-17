@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c -->
+source_hash: 4403dcf223cd6ad5c4f4ca03c46fc92ff01e0c524b0fab35d21b037be16fcecb -->
 
 # Brief
 
@@ -45,7 +45,7 @@ Generated: `docs/context/state.yaml`, `docs/context/PROJECT_STATE.md`, `docs/con
 Frozen: none
 
 ## Open assumptions
-- A-001 — Client names may appear on the public site (F-001)
+None.
 
 ## Handoff
 Next step:
@@ -67,3 +67,4 @@ None.
 | F-007 Stack marquee redesign | implementing | in_progress | 1/2 |
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 2/2 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 4/5 |
+| F-011 Experience highlights and clinic naming | implementing | not_started | 0/3 |

@@ -3,7 +3,7 @@ id: ASSUMPTIONS
 title: Assumptions Log
 status: active
 owner: "M Sechan Alfarisi"
-last_updated: "2026-10-16"
+last_updated: "2026-10-17"
 ---
 
 # Assumptions
@@ -27,10 +27,10 @@ What was assumed, why it could not be verified, and what changes if it is wrong.
 ## Entries
 
 ### A-001 — Client names may appear on the public site
-- status: open
+- status: confirmed
 - feature: F-001
 - raised: 2026-10-16
-- resolution: 2026-10-16, owner in chat: every client may be named except Klinik Cikidang Medika, whose permission is being requested. The site shows "a primary care clinic in Sukabumi" until the clinic agrees; then this entry becomes confirmed.
+- resolution: 2026-10-16, owner in chat: every client may be named except Klinik Cikidang Medika, whose permission was being requested. 2026-10-17, owner in chat: the clinic approved being shown, its name may be used, and its review will name the doctor. F-011 replaces "a primary care clinic in Sukabumi" with the name.
 
 The project list names Klinik Cikidang Medika, VisualKain, InztaMoto, and PT Mangcoding client apps (Welling, Ayah Hebat). The `about-me` sources record the work but not explicit permission to name each client publicly. If any client objects, replace the name with a generic description ("a primary care clinic in Sukabumi") before deploy.
 

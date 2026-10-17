@@ -19,10 +19,11 @@ Task status belongs in each feature's `tasks.md`; `docs/context/state.yaml` and 
 | `F-003` | intro, cursor, scroll choreography | `docs/specs/F-003-intro-cursor-choreography/` | P1 | approved | M1 |
 | `F-004` | freelance-first copy, greeting intro, contact CTA | `docs/specs/F-004-freelance-copy-contact/` | P1 | approved | M1 |
 | `F-005` | site identity and production deploy | `docs/specs/F-005-site-identity-deploy/` | P1 | approved | M1 |
-| `F-006` | testimonials with consent-aware attribution | `docs/specs/F-006-testimonial-attribution/` | P1 | review | M1 |
+| `F-006` | testimonials with consent-aware attribution | `docs/specs/F-006-testimonial-attribution/` | P1 | approved | M1 |
 | `F-007` | stack marquee redesign | `docs/specs/F-007-marquee-redesign/` | P2 | approved | M1 |
 | `F-008` | content corrections: name, Mangcoding, project list | `docs/specs/F-008-content-corrections/` | P1 | approved | M1 |
 | `F-009` | mobile polish, section indicator, motion set 2 | `docs/specs/F-009-mobile-indicator-motion/` | P2 | approved | M1 |
+| `F-011` | experience highlights and clinic naming | `docs/specs/F-011-experience-highlights/` | P1 | approved | M1 |
 
 ## Lifecycle gate meaning
 
