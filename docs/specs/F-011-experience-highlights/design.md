@@ -33,7 +33,7 @@ Two new typed content blocks (`program`, `education`) render around the existing
 | `src/content/portfolio.test.ts` | replace the anonymity test with "clinic is named as approved (A-001)"; education slugs exist in `projects`; program fields are filled |
 | `src/content/testimonials.test.ts` | drop the "cikidang" assertion, keep the phone-number check |
 | `src/components/sections/experience.tsx` | highlight card before `LineRows` (lime "Highlight" label, display type, period and status); education row after the work rows, same anatomy as a work row |
-| `src/components/site/project-chip.tsx` (new) | client link: `jumpTo('#<slug>')`, then dispatches `project:open` with the slug |
+| `src/components/site/project-chip.tsx` (new) | client link: dispatches `project:open` with the slug first, so the row is open before the slices uncover it, then calls `jumpTo('#<slug>')` |
 | `src/components/sections/work.tsx` | `id={project.slug}` on each case-study article |
 | `src/components/sections/project-index.tsx` | `id={project.slug}` on each row; listens for `project:open` and sets `openSlug` |
 | `docs/context/ASSUMPTIONS.md` | A-001 confirmed (owner, 2026-10-17) |
@@ -42,7 +42,7 @@ Two new typed content blocks (`program`, `education`) render around the existing
 
 - The card spans the full width with the `bg-ink-2` surface and a lime label; on phones it stacks: label, program, path and role, period and status.
 - Chips use the `label` style with a border, wrap on small screens, and show the context in `text-muted` after the name.
-- Reduced motion: chips jump without the slice transition (existing `jumpTo` fallback); the card has no extra motion beyond the section's existing reveal.
+- Reduced motion: chips jump without the slice transition (existing `jumpTo` fallback); the card uses the existing clip `Reveal` (as the About facts do), which is skipped under reduced motion.
 
 ## Testing
 

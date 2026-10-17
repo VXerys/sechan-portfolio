@@ -49,7 +49,7 @@ The site shall show a testimonials section built from `src/content/portfolio.ts`
 
 The clinic shall appear without its name until it approves (A-001).
 
-- AC-013: Given the content file, when tests run, then "Cikidang" does not appear.
+- AC-013: Given the content file, when tests run, then "Cikidang" does not appear. Superseded on 2026-10-17 by F-011 AC-060: the clinic approved being named (A-001 confirmed).
 
 ## Business and validation rules
 
