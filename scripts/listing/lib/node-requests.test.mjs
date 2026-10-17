@@ -5,6 +5,7 @@ import http from 'node:http';
 import net from 'node:net';
 import path from 'node:path';
 import { after, before, test } from 'node:test';
+import { request as playwrightRequest } from 'playwright-core';
 
 import { openGuardedSession } from './browser.mjs';
 import { cacheDir, kitDir } from './project.mjs';
@@ -49,10 +50,26 @@ async function withSession(options, run) {
 }
 
 test('playwright-core still funnels Node-side requests through the hooked method (pin)', async () => {
-  await withSession({}, async ({ context }) => {
-    assert.equal(context.request._innerFetch.name, 'guardedInnerFetch');
+  await withSession({}, async ({ context, guard }) => {
+    const prototype = Object.getPrototypeOf(context.request);
+    assert.equal(Object.hasOwn(prototype, '_innerFetch'), true, 'APIRequestContext no longer defines _innerFetch itself');
+    assert.equal(prototype._innerFetch.name, 'guardedInnerFetch');
+    assert.equal(Object.hasOwn(context.request, '_innerFetch'), false);
     const page = await context.newPage();
     assert.equal(page.request, context.request, 'page.request is no longer the context request; guard it separately');
+
+    const second = await context.browser().newContext();
+    const standalone = await playwrightRequest.newContext();
+    try {
+      for (const other of [second.request, standalone]) {
+        assert.equal(other._innerFetch, prototype._innerFetch, 'a request context no longer shares the hooked prototype');
+        await assert.rejects(other.get(OUTSIDE), BLOCKED);
+      }
+    } finally {
+      await standalone.dispose();
+      await second.close();
+    }
+    assert.equal(guard.log.blocked['example.com'], 2);
   });
 });
 
@@ -103,37 +120,27 @@ test('allowed Node-side requests pass and are logged, and a redirect is handed b
   });
 });
 
-test('a capture run whose project reaches outside hosts from Node exits 1, logs each host, and keeps no PNG', async () => {
-  const slug = `_guard-test-${process.pid}`;
+// The kit loads projects only from projects/<slug>.mjs, so a run test writes its project there under a
+// _guard-test- slug (gitignored) and removes it afterwards. A stale clean log and image are planted first: the run
+// must replace them, never leave them as evidence.
+async function runCapture({ setup, before = 'async () => {}' }) {
+  const slug = `_guard-test-${process.pid}-${Math.random().toString(36).slice(2, 8)}`;
   const projectFile = path.join(kitDir, 'projects', `${slug}.mjs`);
   const dir = cacheDir(slug);
-  const fixtures = path.join(kitDir, 'fixtures');
   const port = await freePort();
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'hosts.json'), JSON.stringify({ allowed: { '127.0.0.1': 1 }, blocked: {} }));
+  fs.writeFileSync(path.join(dir, 'page.png'), 'stale');
   fs.writeFileSync(
     projectFile,
     `const project = {
   slug: ${JSON.stringify(slug)},
   baseUrl: 'http://127.0.0.1:${port}',
-  serve: ${JSON.stringify(fixtures)},
+  serve: ${JSON.stringify(path.join(kitDir, 'fixtures'))},
   viewport: { width: 800, height: 600, deviceScaleFactor: 1 },
   allowHosts: [${JSON.stringify(STUB_HOST)}],
-  setup: async (context) => {
-    await context.request.get('https://seed.example.net/').catch(() => null);
-    await context.route('https://${STUB_HOST}/**', async (route) => {
-      const response = await route.fetch({ url: 'https://upstream.example.org/' }).catch(() => null);
-      await route.fulfill(response ? { response } : { body: 'stub', headers: { 'access-control-allow-origin': '*' } });
-    });
-  },
-  shots: [
-    {
-      name: 'page',
-      path: '/selfcheck.html',
-      before: async (page) => {
-        await page.request.get('https://api.example.com/').catch(() => null);
-        await page.evaluate(() => fetch('https://${STUB_HOST}/data').catch(() => null));
-      },
-    },
-  ],
+  setup: ${setup},
+  shots: [{ name: 'page', path: '/selfcheck.html', before: ${before} }],
 };
 
 export default project;
@@ -141,12 +148,45 @@ export default project;
   );
   try {
     const run = spawnSync(process.execPath, [path.join(kitDir, 'capture.mjs'), slug], { encoding: 'utf8', timeout: 90_000 });
-    assert.equal(run.status, 1, run.stdout + run.stderr);
-    const log = JSON.parse(fs.readFileSync(path.join(dir, 'hosts.json'), 'utf8'));
-    assert.deepEqual(Object.keys(log.blocked).sort(), ['api.example.com', 'seed.example.net', 'upstream.example.org']);
-    assert.equal(fs.existsSync(path.join(dir, 'page.png')), false);
+    const logFile = path.join(dir, 'hosts.json');
+    return {
+      run,
+      log: fs.existsSync(logFile) ? JSON.parse(fs.readFileSync(logFile, 'utf8')) : null,
+      pngKept: fs.existsSync(path.join(dir, 'page.png')),
+    };
   } finally {
     fs.rmSync(projectFile, { force: true });
     fs.rmSync(dir, { recursive: true, force: true });
   }
+}
+
+test('a capture run whose project reaches outside hosts from Node exits 1, logs each host, and keeps no PNG', async () => {
+  const { run, log, pngKept } = await runCapture({
+    setup: `async (context) => {
+    await context.request.get('https://seed.example.net/').catch(() => null);
+    await context.route('https://${STUB_HOST}/**', async (route) => {
+      const response = await route.fetch({ url: 'https://upstream.example.org/' }).catch(() => null);
+      await route.fulfill(response ? { response } : { body: 'stub', headers: { 'access-control-allow-origin': '*' } });
+    });
+  }`,
+    before: `async (page) => {
+    await page.request.get('https://api.example.com/').catch(() => null);
+    await page.evaluate(() => fetch('https://${STUB_HOST}/data').catch(() => null));
+  }`,
+  });
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  assert.deepEqual(Object.keys(log.blocked).sort(), ['api.example.com', 'seed.example.net', 'upstream.example.org']);
+  assert.equal(pngKept, false);
+});
+
+test('a setup that throws on an uncaught blocked request still logs the host and exits 1', async () => {
+  const { run, log, pngKept } = await runCapture({
+    setup: `async (context) => {
+    await context.request.get('https://seed.example.net/rest/v1/patients');
+  }`,
+  });
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  assert.match(run.stderr, /listing guard blocked a Node-side request to seed\.example\.net/);
+  assert.deepEqual(log, { allowed: {}, blocked: { 'seed.example.net': 1 } });
+  assert.equal(pngKept, false);
 });

@@ -49,8 +49,8 @@ Each shot waits for network idle, `document.fonts.ready`, its `waitFor` selector
 
 - BR-012: a capture never talks to production or staging. The guard aborts every request, websocket, or service worker fetch to a host outside loopback and `allowHosts`, and Chrome's resolver refuses those names as a second wall. Any blocked host fails the run (exit 1), and no PNG from it is kept.
 - Every run writes `.listing-cache/<slug>/hosts.json` (`{ allowed, blocked }`); it is the task evidence for NFR-002. Compose writes its own `compose-hosts.json`.
-- Node-side Playwright requests (`context.request`, `page.request`, `route.fetch()`) are checked against the same allowlist and logged in the same `hosts.json`; one to an outside host throws and fails the run. They never follow redirects: a 3xx comes back to the caller.
-- Plain Node `fetch`, `http`, or a separate `request.newContext()` cannot be guarded. Seed emulators and call upstreams only through `context.request` in `setup`.
+- Node-side Playwright requests (`context.request`, `page.request`, `route.fetch()`, and any other request context such as `request.newContext()`) are checked against the same allowlist and logged in the same `hosts.json`; one to an outside host throws and fails the run, even when `setup` does not catch it. They never follow redirects: a 3xx comes back to the caller.
+- Plain Node `fetch` or `http` cannot be guarded. Seed emulators and call upstreams only through `context.request` in `setup`.
 - Do not add `page.route` in `before`; put stubs in `setup`. A page route that lets a request through is still counted as blocked and fails the run.
 - BR-013: sample data is invented and lives in the project file; never copy production, staging, exports, or fixtures that hold real people.
 - BR-014: client repositories are used only through a temporary worktree from the production branch; nothing is committed or pushed there, and the worktree is removed after capture.

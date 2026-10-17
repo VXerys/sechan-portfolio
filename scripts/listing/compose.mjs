@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { openGuardedSession } from './lib/browser.mjs';
-import { printHostLog, writeHostLog } from './lib/guard.mjs';
+import { createGuard, printHostLog, writeHostLog } from './lib/guard.mjs';
 import { encodeWebp, formatKb, KB, readImage, writeImage } from './lib/images.mjs';
 import { cacheDir, checkListingConfig, loadProject, outputDir, repoRoot } from './lib/project.mjs';
 import { browserFrame, fillTemplate, labelChip, loadTemplate, phoneFrame, sampleTag } from './lib/template.mjs';
@@ -133,11 +133,13 @@ async function compose(slug) {
 
   const encoded = [];
   let failure = null;
-  const session = await openGuardedSession({
-    allowHosts: FONT_HOSTS,
-    contextOptions: { viewport: { width: FORMATS.cover.width, height: FORMATS.cover.height }, deviceScaleFactor: 2 },
-  });
+  let session = null;
+  const guard = createGuard(FONT_HOSTS);
   try {
+    session = await openGuardedSession({
+      guard,
+      contextOptions: { viewport: { width: FORMATS.cover.width, height: FORMATS.cover.height }, deviceScaleFactor: 2 },
+    });
     for (const job of jobs) {
       const png = await render(session.context, fillTemplate(templates[job.format.template], job.values), job.format);
       encoded.push({ ...(await encodeWebp(png, { ...job.format, name: job.name })), maxBytes: job.format.maxBytes });
@@ -145,13 +147,13 @@ async function compose(slug) {
   } catch (error) {
     failure = error;
   } finally {
-    await session.close();
+    await session?.close();
   }
 
-  const logFile = writeHostLog(cacheDir(slug), session.guard.log, 'compose-hosts.json');
+  const logFile = writeHostLog(cacheDir(slug), guard.log, 'compose-hosts.json');
   console.log(`compose hosts log: ${relative(logFile)}`);
-  printHostLog(session.guard.log);
-  const blocked = session.guard.blockedHosts();
+  printHostLog(guard.log);
+  const blocked = guard.blockedHosts();
   if (blocked.length) console.error(`FAIL: blocked ${blocked.join(', ')}; nothing written`);
   if (failure) console.error(`FAIL: ${failure.message}`);
   if (blocked.length || failure) return 1;

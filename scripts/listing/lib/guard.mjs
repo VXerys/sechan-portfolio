@@ -51,22 +51,35 @@ export class BlockedRequestError extends Error {
   }
 }
 
-// context.request, page.request (the same object), and route.fetch() run in the Playwright driver over Node http:
-// Chrome never sees them, so the route, the request event, and the resolver rule all miss them. Every one of them
-// goes through APIRequestContext._innerFetch, a private method, so the guard wraps that single funnel and refuses to
-// start when it is missing rather than run blind. Redirects are not followed, because the driver would follow a
-// Location to any host without asking; a 3xx comes back to the caller instead (route.fulfill hands it to Chrome,
-// where the next hop meets the browser guard).
+const judges = new WeakMap();
+const wrappedPrototypes = new WeakSet();
+let latestJudge = null;
+const refuseAll = (url) => ({ host: classify(url, new Set())?.host ?? 'non-network-url', ok: false });
+
+// context.request, page.request (the same object), route.fetch(), and any other request context (a second
+// browser.newContext(), or request.newContext()) run in the Playwright driver over Node http: Chrome never sees them,
+// so the route, the request event, and the resolver rule all miss them. Every one of them goes through
+// APIRequestContext.prototype._innerFetch, a private method, so the guard wraps that single funnel once per process and
+// refuses to start when it is missing rather than run blind. A request context the kit did not open is judged by the
+// most recent guard, and with no guard at all every request is refused. Redirects are not followed, because the
+// driver would follow a Location to any host without asking; a 3xx comes back to the caller instead (route.fulfill
+// hands it to Chrome, where the next hop meets the browser guard).
 export function guardNodeRequests(apiRequest, judge) {
-  const innerFetch = apiRequest?._innerFetch;
-  if (typeof innerFetch !== 'function') {
-    throw new Error('playwright-core no longer exposes APIRequestContext._innerFetch, so Node-side requests cannot be guarded; update scripts/listing/lib/guard.mjs before capturing');
+  const prototype = apiRequest ? Object.getPrototypeOf(apiRequest) : null;
+  if (!prototype || !wrappedPrototypes.has(prototype)) {
+    const innerFetch = prototype?._innerFetch;
+    if (typeof innerFetch !== 'function') {
+      throw new Error('playwright-core no longer exposes APIRequestContext._innerFetch, so Node-side requests cannot be guarded; update scripts/listing/lib/guard.mjs before capturing');
+    }
+    prototype._innerFetch = async function guardedInnerFetch(options = {}) {
+      const verdict = (judges.get(this) ?? latestJudge ?? refuseAll)(String(options.url ?? options.request?.url() ?? ''));
+      if (!verdict.ok) throw new BlockedRequestError(verdict.host);
+      return innerFetch.call(this, { ...options, maxRedirects: 0 });
+    };
+    wrappedPrototypes.add(prototype);
   }
-  apiRequest._innerFetch = async function guardedInnerFetch(options = {}) {
-    const verdict = judge(String(options.url ?? options.request?.url() ?? ''));
-    if (!verdict.ok) throw new BlockedRequestError(verdict.host);
-    return innerFetch.call(this, { ...options, maxRedirects: 0 });
-  };
+  judges.set(apiRequest, judge);
+  latestJudge = judge;
 }
 
 export function createGuard(allowHosts) {

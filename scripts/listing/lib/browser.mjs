@@ -32,9 +32,8 @@ async function launchChrome(hosts) {
 }
 
 // The only way the kit opens a browser, so every run gets the same guard order: audit and Node-side hook, project
-// stubs, then the guard routes.
-export async function openGuardedSession({ allowHosts = [], contextOptions = {}, setup } = {}) {
-  const guard = createGuard(allowHosts);
+// stubs, then the guard routes. A caller that must log even a failed setup creates the guard itself and passes it in.
+export async function openGuardedSession({ allowHosts = [], guard = createGuard(allowHosts), contextOptions = {}, setup } = {}) {
   const browser = await launchChrome(guard.hosts);
   try {
     // Service workers fetch outside page routing, so they are blocked rather than trusted.

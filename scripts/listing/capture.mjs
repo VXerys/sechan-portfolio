@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { openGuardedSession } from './lib/browser.mjs';
-import { printHostLog, writeHostLog } from './lib/guard.mjs';
+import { createGuard, printHostLog, writeHostLog } from './lib/guard.mjs';
 import { formatKb, writeImage } from './lib/images.mjs';
 import { cacheDir, checkCaptureConfig, kitDir, loadProject, repoRoot } from './lib/project.mjs';
 import { serveDir } from './lib/static-server.mjs';
@@ -18,9 +18,13 @@ const SELFCHECK_ERROR_EXIT = 3;
 
 const relative = (file) => path.relative(repoRoot, file).replaceAll('\\', '/');
 
-// A failed run leaves no image next to its log, so compose can never pick up a capture the log does not vouch for.
-function dropCaptures(dir, shots) {
-  for (const shot of shots) fs.rmSync(path.join(dir, `${shot.name}.png`), { force: true });
+// Every run starts from an empty slate, so a run that fails early (no browser, a throwing setup) can never leave an
+// older log or image behind as evidence it did not produce.
+function clearPreviousRun(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const file of fs.readdirSync(dir)) {
+    if (file === 'hosts.json' || file.endsWith('.png')) fs.rmSync(path.join(dir, file), { force: true });
+  }
 }
 
 function reportHosts(dir, guard) {
@@ -33,17 +37,23 @@ function reportHosts(dir, guard) {
 async function capture(slug) {
   const project = checkCaptureConfig(await loadProject(slug));
   const dir = cacheDir(slug);
+  clearPreviousRun(dir);
   const base = new URL(project.baseUrl);
-  const server = project.serve ? await serveDir(project.serve, { host: base.hostname.replace(/^\[|\]$/g, ''), port: Number(base.port) || 80 }) : null;
-  if (server) console.log(`serving ${relative(project.serve)} at ${server.origin}`);
+  // Created here rather than inside the session, so a setup that throws on a blocked request is still logged.
+  const guard = createGuard(project.allowHosts);
 
   const { width, height, deviceScaleFactor } = project.viewport;
   const captures = [];
   let failure = null;
+  let server = null;
   let session = null;
   try {
+    if (project.serve) {
+      server = await serveDir(project.serve, { host: base.hostname.replace(/^\[|\]$/g, ''), port: Number(base.port) || 80 });
+      console.log(`serving ${relative(project.serve)} at ${server.origin}`);
+    }
     session = await openGuardedSession({
-      allowHosts: project.allowHosts,
+      guard,
       contextOptions: { viewport: { width, height }, deviceScaleFactor },
       setup: project.setup,
     });
@@ -58,9 +68,8 @@ async function capture(slug) {
     await server?.close();
   }
 
-  const blocked = session ? reportHosts(dir, session.guard) : [];
+  const blocked = reportHosts(dir, guard);
   if (blocked.length || failure) {
-    dropCaptures(dir, project.shots);
     if (blocked.length) console.error(`FAIL: blocked ${blocked.join(', ')}; no capture kept (AC-062, BR-012)`);
     if (failure) console.error(`FAIL: ${failure.message}`);
     return 1;

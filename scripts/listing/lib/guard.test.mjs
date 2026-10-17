@@ -36,7 +36,7 @@ test('allowHosts accepts exact names only, so nothing can allow every host', () 
 test('the guard log counts allowed and blocked hosts separately', () => {
   const guard = createGuard(['fonts.gstatic.com']);
   const handlers = [];
-  guard.watch({ on: (event, handler) => handlers.push([event, handler]), request: { _innerFetch: async () => null } });
+  guard.watch({ on: (event, handler) => handlers.push([event, handler]), request: new (class { async _innerFetch() {} })() });
   const [[event, onRequest]] = handlers;
   assert.equal(event, 'request');
   for (const url of ['http://localhost:5173/', 'https://fonts.gstatic.com/a.woff2', 'https://example.com/', 'https://example.com/b']) {
@@ -51,15 +51,23 @@ test('the Node-side hook refuses to start when the Playwright funnel is missing'
   assert.throws(() => guardNodeRequests(undefined, () => ({ ok: true })), /_innerFetch/);
 });
 
-test('the Node-side hook blocks before the driver is called and never follows redirects', async () => {
+test('the Node-side hook guards every instance of the class, blocks before the driver is called, and never follows redirects', async () => {
   const calls = [];
-  const api = { _innerFetch: async (options) => calls.push(options) };
+  // A fresh class per test, because the hook wraps the prototype once per process.
+  class FakeRequestContext {
+    async _innerFetch(options) {
+      calls.push(options);
+    }
+  }
+  const api = new FakeRequestContext();
+  const stranger = new FakeRequestContext();
   const guard = createGuard([]);
   guard.watch({ on: () => {}, request: api });
 
   await assert.rejects(api._innerFetch({ url: 'https://example.com/rest/v1/patients' }), BlockedRequestError);
   await assert.rejects(api._innerFetch({ request: { url: () => 'https://staging.example.org/' } }), /staging\.example\.org/);
   await assert.rejects(api._innerFetch({ url: '/relative/path' }), /unparsable-url/);
+  await assert.rejects(stranger._innerFetch({ url: "https://seed.example.net/" }), /seed.example.net/);
   assert.equal(calls.length, 0);
 
   await api._innerFetch({ url: 'http://127.0.0.1:4317/seed', maxRedirects: 5 });
@@ -67,6 +75,6 @@ test('the Node-side hook blocks before the driver is called and never follows re
   assert.equal(calls[0].maxRedirects, 0);
   assert.deepEqual(guard.log, {
     allowed: { '127.0.0.1': 1 },
-    blocked: { 'example.com': 1, 'staging.example.org': 1, 'unparsable-url': 1 },
+    blocked: { 'example.com': 1, 'seed.example.net': 1, 'staging.example.org': 1, 'unparsable-url': 1 },
   });
 });
