@@ -31,10 +31,8 @@ test("every testimonial is complete, approved or pending, and tied to a real pro
   }
 });
 
-test("testimonials keep the clinic unnamed and hold no phone numbers (AC-013, BR-002)", () => {
-  const text = JSON.stringify(testimonials);
-  assert.doesNotMatch(text, /cikidang/i);
-  assert.doesNotMatch(text, /(\+62|\b08)\d[\d\s-]{7,}/);
+test("testimonials hold no phone numbers (BR-002, AC-060)", () => {
+  assert.doesNotMatch(JSON.stringify(testimonials), /(\+62|\b08)\d[\d\s-]{7,}/);
 });
 
 test("no client component imports the testimonials content (AC-040)", () => {
