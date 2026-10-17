@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Harbor Ledger · Orders</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="side">
+        <div class="brand"><i></i>Harbor Ledger</div>
+        <nav class="nav">
+          <a href="index.html"><i></i>Overview</a>
+          <a class="on" href="orders.html"><i></i>Orders</a>
+          <a href="order.html"><i></i>Payments</a>
+          <a href="reports.html"><i></i>Reports</a>
+        </nav>
+        <div class="side-foot">Kit demo fixture. Every name and amount here is invented.</div>
+      </aside>
+      <main class="main">
+        <div class="top">
+          <div>
+            <h1>Orders</h1>
+            <div class="sub">38 open · 6 due this week</div>
+          </div>
+          <span class="grow"></span>
+          <span class="btn">Export</span>
+          <span class="btn primary">New order</span>
+          <span class="avatar">SA</span>
+        </div>
+        <div class="chips" id="filters">
+          <button class="on" data-filter="all">All</button>
+          <button data-filter="paid">Paid</button>
+          <button data-filter="dp">Waiting on balance</button>
+          <button data-filter="late">Overdue</button>
+        </div>
+        <section class="card">
+          <table>
+            <thead>
+              <tr><th class="hide-sm">Order</th><th>Customer</th><th class="hide-sm">Items</th><th class="hide-sm">Due</th><th class="num">Total</th><th>Status</th></tr>
+            </thead>
+            <tbody id="rows">
+              <tr data-status="paid"><td class="hide-sm">#1048</td><td>North Pier Café</td><td class="hide-sm muted">24 aprons, 12 caps</td><td class="hide-sm muted">14 Oct</td><td class="num">Rp 7.920.000</td><td><span class="tag paid">Paid</span></td></tr>
+              <tr data-status="dp"><td class="hide-sm">#1047</td><td>Lumen Books</td><td class="hide-sm muted">60 tote bags</td><td class="hide-sm muted">18 Oct</td><td class="num">Rp 5.400.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+              <tr data-status="paid"><td class="hide-sm">#1046</td><td>Kettle &amp; Co</td><td class="hide-sm muted">18 polo shirts</td><td class="hide-sm muted">12 Oct</td><td class="num">Rp 3.150.000</td><td><span class="tag paid">Paid</span></td></tr>
+              <tr data-status="late"><td class="hide-sm">#1045</td><td>Orbit Bikes</td><td class="hide-sm muted">40 jerseys</td><td class="hide-sm muted">9 Oct</td><td class="num">Rp 12.800.000</td><td><span class="tag late">Overdue</span></td></tr>
+              <tr data-status="dp"><td class="hide-sm">#1044</td><td>Juniper Florist</td><td class="hide-sm muted">30 work aprons</td><td class="hide-sm muted">21 Oct</td><td class="num">Rp 4.650.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+              <tr data-status="paid"><td class="hide-sm">#1043</td><td>Copper Kitchen</td><td class="hide-sm muted">16 chef jackets</td><td class="hide-sm muted">8 Oct</td><td class="num">Rp 6.720.000</td><td><span class="tag paid">Paid</span></td></tr>
+              <tr data-status="dp"><td class="hide-sm">#1042</td><td>Slow Tide Coffee</td><td class="hide-sm muted">80 tote bags</td><td class="hide-sm muted">25 Oct</td><td class="num">Rp 7.200.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+              <tr data-status="paid"><td class="hide-sm">#1041</td><td>Field Notes Supply</td><td class="hide-sm muted">12 canvas rolls</td><td class="hide-sm muted">5 Oct</td><td class="num">Rp 2.880.000</td><td><span class="tag paid">Paid</span></td></tr>
+              <tr data-status="late"><td class="hide-sm">#1040</td><td>Harbor Climbing</td><td class="hide-sm muted">50 hoodies</td><td class="hide-sm muted">2 Oct</td><td class="num">Rp 14.250.000</td><td><span class="tag late">Overdue</span></td></tr>
+              <tr data-status="dp"><td class="hide-sm">#1039</td><td>Lantern Studio</td><td class="hide-sm muted">20 shirts</td><td class="hide-sm muted">28 Oct</td><td class="num">Rp 3.600.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+              <tr data-status="dp"><td class="hide-sm">#1038</td><td>Copper Kitchen</td><td class="hide-sm muted">24 aprons</td><td class="hide-sm muted">30 Oct</td><td class="num">Rp 3.840.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+              <tr data-status="dp"><td class="hide-sm">#1037</td><td>North Pier Café</td><td class="hide-sm muted">36 caps</td><td class="hide-sm muted">1 Nov</td><td class="num">Rp 2.520.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+              <tr data-status="dp"><td class="hide-sm">#1036</td><td>Orbit Bikes</td><td class="hide-sm muted">25 jerseys</td><td class="hide-sm muted">3 Nov</td><td class="num">Rp 8.000.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+              <tr data-status="dp"><td class="hide-sm">#1035</td><td>Kettle &amp; Co</td><td class="hide-sm muted">12 polo shirts</td><td class="hide-sm muted">4 Nov</td><td class="num">Rp 2.100.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <nav class="tabs">
+      <a href="index.html"><i></i>Overview</a>
+      <a class="on" href="orders.html"><i></i>Orders</a>
+      <a href="order.html"><i></i>Payments</a>
+      <a href="reports.html"><i></i>Reports</a>
+    </nav>
+    <script>
+      document.getElementById("filters").addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        for (const other of button.parentElement.children) other.classList.toggle("on", other === button);
+        for (const row of document.querySelectorAll("#rows tr")) {
+          row.hidden = button.dataset.filter !== "all" && row.dataset.status !== button.dataset.filter;
+        }
+      });
+    </script>
+  </body>
+</html>

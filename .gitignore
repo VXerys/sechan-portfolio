@@ -46,3 +46,6 @@ next-env.d.ts
 
 # Temporary context tooling (SDD template)
 .context-cache/
+
+# Listing kit: raw captures and host logs, rebuilt by npm run listing:capture (F-010)
+/.listing-cache/

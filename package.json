@@ -9,6 +9,8 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "node --test \"src/**/*.test.ts\"",
+    "listing:capture": "node scripts/listing/capture.mjs",
+    "listing:compose": "node scripts/listing/compose.mjs",
     "context:render": "node scripts/context/render.mjs",
     "context:validate": "node scripts/context/validate-context.mjs",
     "context:archive-handoff": "node scripts/context/archive-handoff.mjs",
@@ -30,6 +32,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
+    "playwright-core": "^1.64.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "yaml": "^2.9.1"

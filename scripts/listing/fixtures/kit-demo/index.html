@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Harbor Ledger · Overview</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="side">
+        <div class="brand"><i></i>Harbor Ledger</div>
+        <nav class="nav">
+          <a class="on" href="index.html"><i></i>Overview</a>
+          <a href="orders.html"><i></i>Orders</a>
+          <a href="order.html"><i></i>Payments</a>
+          <a href="reports.html"><i></i>Reports</a>
+        </nav>
+        <div class="side-foot">Kit demo fixture. Every name and amount here is invented.</div>
+      </aside>
+      <main class="main">
+        <div class="top">
+          <div>
+            <h1>Overview</h1>
+            <div class="sub">Week 41 · all outlets</div>
+          </div>
+          <span class="grow"></span>
+          <span class="btn">Last 12 weeks</span>
+          <span class="btn primary">New order</span>
+          <span class="avatar" id="avatar">--</span>
+        </div>
+        <section class="kpis">
+          <div class="card kpi"><div class="k">Cash in</div><div class="v">Rp 184.250.000</div><div class="d">+12.4% vs last week</div></div>
+          <div class="card kpi"><div class="k">Cash out</div><div class="v">Rp 96.730.000</div><div class="d down">+4.1% vs last week</div></div>
+          <div class="card kpi"><div class="k">Open orders</div><div class="v">38</div><div class="d">6 due this week</div></div>
+          <div class="card kpi"><div class="k">Margin</div><div class="v">31.8%</div><div class="d">+1.2 pts</div></div>
+        </section>
+        <section class="grid-2">
+          <div class="card">
+            <div class="card-head"><h2>Cash in and out</h2><span>weekly, Rp million</span></div>
+            <div class="bars">
+              <div style="height: 52%"></div><div class="out" style="height: 30%"></div>
+              <div style="height: 61%"></div><div class="out" style="height: 35%"></div>
+              <div style="height: 48%"></div><div class="out" style="height: 41%"></div>
+              <div style="height: 70%"></div><div class="out" style="height: 38%"></div>
+              <div style="height: 66%"></div><div class="out" style="height: 44%"></div>
+              <div style="height: 82%"></div><div class="out" style="height: 47%"></div>
+              <div style="height: 77%"></div><div class="out" style="height: 40%"></div>
+              <div style="height: 94%"></div><div class="out" style="height: 51%"></div>
+            </div>
+            <div class="bars-axis"><span>W34</span><span>W35</span><span>W36</span><span>W37</span><span>W38</span><span>W39</span><span>W40</span><span>W41</span></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h2>Where the money went</h2><span>this week</span></div>
+            <div class="split">
+              <div style="width: 46%; background: var(--brand)"></div>
+              <div style="width: 25%; background: #7f9cf2"></div>
+              <div style="width: 17%; background: #b9c6f6"></div>
+              <div style="width: 12%; background: #dfe5f5"></div>
+            </div>
+            <div class="legend">
+              <div><i style="background: var(--brand)"></i>Vendor costs<b>Rp 44.500.000</b></div>
+              <div><i style="background: #7f9cf2"></i>Payroll<b>Rp 24.180.000</b></div>
+              <div><i style="background: #b9c6f6"></i>Shipping<b>Rp 16.440.000</b></div>
+              <div><i style="background: #dfe5f5"></i>Other<b>Rp 11.610.000</b></div>
+            </div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="card-head"><h2>Recent orders</h2><span>updated 2 min ago</span></div>
+          <table>
+            <thead><tr><th class="hide-sm">Order</th><th>Customer</th><th class="hide-sm">Items</th><th class="num">Total</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="hide-sm">#1048</td><td>North Pier Café</td><td class="hide-sm muted">24 aprons, 12 caps</td><td class="num">Rp 7.920.000</td><td><span class="tag paid">Paid</span></td></tr>
+              <tr><td class="hide-sm">#1047</td><td>Lumen Books</td><td class="hide-sm muted">60 tote bags</td><td class="num">Rp 5.400.000</td><td><span class="tag dp">DP 70%</span></td></tr>
+              <tr><td class="hide-sm">#1046</td><td>Kettle &amp; Co</td><td class="hide-sm muted">18 polo shirts</td><td class="num">Rp 3.150.000</td><td><span class="tag paid">Paid</span></td></tr>
+              <tr><td class="hide-sm">#1045</td><td>Orbit Bikes</td><td class="hide-sm muted">40 jerseys</td><td class="num">Rp 12.800.000</td><td><span class="tag late">Overdue</span></td></tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <nav class="tabs">
+      <a class="on" href="index.html"><i></i>Overview</a>
+      <a href="orders.html"><i></i>Orders</a>
+      <a href="order.html"><i></i>Payments</a>
+      <a href="reports.html"><i></i>Reports</a>
+    </nav>
+    <script>
+      // Stands in for a client app's auth call; the demo project answers it with a route stub on a fake host.
+      fetch("https://api.harbor.test/v1/session")
+        .then((response) => response.json())
+        .then((session) => {
+          document.getElementById("avatar").textContent = session.initials;
+          document.body.dataset.session = "ready";
+        });
+    </script>
+  </body>
+</html>
