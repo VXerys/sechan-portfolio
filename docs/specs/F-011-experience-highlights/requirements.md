@@ -2,7 +2,7 @@
 id: F-011
 title: "Experience highlights and clinic naming"
 type: requirements
-status: implementing
+status: verification
 tier: lite
 owner: "M Sechan Alfarisi"
 created: 2026-10-17

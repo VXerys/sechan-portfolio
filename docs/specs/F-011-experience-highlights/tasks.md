@@ -2,7 +2,7 @@
 id: F-011
 title: "Experience highlights and clinic naming"
 type: tasks
-status: implementing
+status: verification
 tier: lite
 owner: "M Sechan Alfarisi"
 created: 2026-10-17
@@ -21,26 +21,26 @@ Run with subagent-driven development: one implementer per task, a task review af
 ## Tasks
 
 ### T-037 — Content and tests
-- status: planned
+- status: done
 - requirements: [FR-033, FR-034, FR-035]
 - depends_on: []
-- evidence: []
+- evidence: [EV-029]
 
 `program` and `education` with their types, the clinic name in the project and the freelance entry, the updated tests, and A-001 confirmed. Facts come from about-me 03, 09, 16 (VERIFIED only). Acceptance: AC-055, AC-057, AC-059, AC-060.
 
 ### T-038 — Experience UI and project chips
-- status: planned
+- status: done
 - requirements: [FR-033, FR-034]
 - depends_on: [T-037]
-- evidence: []
+- evidence: [EV-029, EV-030, EV-031]
 
 Highlight card, education row, `ProjectChip`, ids on case studies and More work rows, and the `project:open` listener. Acceptance: AC-054, AC-056, AC-058.
 
 ### T-039 — Verification
-- status: planned
+- status: done
 - requirements: [FR-033, FR-034, FR-035]
 - depends_on: [T-037, T-038]
-- evidence: []
+- evidence: [EV-029, EV-030, EV-031]
 
 Lint, typecheck, test, build; browser at 360, 768, 1280 px including every chip; record EV blocks from EV-029.
 

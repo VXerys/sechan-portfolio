@@ -58,5 +58,5 @@ The site shall show a testimonials section, between (05) Recognition and Contact
 
 ## Open questions
 
-- A-001: clinic naming permission, blocking: no (the clinic uses an anonymous label until it agrees)
+- A-001: clinic naming permission, blocking: no (the clinic uses an anonymous label until it agrees). Confirmed 2026-10-17 (F-011); the anonymous label stays available for any person who declines to be named.
 - A-003: no quote collected yet, blocking: no for the code; visual checks with real entries wait for the first approval

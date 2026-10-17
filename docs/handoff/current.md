@@ -1,54 +1,53 @@
 ---
 status: active
 owner: "M Sechan Alfarisi"
-session_date: "2026-10-16"
-branch: "fix/F-009-mobile-menu"
-base_commit: "d1713ef"
-current_commit: "d1713ef"
-feature_id: "F-009"
-task_id: "T-034"
-expires_after: "2026-10-23"
+session_date: "2026-10-17"
+branch: "feat/F-011-experience-highlights"
+base_commit: "0733e02"
+current_commit: "5f272df"
+feature_id: "F-011"
+task_id: "T-039"
+expires_after: "2026-10-24"
 ---
 
 # Session Handoff
 
 ## Session objective
 
-BUG-001: on phones the menu links stopped half-masked after F-009 shipped (PR #9, merged). Fix it and record the evidence against F-009.
+F-011: highlight the Asah fellowship in Experience, add Universitas Nusa Putra with the projects built while studying, and name Klinik Cikidang Medika now that the clinic approved it (A-001 confirmed 2026-10-17).
 
 ## Completed
 
-- Root cause in `docs/quality/bugs/BUG-001-mobile-menu-links-stop-half-masked.md`: `transition-transform` on the menu links made GSAP's reveal read a mid-transition position as its end.
-- Menu links and More work rows now transition `scale` only, pills `scale, border-color`. EV-028 in F-009 `verification.md`; T-031 and T-034 cite it.
-- F-009 itself: T-030 to T-033 `done`, T-034 in `review`, EV-022 to EV-024 and EV-028. EV-025 to EV-027 are taken by F-008 on `chore/F-008-renumber-ids` (commit d91ca59, not pushed).
+- T-037 to T-039 `done` with EV-029 to EV-031, built through subagent-driven development: one implementer per task, a task review after each, a whole-branch review, one fix wave, and a scoped re-review (all findings addressed).
+- The final fix wave also moves focus to the target after any slice-transition jump, which fixes the same gap in the header nav.
+- F-002 AC-013 is marked superseded; F-001, F-002, and F-006 note A-001 as confirmed.
 
 ## Changed files
 
-`src/components/site/header.tsx`, `src/components/motion/pill.tsx`, `src/components/sections/project-index.tsx`, F-009 `tasks.md` and `verification.md`, `docs/quality/bugs/BUG-001-*.md` (new), rendered context views.
+`src/content/portfolio.ts` and its test, `src/content/testimonials.test.ts`, `src/components/sections/{experience,work,project-index}.tsx`, `src/components/site/project-chip.tsx` (new), `src/components/motion/slice-transition.tsx`, `src/app/{page.tsx,globals.css}`, F-011 spec, notes in F-001, F-002, F-006, `docs/context/ASSUMPTIONS.md`.
 
 ## Commands executed
 
-`npm run lint`, `npm run typecheck`, `npm test` (23 pass), `npm run build`, `npx next start -p 3004` + in-app browser at 375x812 against the fix and against production, `npm run context:render`, `npm run context:validate -- --strict`.
+`npm test` (25 pass), `npm run lint`, `npm run typecheck`, `npm run build`, `next start -p 3006` with the in-app browser at 360, 375, 768, 1280 px, `npm run context:render`, `npm run context:validate -- --strict`.
 
 ## Uncommitted work
 
-None after the BUG-001 commit on `fix/F-009-mobile-menu`.
+None after the closing docs commit on `feat/F-011-experience-highlights`; the branch is not pushed.
 
 ## Blockers
 
-- A-001 (clinic naming) and A-003 (no quote collected yet) stay open; neither blocks the code.
+- A-003 (testimonials) stays open; the owner is holding the clinic's review until the others arrive. A-004 (Mangcoding permission) affects F-010 only.
 
 ## Exact next step
 
-Owner merges the BUG-001 pull request and opens the menu on a phone. The F-008 id renumbering runs in its own session on `chore/F-008-renumber-ids`; whichever merges second re-runs `npm run context:render`. Then T-024's production favicon check.
+Owner approves the push and pull request for F-011. Owner follow-ups in about-me: 07:534 still labels the clinic permission `NEEDS_VERIFICATION`; 07:132 names ArtConnect's course "Pengembangan Aplikasi Berbasis Web" while 03:68 and 07:148 say "Pemrograman Berbasis Web" (the site uses "Web Programming course"). F-010 continues on `feat/F-010-listing-images`.
 
 ## Do not do next
 
-- Do not put a Tailwind `transition-transform` (or `transition-all`) on an element GSAP animates; transition the specific property instead.
-- Do not kill tweens inside a `gsap.matchMedia` cleanup; `mm.revert()` restores the start values only for tweens it still owns.
-- Do not commit placeholder or sample testimonials; the list stays empty until a real approval.
-- Do not change DNS at name.com without reading the current records on Vercel's Domains page first.
+- Do not put a Tailwind `transition-transform` on an element GSAP animates.
+- Do not add the Asah capstone partner before about-me records it as VERIFIED.
+- Do not commit placeholder testimonials.
 
 ## Validity
 
-Valid until 2026-10-23 or the next commit.
+Valid until 2026-10-24 or the next commit.

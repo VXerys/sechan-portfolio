@@ -2,7 +2,7 @@
 id: F-011
 title: "Experience highlights and clinic naming"
 type: design
-status: implementing
+status: verification
 tier: lite
 owner: "M Sechan Alfarisi"
 created: 2026-10-17
@@ -32,10 +32,11 @@ Two new typed content blocks (`program`, `education`) render around the existing
 | `src/content/portfolio.ts` | `Program` type and `program` (Asah); `Education` type and `education` (Nusa Putra, GPA, project slugs with context); clinic `client` and the freelance point use "Klinik Cikidang Medika" |
 | `src/content/portfolio.test.ts` | replace the anonymity test with "clinic is named as approved (A-001)"; education slugs exist in `projects`; program fields are filled |
 | `src/content/testimonials.test.ts` | drop the "cikidang" assertion, keep the phone-number check |
-| `src/components/sections/experience.tsx` | highlight card before `LineRows` (lime "Highlight" label, display type, period and status); education row after the work rows, same anatomy as a work row |
+| `src/components/sections/experience.tsx` | highlight card before `LineRows` (lime "Highlight" label, display type, period and status); education row after the work rows; shared `Row` and `Point` give both the same anatomy; the hover fill transitions `scale`, not `transform` (BUG-001) |
 | `src/components/site/project-chip.tsx` (new) | client link: dispatches `project:open` with the slug first, so the row is open before the slices uncover it, then calls `jumpTo('#<slug>')` |
-| `src/components/sections/work.tsx` | `id={project.slug}` on each case-study article |
-| `src/components/sections/project-index.tsx` | `id={project.slug}` on each row; listens for `project:open` and sets `openSlug` |
+| `src/components/sections/work.tsx` | `id`, `data-section-label` (the slice transition's centre label), and `scroll-mt-24` on each case-study article |
+| `src/components/sections/project-index.tsx` | the same three attributes on each row; listens for `project:open` and sets `openSlug` |
+| `src/components/motion/slice-transition.tsx`, `src/app/globals.css` | after the jump, focus moves to the target (a More work row's toggle button, otherwise the element with `tabindex="-1"`), so keyboard and screen-reader users land where the page did; no outline on that programmatic focus |
 | `docs/context/ASSUMPTIONS.md` | A-001 confirmed (owner, 2026-10-17) |
 
 ## UI behavior

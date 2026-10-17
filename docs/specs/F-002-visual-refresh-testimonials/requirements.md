@@ -57,5 +57,5 @@ The clinic shall appear without its name until it approves (A-001).
 
 ## Open questions
 
-- A-001: clinic naming permission, blocking: no
+- A-001: clinic naming permission, blocking: no. Confirmed 2026-10-17 (F-011).
 - A-003: testimonials not yet collected, blocking: no
