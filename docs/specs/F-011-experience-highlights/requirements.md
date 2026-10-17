@@ -27,12 +27,12 @@ Non-goals: a capstone line before about-me records it as VERIFIED; testimonials 
 
 ### FR-033 — Asah highlight
 
-- AC-054: Given the Experience section, when it renders, then a highlight card above the rows shows "Asah 2026 led by Dicoding, supported by GoTo", "Next-Gen AI Engineer path", the role "Fellow", "Aug 2026 - Jan 2027", and "In progress".
+- AC-054: Given the Experience section, when it renders, then a highlight card above the rows shows "Asah 2026 led by Dicoding supported by GoTo", "Next-Gen AI Engineer path", the role "Fellow", "Aug 2026 - Jan 2027", and "In progress".
 - AC-055: Given no capstone recorded as VERIFIED in about-me, when the card renders, then it names no capstone partner.
 
 ### FR-034 — Education and projects built while studying
 
-- AC-056: Given the Experience section, when it renders, then a row labelled "Education" shows "Universitas Nusa Putra", "S.Kom. Informatics", "Sep 2023 - 2027 (expected)", and "GPA 3.73".
+- AC-056: Given the Experience section, when it renders, then a row labelled "Education" shows "Universitas Nusa Putra", "S.Kom. Informatics Engineering", "Sep 2023 - 2027 (expected)", and "GPA 3.73".
 - AC-057: Given the education row, when it renders, then a "Built while studying" group lists Gunung Puyuh WebGIS, ArtConnect (Web Programming course), Cartify (Research Methodology and Mobile Programming), and Fluxa (independent).
 - AC-058: Given one of those projects, when its chip is clicked, then the page moves to its case study, or to its More work row and opens it.
 
