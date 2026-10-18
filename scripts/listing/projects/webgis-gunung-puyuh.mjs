@@ -54,18 +54,12 @@ const project = {
   },
   shots: [
     {
-      name: 'splash',
+      name: 'landing',
       path: '/',
       waitFor: '#landing-page.active',
       before: async (page) => {
-        // The app hides the splash 1.5 s after load and removes it 0.8 s later; showing it again before that
-        // would be undone by its own timer.
+        // The splash fades over the landing page for the first 2.3 s after load; wait it out so the page is clean.
         await page.waitForFunction(() => getComputedStyle(document.getElementById('splash-screen')).display === 'none');
-        await page.evaluate(() => {
-          const splash = document.getElementById('splash-screen');
-          splash.style.display = '';
-          splash.classList.remove('hidden');
-        });
       },
     },
     {
@@ -130,7 +124,7 @@ const project = {
     tagline: 'An interactive map of which Gunung Puyuh neighbourhoods sit too far from schools and health facilities.',
     cover: { shot: 'service-area' },
     slides: [
-      { shot: 'splash', caption: 'Start with a short intro to the Gunung Puyuh accessibility study' },
+      { shot: 'landing', caption: 'Read the background, goals and benefits of the study before opening the map' },
       { shot: 'gap', caption: 'Check if a spot has schools or clinics within 250 and 500 metres' },
       { shot: 'health', caption: 'Switch school and health layers on and off to compare coverage' },
       { shot: 'popup', caption: 'Open any school to see its name and photo on the map' },
