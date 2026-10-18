@@ -58,7 +58,10 @@ async function capture(slug) {
       setup: project.setup,
     });
     for (const shot of project.shots) {
-      captures.push({ shot, png: await captureShot(session.context, project.baseUrl, shot) });
+      const png = await captureShot(session.context, project.baseUrl, shot);
+      // A strict stub that saw an unstubbed request fails here, before the shot counts as captured.
+      session.verify();
+      captures.push({ shot, png });
       console.log(`  ${shot.name}: captured`);
     }
   } catch (error) {

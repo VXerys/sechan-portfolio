@@ -1,6 +1,9 @@
+import { addRunCheck } from './browser.mjs';
+
 // Answers a Supabase client from fixtures, so an app built on Supabase renders signed in without any real project.
 // Every request to the stub origin is fulfilled here and never continued: a path the fixtures do not cover gets an
 // empty or 404 answer and a log line, so a missing stub shows up in the run output instead of as a silent blank screen.
+// With strict set, any such line fails the capture, so a screen is never shot with half its data stubbed.
 
 const RESERVED_TLD = '.test';
 // A .test name cannot resolve (RFC 6761), so even a request that slipped past the route could not reach a real host.
@@ -221,7 +224,7 @@ function corsHeaders(headers) {
 const json = (status, body, extra = {}) => ({ status, headers: { 'content-type': 'application/json; charset=utf-8', ...extra }, body: body === undefined ? '' : JSON.stringify(body) });
 const notFound = (message) => json(404, { code: 'STUB404', message, details: null, hint: 'add it to the project stub fixtures' });
 
-export function createSupabaseStub({ origin, user, session, tables = {}, rpc = {}, files = {}, storageKey, signedOutPaths = [], log = (line) => console.log(line) }) {
+export function createSupabaseStub({ origin, user, session, tables = {}, rpc = {}, files = {}, storageKey, signedOutPaths = [], strict = false, log = (line) => console.log(line) }) {
   const stubOrigin = assertStubOrigin(origin);
   if (!user?.id || !user?.email) throw new Error('Supabase stub needs a sample user with id and email (see sampleUser)');
   const activeSession = session ?? sampleSession(user, { origin: stubOrigin });
@@ -318,7 +321,30 @@ export function createSupabaseStub({ origin, user, session, tables = {}, rpc = {
     return { ...response, headers: { ...corsHeaders(headers), ...response.headers } };
   }
 
+  // A throwing fixture (an rpc function, a malformed row) must still answer, or the client waits until the shot times
+  // out and the cause is lost; the 500 and its log line point at the fixture instead.
+  function answer(request) {
+    try {
+      return handle(request);
+    } catch (error) {
+      let where = request.url;
+      try {
+        where = new URL(request.url).pathname;
+      } catch {
+        // An unparsable URL is reported as given.
+      }
+      miss(`error ${request.method} ${where}: ${error.message}`);
+      return json(500, { code: 'STUB500', message: error.message, details: null, hint: 'fix the project stub fixtures' }, corsHeaders(request.headers ?? {}));
+    }
+  }
+
+  function verify() {
+    if (!strict || misses.size === 0) return;
+    throw new Error(`Supabase stub is strict and ${misses.size} request(s) had no stub: ${[...misses].join('; ')}`);
+  }
+
   async function install(context) {
+    if (strict) addRunCheck(context, verify);
     await context.addInitScript(
       ({ storageKey: name, value, signedOut }) => {
         try {
@@ -334,11 +360,11 @@ export function createSupabaseStub({ origin, user, session, tables = {}, rpc = {
       (url) => url.origin === stubOrigin,
       async (route) => {
         const request = route.request();
-        const response = handle({ method: request.method(), url: request.url(), headers: request.headers(), postData: request.postData() });
+        const response = answer({ method: request.method(), url: request.url(), headers: request.headers(), postData: request.postData() });
         await route.fulfill(response);
       },
     );
   }
 
-  return { origin: stubOrigin, host: new URL(stubOrigin).hostname, storageKey: key, session: activeSession, misses, handle, install };
+  return { origin: stubOrigin, host: new URL(stubOrigin).hostname, storageKey: key, session: activeSession, strict, misses, handle, answer, verify, install };
 }

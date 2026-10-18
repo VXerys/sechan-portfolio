@@ -31,6 +31,15 @@ async function launchChrome(hosts) {
   return chromium.launch({ executablePath, headless: true, args: launchArgs(hosts) });
 }
 
+const runChecks = new WeakMap();
+
+// A stub that must fail the run on its own (a strict Supabase stub) registers here when it installs, so a project
+// cannot turn strict on and then forget to wire the check into the capture.
+export function addRunCheck(context, check) {
+  if (!runChecks.has(context)) runChecks.set(context, []);
+  runChecks.get(context).push(check);
+}
+
 // The only way the kit opens a browser, so every run gets the same guard order: audit and Node-side hook, project
 // stubs, then the guard routes. A caller that must log even a failed setup creates the guard itself and passes it in.
 export async function openGuardedSession({ allowHosts = [], guard = createGuard(allowHosts), contextOptions = {}, setup } = {}) {
@@ -41,7 +50,10 @@ export async function openGuardedSession({ allowHosts = [], guard = createGuard(
     guard.watch(context);
     if (setup) await setup(context);
     await guard.enforce(context);
-    return { context, guard, close: () => browser.close() };
+    const verify = () => {
+      for (const check of runChecks.get(context) ?? []) check();
+    };
+    return { context, guard, verify, close: () => browser.close() };
   } catch (error) {
     await browser.close();
     throw error;

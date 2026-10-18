@@ -1,9 +1,13 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import net from 'node:net';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { test } from 'node:test';
 
 import { openGuardedSession } from './browser.mjs';
-import { kitDir } from './project.mjs';
+import { cacheDir, kitDir } from './project.mjs';
 import { serveDir } from './static-server.mjs';
 import { assertStubOrigin, createSupabaseStub, parseFilter, parseSelect, queryRows, sampleUser } from './supabase-stub.mjs';
 
@@ -136,6 +140,103 @@ test('auth answers the sample user and session, and nothing in it is a usable to
 test('the stub refuses to answer for any origin but its own', () => {
   const { stub } = makeStub();
   assert.throws(() => stub.handle({ method: 'GET', url: 'https://abcd.supabase.co/rest/v1/artworks' }), /not https:\/\/stub\.listing\.test/);
+});
+
+test('a fixture that throws answers 500 with a MISSING line instead of leaving the request unanswered', () => {
+  const { stub, lines } = makeStub({
+    rpc: {
+      broken: () => {
+        throw new Error('fixture has no row for p_id');
+      },
+    },
+  });
+  const response = stub.answer({ method: 'POST', url: `${ORIGIN}/rest/v1/rpc/broken`, headers: { origin: 'http://127.0.0.1:3000' }, postData: '{}' });
+  assert.equal(response.status, 500);
+  assert.equal(body(response).code, 'STUB500');
+  assert.equal(response.headers['access-control-allow-origin'], 'http://127.0.0.1:3000', 'a 500 the browser cannot read is as silent as no answer');
+  assert.deepEqual(lines.filter((line) => line.includes('MISSING')), ['  supabase stub: MISSING error POST /rest/v1/rpc/broken: fixture has no row for p_id']);
+
+  assert.throws(() => stub.handle({ method: 'GET', url: 'https://abcd.supabase.co/rest/v1/artworks' }));
+  assert.equal(stub.answer({ method: 'GET', url: 'https://abcd.supabase.co/rest/v1/artworks' }).status, 500);
+});
+
+test('strict turns any MISSING line into a failed check, and a lenient stub only logs', () => {
+  const lenient = makeStub().stub;
+  get(lenient, '/rest/v1/patients?select=*');
+  assert.doesNotThrow(() => lenient.verify());
+
+  const strict = makeStub({ strict: true }).stub;
+  get(strict, '/rest/v1/artworks?select=*&status=eq.sold');
+  assert.doesNotThrow(() => strict.verify(), 'a fully stubbed read passes');
+  get(strict, '/rest/v1/artworks?select=*&or=(title.ilike.*a*)');
+  get(strict, '/rest/v1/patients?select=*');
+  assert.throws(() => strict.verify(), /strict and 2 request\(s\) had no stub: artworks query or filter \(ignored\); table patients \(answered \[\]\)/);
+});
+
+function freePort() {
+  return new Promise((resolve) => {
+    const probe = net.createServer().listen(0, '127.0.0.1', () => {
+      const { port } = probe.address();
+      probe.close(() => resolve(port));
+    });
+  });
+}
+
+// Same pattern as the guard run tests: a _guard-test- project (gitignored) drives the real capture.mjs, and a stale
+// image is planted first, so a failed strict run is shown to leave no PNG behind.
+async function runStrictCapture(table) {
+  const slug = `_guard-test-${process.pid}-${Math.random().toString(36).slice(2, 8)}`;
+  const projectFile = path.join(kitDir, 'projects', `${slug}.mjs`);
+  const dir = cacheDir(slug);
+  const port = await freePort();
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'page.png'), 'stale');
+  const stubModule = pathToFileURL(path.join(kitDir, 'lib', 'supabase-stub.mjs')).href;
+  fs.writeFileSync(
+    projectFile,
+    `import { createSupabaseStub, sampleUser } from ${JSON.stringify(stubModule)};
+
+const stub = createSupabaseStub({
+  origin: ${JSON.stringify(ORIGIN)},
+  user: sampleUser({ id: 'auth-0001', email: 'sample.owner@example.test', fullName: 'Sample Owner' }),
+  tables: { visits: [{ id: 'v1', status: 'done' }] },
+  storageKey: 'strict-test-auth',
+  strict: true,
+});
+
+const project = {
+  slug: ${JSON.stringify(slug)},
+  baseUrl: 'http://127.0.0.1:${port}',
+  serve: ${JSON.stringify(path.join(kitDir, 'fixtures'))},
+  viewport: { width: 800, height: 600, deviceScaleFactor: 1 },
+  allowHosts: [stub.host],
+  setup: (context) => stub.install(context),
+  shots: [{ name: 'page', path: '/selfcheck.html', before: (page) => page.evaluate((url) => fetch(url).then((response) => response.json()), ${JSON.stringify(`${ORIGIN}/rest/v1/`)} + ${JSON.stringify(table)} + '?select=*') }],
+};
+
+export default project;
+`,
+  );
+  try {
+    const run = spawnSync(process.execPath, [path.join(kitDir, 'capture.mjs'), slug], { encoding: 'utf8', timeout: 90_000 });
+    return { run, pngKept: fs.existsSync(path.join(dir, 'page.png')) };
+  } finally {
+    fs.rmSync(projectFile, { force: true });
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
+test('a capture with a strict stub exits 1 and keeps no PNG when a shot reads an unstubbed table', async () => {
+  const { run, pngKept } = await runStrictCapture('patients');
+  assert.equal(run.status, 1, run.stdout + run.stderr);
+  assert.match(run.stderr, /FAIL: Supabase stub is strict and 1 request\(s\) had no stub: table patients/);
+  assert.equal(pngKept, false);
+});
+
+test('a capture with a strict stub keeps its PNG when every request is stubbed', async () => {
+  const { run, pngKept } = await runStrictCapture('visits');
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.equal(pngKept, true);
 });
 
 test('in Chrome behind the guard, the stub answers a cross-origin Supabase-style fetch and nothing leaves', async () => {
