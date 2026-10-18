@@ -46,7 +46,7 @@ supersedes: null
 ## Data and consistency
 
 - Sample data lives in `scripts/listing/projects/<slug>.mjs`: names from a fixed fictional list, amounts generated in plausible ranges, dates relative to the capture day. One file per project, so a reviewer reads all data that can appear on a slide.
-- Supabase apps: `page.route` fulfils `/auth/v1/*` with a sample session and `/rest/v1/<table>` with fixture rows filtered by the query's `select` and `eq` params where the screen needs it. Unknown tables return `[]` and are logged, so a missing stub is visible instead of silent.
+- Supabase apps: context routes registered in the project's `setup` (behind the guard, never `page.route` in `before`) fulfil `/auth/v1/*` with a sample session and `/rest/v1/<table>` with fixture rows filtered by the query's `select` and `eq` params where the screen needs it. Unknown tables return `[]` and are logged, so a missing stub is visible instead of silent.
 - Firebase apps: the emulator suite (auth, firestore) runs under `demo-<slug>`. Demo project ids cannot reach a real project, so a missed override still fails closed. Fixtures are written through the emulator REST API before capture.
 - Static apps (WebGIS): the repository's own GeoJSON is public data; no stub is needed.
 - Output is deterministic for a given shot list, fixtures, and app commit; the commit is recorded in each task's evidence.

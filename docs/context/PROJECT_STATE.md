@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: fb448afeb0e62fa4424561c56100877ffb3c9719194961d98101c944d3a133f9 -->
+source_hash: 0bb977dae142545c56b1ae99ae452056feeaff095fff1b20f1d0bd8c8e2243b0 -->
 
 # Project State
 
-- Generated at: 2026-10-17T10:38:27.930Z
+- Generated at: 2026-10-18T04:27:11.114Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 3
@@ -29,14 +29,14 @@ source_hash: fb448afeb0e62fa4424561c56100877ffb3c9719194961d98101c944d3a133f9 --
 ## Git
 
 - Branch: `feat/F-010-listing-images`
-- HEAD: `0733e02`
+- HEAD: `8579063`
 - Worktree: dirty
 
 Recent commits:
 
+- `8579063 fix(F-010): log blocked requests when setup fails`
+- `4060e2c fix(F-010): guard Node-side requests in the listing kit`
+- `c8d17ad feat(F-010): add listing capture and compose kit`
+- `bd9d73f docs(F-010): plan project listing images`
 - `0733e02 Merge pull request #10 from VXerys/fix/F-009-mobile-menu`
-- `52dc06a fix(F-009): mobile menu links stop half-masked (BUG-001)`
-- `d1713ef Merge pull request #9 from VXerys/feat/F-009-mobile-indicator-motion`
-- `d5545b7 feat(F-009): mobile polish, section indicator, motion set 2`
-- `fa7a7cf Merge pull request #8 from VXerys/feat/F-008-content-corrections`
 <!-- GENERATED:GIT_FACTS:END -->
