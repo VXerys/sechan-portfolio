@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readdirSync } from "node:fs";
 import test from "node:test";
 
 import { listingCopy, listingNotice } from "./listing-copy.ts";
@@ -26,4 +27,13 @@ test("sample-data sets carry a notice, and only client work mentions approval (A
   assert.match(listingNotice(sample, true) ?? "", /client's approval/);
   assert.equal(listingNotice(sample, false), "Screens use sample data.");
   assert.equal(listingNotice({ ...sample, sampleData: false }, true), null);
+});
+
+test("every listing folder has a cover and one slide per caption, so no slide ships without alt text (AC-068)", () => {
+  for (const [slug, copy] of Object.entries(listingCopy)) {
+    const files = readdirSync(new URL(`../assets/images/listings/${slug}/`, import.meta.url));
+    assert.ok(files.includes("cover.webp"), `${slug} has no cover`);
+    const slides = files.filter((name) => /^\d{2}\.webp$/.test(name));
+    assert.equal(slides.length, copy.captions.length, `${slug}: ${slides.length} slides, ${copy.captions.length} captions`);
+  }
 });

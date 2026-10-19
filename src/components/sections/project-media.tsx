@@ -38,7 +38,8 @@ export function ProjectMedia({ project }: { project: Project }) {
       });
       mm.add(DESKTOP_MOTION, () => {
         const layer = el.querySelector("[data-parallax='image']");
-        if (!layer) return;
+        // Listing covers are composed edge to edge (title, sample-data tag), so they skip the scaled parallax that would crop them.
+        if (!layer || listing) return;
         gsap.fromTo(
           layer,
           { yPercent: -7, scale: 1.14 },
@@ -47,7 +48,7 @@ export function ProjectMedia({ project }: { project: Project }) {
       });
       return () => mm.revert();
     },
-    { scope: frame },
+    { scope: frame, dependencies: [listing] },
   );
 
   const visual = (
@@ -64,7 +65,7 @@ export function ProjectMedia({ project }: { project: Project }) {
       </span>
       {media ? (
         <div data-parallax="image" className="absolute inset-0">
-          <div className="absolute inset-0 transition-transform duration-1000 ease-[var(--ease-expo)] group-hover:scale-[1.05]">
+          <div className={`absolute inset-0 ${listing ? "" : "transition-transform duration-1000 ease-[var(--ease-expo)] group-hover:scale-[1.05]"}`}>
             <Image
               src={media.src}
               alt={media.alt}

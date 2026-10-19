@@ -8,7 +8,8 @@ import type { ListingSlide } from "@/content/listings";
 const DRAG_THRESHOLD = 6;
 
 // Native horizontal scroll carries touch, trackpad, and keyboard; the pointer drag only adds a grab for mouse users,
-// so the strip works without JavaScript and needs no reduced-motion branch.
+// so the strip works without JavaScript and needs no reduced-motion branch. Lenis would swallow a trackpad swipe
+// with any vertical drift, so mostly horizontal gestures are left to the strip while vertical wheel stays smooth.
 export function ListingStrip({ title, slides, label, notice }: { title: string; slides: ListingSlide[]; label: string | null; notice: string | null }) {
   const track = useRef<HTMLDivElement>(null);
   const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
@@ -51,18 +52,19 @@ export function ListingStrip({ title, slides, label, notice }: { title: string; 
         aria-label={`${title} screens`}
         tabIndex={0}
         data-cursor="hide"
+        data-lenis-prevent-horizontal
         onPointerDown={down}
         onPointerMove={move}
         onPointerUp={up}
         onPointerCancel={up}
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-3 [scrollbar-width:thin] data-[dragging]:cursor-grabbing data-[dragging]:snap-none md:cursor-grab"
+        className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-3 [scrollbar-width:thin] data-[dragging]:cursor-grabbing data-[dragging]:snap-none md:cursor-grab focus-visible:outline-offset-[-2px]"
       >
         {slides.map((slide) => (
           <figure key={slide.alt} className="h-[22rem] shrink-0 snap-start overflow-hidden rounded-sm bg-ink-2 md:h-[26rem]">
             <Image
               src={slide.src}
               alt={slide.alt}
-              sizes="(min-width: 768px) 26rem, 72vw"
+              sizes="(min-width: 768px) 26rem, 80vw"
               draggable={false}
               className="h-full w-auto select-none"
             />

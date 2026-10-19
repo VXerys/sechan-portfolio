@@ -49,7 +49,14 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
         const tilt = gsap.quickTo(card, "rotate", { duration: 0.9, ease: "power3" });
         let lastX = 0;
 
+        let overPanel = false;
         const move = (event: PointerEvent) => {
+          // An open panel holds the screen strip; a preview card over it would hide the very slide under the pointer.
+          const inPanel = event.target instanceof Element && event.target.closest("[data-panel]") !== null;
+          if (inPanel !== overPanel) {
+            overPanel = inPanel;
+            gsap.to(card, { scale: inPanel ? 0.6 : 1, autoAlpha: inPanel ? 0 : 1, duration: 0.3, ease: "power3.out", overwrite: "auto" });
+          }
           x(event.clientX);
           y(event.clientY);
           // Horizontal speed tilts the card, so it swings like something carried rather than glued to the pointer.
@@ -57,6 +64,7 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
           lastX = event.clientX;
         };
         const enter = (event: PointerEvent) => {
+          overPanel = false;
           lastX = event.clientX;
           gsap.set(card, { x: event.clientX, y: event.clientY });
           gsap.to(card, { scale: 1, autoAlpha: 1, duration: 0.6, ease: "expo.out", overwrite: "auto" });
@@ -115,6 +123,7 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
                 </h4>
                 <div
                   id={panelId}
+                  data-panel
                   className={`grid transition-[grid-template-rows] duration-700 ease-[var(--ease-expo)] ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                 >
                   <div className="overflow-hidden" inert={!open}>

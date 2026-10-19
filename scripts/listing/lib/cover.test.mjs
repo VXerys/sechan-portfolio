@@ -8,6 +8,9 @@ import { openGuardedSession } from './browser.mjs';
 import { checkListingConfig, kitDir } from './project.mjs';
 import { coverOverlay, phoneFrame } from './template.mjs';
 
+// Built per platform, so the absolute-path check holds on the Linux CI runner as well as on Windows.
+const SHOT = path.resolve('shots', 'a.png');
+
 const SOURCE = { width: 200, height: 400 };
 
 function listingWith(sources, type = 'mobile') {
@@ -28,10 +31,10 @@ function listingWith(sources, type = 'mobile') {
 }
 
 test('sources accept a plain path or a file with cover regions', () => {
-  const plain = checkListingConfig(listingWith({ a: 'C:/shots/a.png' }));
-  assert.deepEqual(plain.sources.a, { file: 'C:/shots/a.png', cover: [] });
+  const plain = checkListingConfig(listingWith({ a: SHOT }));
+  assert.deepEqual(plain.sources.a, { file: SHOT, cover: [] });
   const region = { x: 1, y: 2, w: 30, h: 10, kind: 'name', value: 'Mina', fill: '#ffffff' };
-  const covered = checkListingConfig(listingWith({ a: { file: 'C:/shots/a.png', cover: [region] } }));
+  const covered = checkListingConfig(listingWith({ a: { file: SHOT, cover: [region] } }));
   assert.deepEqual(covered.sources.a.cover, [region]);
 });
 
@@ -46,10 +49,10 @@ test('cover regions are rejected when they could leave a value uncovered or inje
     { x: 0, y: 0, w: 10, h: 10, kind: 'block', fill: 'red" onload="x' },
   ];
   for (const region of bad) {
-    assert.throws(() => checkListingConfig(listingWith({ a: { file: 'C:/a.png', cover: [region] } })), /cover\[0\]/);
+    assert.throws(() => checkListingConfig(listingWith({ a: { file: SHOT, cover: [region] } })), /cover\[0\]/);
   }
   const block = { x: 0, y: 0, w: 10, h: 10, kind: 'block', fill: '#fff' };
-  assert.throws(() => checkListingConfig(listingWith({ a: { file: 'C:/a.png', cover: [block] } }, 'web')), /only drawn on mobile/);
+  assert.throws(() => checkListingConfig(listingWith({ a: { file: SHOT, cover: [block] } }, 'web')), /only drawn on mobile/);
 });
 
 test('the overlay uses the source pixel grid and escapes sample values', () => {
