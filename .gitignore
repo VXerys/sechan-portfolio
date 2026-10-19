@@ -46,3 +46,9 @@ next-env.d.ts
 
 # Temporary context tooling (SDD template)
 .context-cache/
+
+# Listing kit: raw captures and host logs, rebuilt by npm run listing:capture (F-010)
+/.listing-cache/
+
+# Listing kit run tests write a temporary project here and delete it; never commit one left by a crash
+/scripts/listing/projects/_guard-test-*.mjs

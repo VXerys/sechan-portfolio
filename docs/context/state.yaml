@@ -444,6 +444,120 @@ features:
           - EV-023
           - EV-024
           - EV-028
+  - id: F-010
+    title: Project listing images
+    status: verification
+    phase: complete
+    spec_path: docs/specs/F-010-listing-images
+    tasks:
+      - id: T-040
+        title: Listing kit
+        status: done
+        requirements:
+          - FR-036
+        depends_on: []
+        evidence:
+          - EV-040
+      - id: T-041
+        title: Gunung Puyuh WebGIS listing
+        status: done
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence:
+          - EV-040
+          - EV-041
+      - id: T-042
+        title: ArtConnect listing
+        status: done
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence:
+          - EV-041
+      - id: T-043
+        title: Klinik Cikidang Medika listing
+        status: done
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence:
+          - EV-041
+      - id: T-044
+        title: VisualKain Finance listing
+        status: done
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence:
+          - EV-041
+      - id: T-045
+        title: InztaMoto ERP listing
+        status: done
+        requirements:
+          - FR-037
+        depends_on:
+          - T-044
+        evidence:
+          - EV-041
+      - id: T-046
+        title: BookMate listing
+        status: done
+        requirements:
+          - FR-038
+        depends_on:
+          - T-040
+        evidence:
+          - EV-042
+      - id: T-047
+        title: Welling and Ayah Hebat listing
+        status: done
+        requirements:
+          - FR-038
+        depends_on:
+          - T-040
+        evidence:
+          - EV-042
+      - id: T-048
+        title: Site gallery and notice
+        status: done
+        requirements:
+          - FR-039
+        depends_on:
+          - T-041
+        evidence:
+          - EV-043
+      - id: T-049
+        title: Verification
+        status: done
+        requirements:
+          - FR-036
+          - FR-037
+          - FR-038
+          - FR-039
+        depends_on:
+          - T-042
+          - T-043
+          - T-045
+          - T-046
+          - T-048
+        evidence:
+          - EV-040
+          - EV-041
+          - EV-042
+          - EV-043
+      - id: T-050
+        title: Marketiv listing
+        status: deferred
+        requirements:
+          - FR-037
+        depends_on:
+          - T-040
+        evidence: []
 active:
   feature_id: F-001
   task_id: T-005
@@ -455,5 +569,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-16T07:54:16.654Z
-source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c
+generated_at: 2026-10-19T03:51:44.636Z
+source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b

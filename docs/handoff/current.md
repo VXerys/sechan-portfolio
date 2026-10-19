@@ -1,54 +1,54 @@
 ---
 status: active
 owner: "M Sechan Alfarisi"
-session_date: "2026-10-16"
-branch: "fix/F-009-mobile-menu"
-base_commit: "d1713ef"
-current_commit: "d1713ef"
-feature_id: "F-009"
-task_id: "T-034"
-expires_after: "2026-10-23"
+session_date: "2026-10-19"
+branch: "feat/F-010-listing-images"
+base_commit: "0733e02"
+current_commit: "9fd6752"
+feature_id: "F-010"
+task_id: "T-049"
+expires_after: "2026-10-26"
 ---
 
 # Session Handoff
 
 ## Session objective
 
-BUG-001: on phones the menu links stopped half-masked after F-009 shipped (PR #9, merged). Fix it and record the evidence against F-009.
+F-010: Play Store style listing sets for every in-scope project, built from the real apps with invented data and never touching production or staging, plus a gallery on the site.
 
 ## Completed
 
-- Root cause in `docs/quality/bugs/BUG-001-mobile-menu-links-stop-half-masked.md`: `transition-transform` on the menu links made GSAP's reveal read a mid-transition position as its end.
-- Menu links and More work rows now transition `scale` only, pills `scale, border-color`. EV-028 in F-009 `verification.md`; T-031 and T-034 cite it.
-- F-009 itself: T-030 to T-033 `done`, T-034 in `review`, EV-022 to EV-024 and EV-028. EV-025 to EV-027 are taken by F-008 on `chore/F-008-renumber-ids` (commit d91ca59, not pushed).
+- Listing kit in `scripts/listing/`: host allowlist guard (browser and Node side), strict Supabase stub, Firebase emulator helper (`demo-` ids only), compose templates with cover regions for sensitive values.
+- Eight sets in `src/assets/images/listings/`: Klinik Cikidang Medika, VisualKain Finance, InztaMoto ERP, ArtConnect, Gunung Puyuh WebGIS, BookMate, Welling and Ayah Hebat. Marketiv deferred (landing page revamp).
+- Gallery: covers replace posters (frames now 16:10), a screen strip in each case study and More work panel, sample-data notice.
+- T-040 to T-049 `done` with EV-040 to EV-043; A-004 confirmed 2026-10-18. Repos cloned for the owner: `D:\Projects\accessibility-gap-analysis-webgis`, `D:\Projects\artconnect-crm`. Temporary client worktrees removed.
 
 ## Changed files
 
-`src/components/site/header.tsx`, `src/components/motion/pill.tsx`, `src/components/sections/project-index.tsx`, F-009 `tasks.md` and `verification.md`, `docs/quality/bugs/BUG-001-*.md` (new), rendered context views.
+`scripts/listing/**`, `src/assets/images/listings/**`, `src/content/{listing-copy,listing-copy.test,listings,media}.ts`, `src/components/sections/{listing-strip,project-media,project-index}.tsx`, `package.json` (playwright-core dev dependency, kit scripts, kit tests in `npm test`), `.gitignore`, F-010 spec, `docs/context/ASSUMPTIONS.md`.
 
 ## Commands executed
 
-`npm run lint`, `npm run typecheck`, `npm test` (23 pass), `npm run build`, `npx next start -p 3004` + in-app browser at 375x812 against the fix and against production, `npm run context:render`, `npm run context:validate -- --strict`.
+`npm run lint`, `npm run typecheck`, `npm test` (73 pass), `npm run build`, every `listing:capture` and `listing:compose` run, `next start` with the in-app browser at 1280 and 375 px, `npm run context:render`, `npm run context:validate -- --strict`.
 
 ## Uncommitted work
 
-None after the BUG-001 commit on `fix/F-009-mobile-menu`.
+None after the closing docs commit; not pushed.
 
 ## Blockers
 
-- A-001 (clinic naming) and A-003 (no quote collected yet) stay open; neither blocks the code.
+- A-003 (testimonials) stays open; the owner holds the reviews.
 
 ## Exact next step
 
-Owner merges the BUG-001 pull request and opens the menu on a phone. The F-008 id renumbering runs in its own session on `chore/F-008-renumber-ids`; whichever merges second re-runs `npm run context:render`. Then T-024's production favicon check.
+Owner approves pushing F-011 and F-010. Merge order: F-011 first (names the clinic), then F-010; F-008's renumber branch (`chore/F-008-renumber-ids`, unpushed) can go before or after. Each later merge re-runs `npm run context:render` and resolves the `_index.md` and rendered-view conflicts. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo), update about-me 07:534 and 07:132.
 
 ## Do not do next
 
-- Do not put a Tailwind `transition-transform` (or `transition-all`) on an element GSAP animates; transition the specific property instead.
-- Do not kill tweens inside a `gsap.matchMedia` cleanup; `mm.revert()` restores the start values only for tweens it still owns.
-- Do not commit placeholder or sample testimonials; the list stays empty until a real approval.
-- Do not change DNS at name.com without reading the current records on Vercel's Domains page first.
+- Never run a client app with its real env, its `predev`, or `dev:prod`; never use VisualKain's `seed-data.ts`.
+- Do not put a Tailwind `transition-transform` on an element GSAP animates.
+- Do not commit placeholder testimonials.
 
 ## Validity
 
-Valid until 2026-10-23 or the next commit.
+Valid until 2026-10-26 or the next commit.

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{title}} slide {{index}}</title>
+    <link rel="stylesheet" href="listing.css" />
+  </head>
+  <body class="slide type-mobile">
+    <div class="ghost ghost-index display" aria-hidden="true">{{index}}</div>
+    <header class="meta label">
+      <span class="mark"></span>
+      <span class="count"><b>{{index}}</b> / {{total}}</span>
+      <span class="spacer"></span>
+      <span class="slide-project">{{title}}</span>
+    </header>
+    <div class="rule"></div>
+    <h2 class="display caption" data-fit="60">{{caption}}</h2>
+    <div class="tags">{{{chip}}}{{{sample}}}</div>
+    <figure class="stage">{{{frame}}}</figure>
+  </body>
+</html>

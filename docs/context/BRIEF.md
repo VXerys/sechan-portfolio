@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 1e1cb7329bf7383b348cc6fce9e5654db84d14fbe1935a900eed77eb9033440c -->
+source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b -->
 
 # Brief
 
@@ -50,7 +50,7 @@ Frozen: none
 ## Handoff
 Next step:
 
-Owner merges the BUG-001 pull request and opens the menu on a phone. The F-008 id renumbering runs in its own session on `chore/F-008-renumber-ids`; whichever merges second re-runs `npm run context:render`. Then T-024's production favicon check.
+Owner approves pushing F-011 and F-010. Merge order: F-011 first (names the clinic), then F-010; F-008's renumber branch (`chore/F-008-renumber-ids`, unpushed) can go before or after. Each later merge re-runs `npm run context:render` and resolves the `_index.md` and rendered-view conflicts. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo), update about-me 07:534 and 07:132.
 
 ## Other open tasks
 None.
@@ -67,3 +67,4 @@ None.
 | F-007 Stack marquee redesign | implementing | in_progress | 1/2 |
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 2/2 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 4/5 |
+| F-010 Project listing images | verification | complete | 10/11 |
