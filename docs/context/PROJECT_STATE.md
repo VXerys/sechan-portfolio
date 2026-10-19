@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4 -->
+source_hash: 57e87cb387036078560b640a3d63f7dd01017b0f219a9cd95269784925fa1200 -->
 
 # Project State
 
-- Generated at: 2026-10-19T05:22:40.426Z
+- Generated at: 2026-10-19T07:22:37.713Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 1
@@ -25,19 +25,20 @@ source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4 --
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 0 | 0 | 0 | 1 | 4 | 0 |
 | F-010 Project listing images | verification | complete | 0 | 0 | 0 | 0 | 10 | 1 |
 | F-011 Experience highlights and clinic naming | verification | complete | 0 | 0 | 0 | 0 | 3 | 0 |
+| F-012 Narrative revamp: chapters, theme handoff, case-study beats | verification | in_progress | 0 | 0 | 0 | 5 | 0 | 0 |
 
 <!-- GENERATED:GIT_FACTS:START -->
 ## Git
 
-- Branch: `fix/more-work-gallery-copy`
-- HEAD: `f66e72c`
+- Branch: `feat/F-012-narrative-revamp`
+- HEAD: `b3ac4bc`
 - Worktree: dirty
 
 Recent commits:
 
+- `b3ac4bc Merge pull request #14 from VXerys/fix/more-work-gallery-copy`
+- `f0d2257 feat(F-010): story-led listing covers instead of a repeated title`
+- `6aef67f Merge pull request #13 from VXerys/fix/more-work-gallery-copy`
 - `f66e72c docs(F-010): point the handoff at an F-010 task`
 - `25d08a5 fix(F-010): show panel covers on desktop, hold tapped row, Cartify cover, manifesto copy`
-- `78d8812 Merge pull request #11 from VXerys/feat/F-011-experience-highlights`
-- `c4fbf26 Merge main (F-010) into F-011 and resolve conflicts`
-- `8b24980 Merge pull request #12 from VXerys/feat/F-010-listing-images`
 <!-- GENERATED:GIT_FACTS:END -->

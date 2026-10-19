@@ -65,7 +65,7 @@ export function Hero({ profile }: { profile: Profile }) {
   };
 
   return (
-    <section id="top" ref={root} className="relative z-0 overflow-hidden">
+    <section id="top" ref={root} data-theme="ink" className="relative z-0 overflow-hidden">
       <div data-hero-inner className="flex min-h-svh origin-bottom flex-col px-4 pb-8 pt-20 md:px-8 md:pt-24">
       <div className="label flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-muted" data-intro>
         <span data-rise>Portfolio 2026</span>

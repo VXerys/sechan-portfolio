@@ -1,8 +1,8 @@
-import { DriftTitle } from "@/components/motion/drift-title";
+import { BEATS } from "@/components/motion/beats";
+import { CaseBeats } from "@/components/motion/case-beats";
 import { LineRows } from "@/components/motion/line-rows";
 import { Reveal } from "@/components/motion/reveal";
 import { RollText } from "@/components/motion/roll-text";
-import { Scramble } from "@/components/motion/scramble";
 import { ProjectIndex } from "@/components/sections/project-index";
 import { ProjectMedia } from "@/components/sections/project-media";
 import { ProjectQuote } from "@/components/sections/project-quote";
@@ -27,6 +27,17 @@ function ExternalLinks({ project }: { project: Project }) {
   );
 }
 
+function BeatLabel({ index, className = "" }: { index: number; className?: string }) {
+  return (
+    <h4 className={`label text-accent ${className}`}>
+      {pad(index + 1)} {BEATS[index]}
+    </h4>
+  );
+}
+
+// Featured studies alternate paper and ink so each one arrives as its own chapter.
+const STUDY_THEMES = ["paper", "ink"] as const;
+
 function CaseStudy({ project, index, quote }: { project: Project; index: number; quote: TestimonialView | null }) {
   const meta = [
     { term: "Role", value: project.role },
@@ -41,13 +52,14 @@ function CaseStudy({ project, index, quote }: { project: Project; index: number;
     <article
       id={project.slug}
       data-section-label={project.title}
+      data-theme={STUDY_THEMES[index % STUDY_THEMES.length]}
       aria-labelledby={`${project.slug}-title`}
-      className="grid scroll-mt-24 gap-8 lg:grid-cols-12 lg:gap-10"
+      className="grid scroll-mt-24 gap-8 px-4 py-20 md:px-8 md:py-32 lg:grid-cols-12 lg:gap-10"
     >
       {/* overflow-x-clip on the section, not overflow-hidden: a hidden overflow would turn off this sticky column. */}
       <div className="self-start lg:sticky lg:top-24 lg:col-span-5">
         <p className="label text-muted">
-          <Scramble text={`${pad(index + 1)} / ${project.category}`} />
+          Ch. 02.{index + 1} / {project.category}
         </p>
         <Reveal as="h3" id={`${project.slug}-title`} mode="words" className="display mt-4 text-[17vw] md:text-[11vw] lg:text-[6.2vw]">
           {project.title}
@@ -67,38 +79,35 @@ function CaseStudy({ project, index, quote }: { project: Project; index: number;
           ))}
         </LineRows>
         <ExternalLinks project={project} />
+        <CaseBeats />
       </div>
 
       <div className="lg:col-span-7">
         <ProjectMedia project={project} />
 
         {/* Label and body share one grid so a short paragraph never leaves a column-sized gap beside a long list. */}
-        <div className="mt-12 grid gap-4 md:grid-cols-[8.5rem_1fr] md:gap-8">
-          <h4 className="label pt-2 text-accent">The problem</h4>
+        <div data-beat="0" className="mt-12 grid gap-4 md:grid-cols-[8.5rem_1fr] md:gap-8">
+          <BeatLabel index={0} className="pt-2" />
           <Reveal as="p" className="statement text-[1.6rem] text-paper/90 md:text-[2rem]">
             {project.problem}
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-4 md:grid-cols-[8.5rem_1fr] md:gap-8">
-          <h4 className="label pt-5 text-accent">What I built</h4>
-          <LineRows as="ol">
-            {project.contribution.map((item, itemIndex) => (
-              <li key={item} data-row className="relative overflow-hidden">
-                <span data-line className="absolute inset-x-0 top-0 h-px bg-line" />
-                <div data-row-content className="grid grid-cols-[2.5rem_1fr] gap-3 py-4 text-[1.0625rem] leading-relaxed text-paper/80">
-                  <span className="label pt-1 text-muted">{pad(itemIndex + 1)}</span>
-                  <span>{item}</span>
-                </div>
-              </li>
-            ))}
-          </LineRows>
-        </div>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-[8.5rem_1fr] md:gap-8">
-          <h4 className="label pt-2 text-accent">Stack</h4>
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-            <Reveal as="ul" className="flex flex-wrap gap-2">
+        <div data-beat="1" className="mt-12 grid gap-4 md:grid-cols-[8.5rem_1fr] md:gap-8">
+          <BeatLabel index={1} className="pt-5" />
+          <div>
+            <LineRows as="ol">
+              {project.contribution.map((item, itemIndex) => (
+                <li key={item} data-row className="relative overflow-hidden">
+                  <span data-line className="absolute inset-x-0 top-0 h-px bg-line" />
+                  <div data-row-content className="grid grid-cols-[2.5rem_1fr] gap-3 py-4 text-[1.0625rem] leading-relaxed text-paper/80">
+                    <span className="label pt-1 text-muted">{pad(itemIndex + 1)}</span>
+                    <span>{item}</span>
+                  </div>
+                </li>
+              ))}
+            </LineRows>
+            <Reveal as="ul" className="mt-6 flex flex-wrap gap-2">
               {project.stack.map((tool) => (
                 <li
                   key={tool}
@@ -108,27 +117,25 @@ function CaseStudy({ project, index, quote }: { project: Project; index: number;
                 </li>
               ))}
             </Reveal>
-            {project.outcomes.length > 0 && (
-              <ul className="space-y-2 lg:max-w-xs lg:text-right" aria-label="Outcomes">
-                {project.outcomes.map((outcome) => (
-                  <li key={outcome} className="text-sm leading-snug">
-                    <span className="text-accent" aria-hidden="true">
-                      ●{" "}
-                    </span>
-                    {outcome}
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         </div>
 
-        {quote && (
-          <div className="mt-12 grid gap-4 md:grid-cols-[8.5rem_1fr] md:gap-8">
-            <h4 className="label pt-2 text-accent">In their words</h4>
-            <ProjectQuote quote={quote} />
+        <div data-beat="2" className="mt-12 grid gap-4 md:grid-cols-[8.5rem_1fr] md:gap-8">
+          <BeatLabel index={2} className="pt-2" />
+          <div>
+            <ul className="space-y-3" aria-label="Outcomes">
+              {(project.outcomes.length > 0 ? project.outcomes : [project.status]).map((outcome) => (
+                <li key={outcome} className="statement text-[1.6rem] leading-tight md:text-[2rem]">
+                  <span className="text-accent" aria-hidden="true">
+                    ●{" "}
+                  </span>
+                  {outcome}
+                </li>
+              ))}
+            </ul>
+            {quote && <ProjectQuote quote={quote} className="mt-10 border-t border-line pt-8" />}
           </div>
-        )}
+        </div>
       </div>
     </article>
   );
@@ -139,26 +146,50 @@ export function Work({ projects, quotes }: { projects: Project[]; quotes: Testim
   const more = projects.filter((project) => !project.featured);
 
   return (
-    <section id="work" data-section="02" data-section-label="Work" aria-labelledby="work-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
-      <div className="mb-16 md:mb-24">
-        <p className="label mb-6 text-muted">
-          <Scramble text={`(02) Selected work · ${pad(projects.length)} projects`} />
-        </p>
-        <DriftTitle id="work-title" lines={["Selected", "Work"]} accentLine={1} className="display text-[22vw] md:text-[15vw]" />
-      </div>
+    <>
+      <section
+        id="work"
+        data-section="02"
+        data-section-label="Selected work"
+        data-theme="ink"
+        aria-labelledby="work-title"
+        className="overflow-x-clip pt-24 md:pt-36"
+      >
+        <div className="px-4 pb-8 md:px-8 md:pb-12">
+          <p className="label mb-6 text-muted">
+            Ch. 02 · Selected work · {pad(featured.length)} chapters
+          </p>
+          <Reveal as="h2" id="work-title" mode="words" className="display text-[22vw] md:text-[15vw]">
+            Selected <span className="text-accent">work</span>
+          </Reveal>
+          <p className="mt-8 max-w-xl text-[1.15rem] leading-relaxed text-paper/80 md:ml-[33%]">
+            Each project in three beats: the problem it started with, what I built, and what it proved.
+          </p>
+        </div>
 
-      <div className="space-y-32 md:space-y-48">
         {featured.map((project, index) => (
           <CaseStudy key={project.slug} project={project} index={index} quote={quoteForProject(quotes, project.slug)} />
         ))}
-      </div>
+      </section>
 
       {more.length > 0 && (
-        <div className="mt-32 md:mt-48">
-          <h3 className="label mb-6 text-muted">More work</h3>
+        <section
+          id="archive"
+          data-section="03"
+          data-section-label="Archive"
+          data-theme="paper"
+          aria-labelledby="archive-title"
+          className="overflow-x-clip px-4 py-24 md:px-8 md:py-36"
+        >
+          <p className="label mb-6 text-muted">
+            Ch. 03 · Archive · {pad(more.length)} files
+          </p>
+          <Reveal as="h2" id="archive-title" mode="words" className="display mb-12 text-[22vw] md:mb-16 md:text-[13vw]">
+            Archive
+          </Reveal>
           <ProjectIndex projects={more} offset={featured.length} quotes={quotes} />
-        </div>
+        </section>
       )}
-    </section>
+    </>
   );
 }

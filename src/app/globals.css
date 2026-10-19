@@ -8,6 +8,11 @@
   --color-line: #2a2a27;
   --color-accent: #d4ff3a;
 
+  /* Fixed brand colours for things that must not follow the chapter theme (intro curtain, posters). */
+  --color-brand-ink: #0c0c0b;
+  --color-brand-paper: #efede6;
+  --color-brand-lime: #d4ff3a;
+
   --font-sans: var(--font-host), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
@@ -112,6 +117,43 @@
     opacity: 0.06;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+}
+
+/* Chapter themes (F-012). Without JavaScript each chapter carries its own palette as a solid block. Once the
+   handoff runs it adds html.theme-live and blends the root values instead, so chapters drop their own. Keep the
+   values in step with src/lib/themes.ts, which the tests check for contrast. */
+html:not(.theme-live) [data-theme] {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+html:not(.theme-live) [data-theme="ink"] {
+  --color-ink: #0c0c0b;
+  --color-ink-2: #161614;
+  --color-paper: #efede6;
+  --color-muted: #8f8d85;
+  --color-line: #2a2a27;
+  --color-accent: #d4ff3a;
+}
+html:not(.theme-live) [data-theme="paper"] {
+  --color-ink: #efede6;
+  --color-ink-2: #e4e1d7;
+  --color-paper: #0c0c0b;
+  --color-muted: #65635c;
+  --color-line: #cfccc2;
+  --color-accent: #3d5200;
+}
+html:not(.theme-live) [data-theme="lime"] {
+  --color-ink: #d4ff3a;
+  --color-ink-2: #c6f02c;
+  --color-paper: #0c0c0b;
+  --color-muted: #3f4d12;
+  --color-line: #a9cc2e;
+  --color-accent: #0c0c0b;
+}
+
+/* The custom cursor is tuned for ink; on paper and lime chapters the native cursor carries on alone (AC-083). */
+html[data-active-theme]:not([data-active-theme="ink"]) [data-site-cursor] {
+  visibility: hidden;
 }
 
 /* Lenis */

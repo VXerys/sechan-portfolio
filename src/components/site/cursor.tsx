@@ -80,6 +80,7 @@ export function Cursor() {
       <div
         ref={ring}
         aria-hidden="true"
+        data-site-cursor
         data-state="idle"
         className="pointer-events-none fixed left-0 top-0 z-[70] flex size-[38px] items-center justify-center overflow-hidden rounded-full border border-paper/50 opacity-0 mix-blend-difference transition-[background-color,border-color] duration-300 data-[state=label]:border-transparent data-[state=label]:bg-accent data-[state=label]:mix-blend-normal data-[state=link]:border-transparent data-[state=link]:bg-paper"
       >
@@ -88,6 +89,7 @@ export function Cursor() {
       <div
         ref={dot}
         aria-hidden="true"
+        data-site-cursor
         className="pointer-events-none fixed left-0 top-0 z-[71] size-1.5 rounded-full bg-accent opacity-0"
       />
     </>

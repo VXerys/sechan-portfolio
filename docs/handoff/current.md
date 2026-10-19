@@ -2,11 +2,11 @@
 status: active
 owner: "M Sechan Alfarisi"
 session_date: "2026-10-19"
-branch: "fix/more-work-gallery-copy"
-base_commit: "78d8812"
-current_commit: "25d08a5"
-feature_id: "F-010"
-task_id: "T-050"
+branch: "feat/F-012-narrative-revamp"
+base_commit: "b3ac4bc"
+current_commit: "b3ac4bc"
+feature_id: "F-012"
+task_id: "T-055"
 expires_after: "2026-10-26"
 ---
 
@@ -14,42 +14,53 @@ expires_after: "2026-10-26"
 
 ## Session objective
 
-Owner feedback after F-010 and F-011 merged: rewrite the About manifesto, fix the More work panels (no visual on laptops, "+" on a phone landing at the end of another project's details), and give Cartify a cover from the owner's collage.
+F-012 narrative revamp as a preview branch: chapters with a scroll-linked theme handoff (ink, paper, lime), a chapter label with reading progress, a story-ordered page, and Problem, Build, Proof beats in case studies. References came from Awwwards and were reverse-engineered with REA; Lama Lama's `colorTheme` pattern was rebuilt without WebGL.
 
 ## Completed
 
-- Manifesto and the matching About paragraph rewritten in `src/content/portfolio.ts`.
-- More work panel shows the project cover on every screen, beside the summary on desktop (`project-index.tsx`).
-- Opening a row below an open one holds the tapped row in place while the other panel collapses (`holdInPlace`).
-- Cartify cover composed from the owner's collage (email lines masked) at `src/assets/images/cartify-cover.webp`; composed covers skip zoom and scaled parallax (`media.ts`, `project-media.tsx`).
-- Checked in a production build at 375 px (row stays under the finger) and 1280 px (panel cover, Cartify cover uncropped, manifesto).
+- Spec F-012 (full tier), with Q1 to Q9 approved by the owner.
+- T-051 to T-055 implemented and in `review`, with evidence EV-044 to EV-046.
 
 ## Changed files
 
-`src/components/sections/project-index.tsx`, `src/components/sections/project-media.tsx`, `src/content/media.ts`, `src/content/portfolio.ts`, `src/assets/images/cartify-cover.webp`, `docs/handoff/current.md`.
+- `src/lib/themes.ts` and its test (new).
+- `src/components/motion/theme-handoff.tsx`, `case-beats.tsx`, `beats.ts` (new).
+- `src/components/sections/thesis.tsx`, renamed from `about.tsx`.
+- `work.tsx`, `experience.tsx`, `capabilities.tsx`, `proof-track.tsx`, `testimonials.tsx`, `contact.tsx`, `hero.tsx`.
+- `src/components/site/header.tsx`, `section-indicator.tsx`, `cursor.tsx`.
+- `src/components/motion/intro.tsx`, `clip-sheet.tsx`.
+- `src/app/page.tsx`, `src/app/globals.css`, `src/content/portfolio.ts` (the thesis copy).
+- Removed `scramble.tsx` and `drift-title.tsx`.
+- Docs: `docs/specs/F-012-narrative-revamp/*`, `docs/specs/_index.md`.
 
 ## Commands executed
 
-`npm run lint` clean, `npm run typecheck` 0 errors, `npm test` 76/76, `npm run build` static output.
+- `npm run lint`: clean.
+- `npm run typecheck`: clean.
+- `npm test`: 81/81.
+- `npm run build`: static.
+- In-app browser at 1280 and 375 px.
 
 ## Uncommitted work
 
-None after the fix commit; the branch is not pushed.
+None after the F-012 commit. The branch is not pushed.
 
 ## Blockers
 
-- A-003 (testimonials) stays open; the owner holds the reviews.
+- A-003 (testimonials) stays open.
 
 ## Exact next step
 
-Owner approves the push and a PR of `fix/more-work-gallery-copy` to `main`. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 and 07:132; push or close `chore/F-008-renumber-ids`.
+The owner reviews the preview. If the owner asks, push the branch for a Vercel preview URL. Never merge into `main` without explicit owner approval (BR-018).
+
+Still not verified: reduced motion (AC-072, AC-083) and Lighthouse on the deployed preview (NFR-005).
 
 ## Do not do next
 
-- Never run a client app with its real env, its `predev`, or `dev:prod`; never use VisualKain's `seed-data.ts`.
+- Do not merge F-012 into `main`.
+- Do not add WebGL or a new dependency for the transitions.
 - Do not put a Tailwind `transition-transform` on an element GSAP animates.
-- Do not add the Asah capstone partner before about-me records it as VERIFIED.
-- Do not commit placeholder testimonials.
+- Never run a client app with its real env.
 
 ## Validity
 

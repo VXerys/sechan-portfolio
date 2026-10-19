@@ -12,6 +12,8 @@ export type Profile = {
   availability: string;
   about: string[]; // 2-4 short paragraphs
   manifesto: { text: string; accent: string }; // the "How I work" line from about[3], split for typesetting
+  // Opening of chapter 01: a claim and its proof, restating project facts below (BR-017), never new ones.
+  thesis: { line: string; accent: string; proof: string };
   email: string | null;
   links: Link[];
 };
@@ -75,6 +77,12 @@ export const profile: Profile = {
   manifesto: {
     text: "I plan before I build, test every rule that touches money or patient data, and enforce access in the database,",
     accent: "so a broken screen can't get around it.",
+  },
+  thesis: {
+    line: "Small teams run on spreadsheets and group chats.",
+    accent: "I build the software that takes over.",
+    proof:
+      "A clinic and a riding-gear brand moved off spreadsheets, a garment maker now sees its real cash, and a reading community runs on an app I helped ship to Google Play.",
   },
   email: "sehanalfarisi9@gmail.com",
   links: [

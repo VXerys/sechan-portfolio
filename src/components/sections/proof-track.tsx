@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 
-import { DriftTitle } from "@/components/motion/drift-title";
 import { Reveal } from "@/components/motion/reveal";
 import type { Achievement } from "@/content/portfolio";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
@@ -54,10 +53,12 @@ export function ProofTrack({ achievements }: { achievements: Achievement[] }) {
       <div data-pin className="group-data-[horizontal]/proof:flex group-data-[horizontal]/proof:h-svh group-data-[horizontal]/proof:flex-col group-data-[horizontal]/proof:justify-center">
         <div className="flex items-end justify-between gap-6">
           <div>
-            <p className="label mb-6 text-ink/50">(05) Recognition</p>
-            <DriftTitle lines={["Proof"]} className="display text-[24vw] md:text-[14vw] group-data-[horizontal]/proof:text-[9vw]" />
+            <p className="label mb-6 text-muted">Recognition</p>
+            <Reveal as="h3" mode="words" className="display text-[24vw] md:text-[14vw] group-data-[horizontal]/proof:text-[9vw]">
+              Proof
+            </Reveal>
           </div>
-          <p className="label hidden pb-3 text-ink/50 group-data-[horizontal]/proof:block">Scroll to move sideways →</p>
+          <p className="label hidden pb-3 text-muted group-data-[horizontal]/proof:block">Scroll to move sideways →</p>
         </div>
 
         <ul
@@ -66,7 +67,7 @@ export function ProofTrack({ achievements }: { achievements: Achievement[] }) {
         >
           {achievements.map((item, index) => (
             <li key={item.title} className="group-data-[horizontal]/proof:w-[30vw]">
-              <Reveal mode="clip" delay={index * 0.06} className="group relative h-full overflow-hidden border border-ink/15">
+              <Reveal mode="clip" delay={index * 0.06} className="group relative h-full overflow-hidden border border-line">
                 <span
                   aria-hidden="true"
                   className="absolute inset-0 origin-bottom scale-y-0 bg-accent transition-transform duration-700 ease-[var(--ease-expo)] group-hover:scale-y-100"
@@ -74,12 +75,12 @@ export function ProofTrack({ achievements }: { achievements: Achievement[] }) {
                 <div className="relative flex h-full min-h-[18rem] flex-col justify-between gap-8 p-6 md:p-8 group-data-[horizontal]/proof:min-h-[52vh]">
                   <div className="flex items-start justify-between gap-4">
                     <span className="display text-6xl md:text-7xl">{item.year}</span>
-                    <span className="label text-ink/50">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="label text-muted">{String(index + 1).padStart(2, "0")}</span>
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold leading-snug md:text-2xl">{item.title}</h3>
-                    <p className="mt-1 text-sm text-ink/60">{item.issuer}</p>
-                    {item.note && <p className="statement mt-5 text-xl italic leading-snug text-ink/80 md:text-2xl">{item.note}</p>}
+                    <p className="mt-1 text-sm text-muted">{item.issuer}</p>
+                    {item.note && <p className="statement mt-5 text-xl italic leading-snug text-paper/80 md:text-2xl">{item.note}</p>}
                   </div>
                 </div>
               </Reveal>
@@ -87,8 +88,8 @@ export function ProofTrack({ achievements }: { achievements: Achievement[] }) {
           ))}
         </ul>
 
-        <div aria-hidden="true" className="mt-8 hidden h-px bg-ink/15 group-data-[horizontal]/proof:block">
-          <span data-progress className="block h-px origin-left scale-x-0 bg-ink" />
+        <div aria-hidden="true" className="mt-8 hidden h-px bg-line group-data-[horizontal]/proof:block">
+          <span data-progress className="block h-px origin-left scale-x-0 bg-paper" />
         </div>
       </div>
     </div>

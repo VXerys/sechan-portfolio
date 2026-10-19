@@ -600,6 +600,70 @@ features:
           - EV-029
           - EV-030
           - EV-031
+  - id: F-012
+    title: "Narrative revamp: chapters, theme handoff, case-study beats"
+    status: verification
+    phase: in_progress
+    spec_path: docs/specs/F-012-narrative-revamp
+    tasks:
+      - id: T-051
+        title: Theme engine and tokens
+        status: review
+        requirements:
+          - FR-040
+        depends_on: []
+        evidence:
+          - EV-044
+          - EV-045
+          - EV-046
+      - id: T-052
+        title: Chapter navigation
+        status: review
+        requirements:
+          - FR-041
+        depends_on:
+          - T-051
+        evidence:
+          - EV-045
+      - id: T-053
+        title: Story arc and copy
+        status: review
+        requirements:
+          - FR-042
+          - FR-044
+        depends_on:
+          - T-051
+        evidence:
+          - EV-045
+          - EV-046
+      - id: T-054
+        title: Case-study beats
+        status: review
+        requirements:
+          - FR-043
+        depends_on:
+          - T-053
+        evidence:
+          - EV-045
+          - EV-046
+      - id: T-055
+        title: Verification and preview
+        status: review
+        requirements:
+          - FR-040
+          - FR-041
+          - FR-042
+          - FR-043
+          - FR-044
+        depends_on:
+          - T-051
+          - T-052
+          - T-053
+          - T-054
+        evidence:
+          - EV-044
+          - EV-045
+          - EV-046
 active:
   feature_id: F-001
   task_id: T-005
@@ -608,5 +672,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-19T05:22:40.426Z
-source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4
+generated_at: 2026-10-19T07:22:37.713Z
+source_hash: 57e87cb387036078560b640a3d63f7dd01017b0f219a9cd95269784925fa1200

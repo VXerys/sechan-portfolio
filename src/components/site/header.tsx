@@ -7,15 +7,15 @@ import { RollText } from "@/components/motion/roll-text";
 import { jumpTo } from "@/components/motion/slice-transition";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
 import { LocalTime } from "@/components/site/local-time";
-import { Scramble } from "@/components/motion/scramble";
 import { SectionIndicator, useCurrentSection } from "@/components/site/section-indicator";
 
-// Page order, so the menu numbers match the section labels.
+// Chapter order, so the menu reads as the story does.
+// Each entry also lights up for the chapters that belong to it.
 const NAV = [
-  { href: "#about", label: "About" },
-  { href: "#work", label: "Work" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
+  { href: "#about", label: "Why I build", chapters: ["about"] },
+  { href: "#work", label: "Work", chapters: ["work", "archive"] },
+  { href: "#experience", label: "Path", chapters: ["experience", "capabilities", "testimonials"] },
+  { href: "#contact", label: "Contact", chapters: ["contact"] },
 ];
 
 export function Header({ name }: { name: string }) {
@@ -88,13 +88,13 @@ export function Header({ name }: { name: string }) {
       {/* Blend mode sits on the fixed element itself; on a child it would only blend inside the header's own stacking context. */}
       <header
         ref={bar}
-        className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 py-4 md:px-8 md:py-5 ${open ? "text-ink" : "text-paper mix-blend-difference"}`}
+        className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 py-4 md:px-8 md:py-5 ${open ? "text-ink" : "text-brand-paper mix-blend-difference"}`}
       >
         <div className="flex items-center gap-4 md:w-72">
           <a href="#top" onClick={(event) => go(event, "#top")} className="label text-[0.8rem] tracking-[0.12em]" aria-label={`${name}, back to top`}>
-            Sechan<span className={open ? "text-ink/50" : "text-muted"}>/</span>Alfarisi
+            Sechan<span className={open ? "text-ink/50" : "text-brand-paper/55"}>/</span>Alfarisi
           </a>
-          <SectionIndicator current={open ? null : current} className="label hidden text-muted sm:block" />
+          <SectionIndicator current={open ? null : current} className="label hidden text-brand-paper/55 sm:block" />
         </div>
         <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
           {NAV.map((item) => (
@@ -102,22 +102,22 @@ export function Header({ name }: { name: string }) {
               <a
                 href={item.href}
                 onClick={(event) => go(event, item.href)}
-                aria-current={current && item.href === `#${current.id}` ? "location" : undefined}
+                aria-current={current && item.chapters.includes(current.id) ? "location" : undefined}
                 className="label link-underline flex items-center gap-2 py-2 opacity-60 transition-opacity duration-300 hover:opacity-100 aria-[current=location]:opacity-100"
               >
                 <span
                   aria-hidden="true"
                   className={`size-1.5 rounded-full bg-current transition-transform duration-500 ease-[var(--ease-expo)] ${
-                    current && item.href === `#${current.id}` ? "scale-100" : "scale-0"
+                    current && item.chapters.includes(current.id) ? "scale-100" : "scale-0"
                   }`}
                 />
-                <Scramble on="hover" text={item.label} />
+                <RollText text={item.label} />
               </a>
             </Magnetic>
           ))}
         </nav>
         <div className="hidden md:block md:w-72 md:text-right">
-          <LocalTime className="label text-muted" />
+          <LocalTime className="label text-brand-paper/55" />
         </div>
         <button
           ref={toggle}

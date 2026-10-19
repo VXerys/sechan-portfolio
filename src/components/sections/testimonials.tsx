@@ -1,6 +1,5 @@
-import { DriftTitle } from "@/components/motion/drift-title";
 import { LineRows } from "@/components/motion/line-rows";
-import { Scramble } from "@/components/motion/scramble";
+import { Reveal } from "@/components/motion/reveal";
 import type { Project } from "@/content/portfolio";
 import type { TestimonialView } from "@/lib/testimonials";
 
@@ -15,12 +14,21 @@ export function Testimonials({ testimonials, projects, number }: Props) {
   const count = `${pad(testimonials.length)} ${testimonials.length === 1 ? "quote" : "quotes"}`;
 
   return (
-    <section id="testimonials" data-section={number} data-section-label="Kind words" aria-labelledby="testimonials-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
+    <section
+      id="testimonials"
+      data-section={number}
+      data-section-label="Kind words"
+      data-theme="ink"
+      aria-labelledby="testimonials-title"
+      className="overflow-x-clip px-4 py-24 md:px-8 md:py-36"
+    >
       <div className="mb-16 md:mb-24">
         <p className="label mb-6 text-muted">
-          <Scramble text={`(${number}) Kind words · ${count}`} />
+          Ch. {number} · Kind words · {count}
         </p>
-        <DriftTitle id="testimonials-title" lines={["In their", "words"]} accentLine={1} className="display text-[22vw] md:text-[13vw]" />
+        <Reveal as="h2" id="testimonials-title" mode="words" className="display text-[22vw] md:text-[13vw]">
+          In their <span className="text-accent">words</span>
+        </Reveal>
       </div>
 
       <LineRows as="ul">

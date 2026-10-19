@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4 -->
+source_hash: 57e87cb387036078560b640a3d63f7dd01017b0f219a9cd95269784925fa1200 -->
 
 # Brief
 
@@ -50,7 +50,9 @@ None.
 ## Handoff
 Next step:
 
-Owner approves the push and a PR of `fix/more-work-gallery-copy` to `main`. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 and 07:132; push or close `chore/F-008-renumber-ids`.
+The owner reviews the preview. If the owner asks, push the branch for a Vercel preview URL. Never merge into `main` without explicit owner approval (BR-018).
+
+Still not verified: reduced motion (AC-072, AC-083) and Lighthouse on the deployed preview (NFR-005).
 
 ## Other open tasks
 None.
@@ -69,3 +71,4 @@ None.
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 4/5 |
 | F-010 Project listing images | verification | complete | 10/11 |
 | F-011 Experience highlights and clinic naming | verification | complete | 3/3 |
+| F-012 Narrative revamp: chapters, theme handoff, case-study beats | verification | in_progress | 0/5 |

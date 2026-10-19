@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4 -->
+source_hash: 57e87cb387036078560b640a3d63f7dd01017b0f219a9cd95269784925fa1200 -->
 
 # Project Progress
 
@@ -108,3 +108,13 @@ source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4 --
 | T-037 Content and tests | done | FR-033, FR-034, FR-035 |  | EV-029 |
 | T-038 Experience UI and project chips | done | FR-033, FR-034 | T-037 | EV-029, EV-030, EV-031 |
 | T-039 Verification | done | FR-033, FR-034, FR-035 | T-037, T-038 | EV-029, EV-030, EV-031 |
+
+## F-012 — Narrative revamp: chapters, theme handoff, case-study beats (`verification`, in_progress)
+
+| Task | Status | Requirements | Depends on | Evidence |
+|---|---|---|---|---|
+| T-051 Theme engine and tokens | review | FR-040 |  | EV-044, EV-045, EV-046 |
+| T-052 Chapter navigation | review | FR-041 | T-051 | EV-045 |
+| T-053 Story arc and copy | review | FR-042, FR-044 | T-051 | EV-045, EV-046 |
+| T-054 Case-study beats | review | FR-043 | T-053 | EV-045, EV-046 |
+| T-055 Verification and preview | review | FR-040, FR-041, FR-042, FR-043, FR-044 | T-051, T-052, T-053, T-054 | EV-044, EV-045, EV-046 |

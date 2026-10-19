@@ -1,9 +1,7 @@
 import type { ReactNode } from "react";
 
-import { DriftTitle } from "@/components/motion/drift-title";
 import { LineRows } from "@/components/motion/line-rows";
 import { Reveal } from "@/components/motion/reveal";
-import { Scramble } from "@/components/motion/scramble";
 import { ProjectChip } from "@/components/site/project-chip";
 import type { Education, Experience as Entry, Program, Project } from "@/content/portfolio";
 
@@ -57,12 +55,19 @@ export function Experience({ entries, program, education, projects }: Props) {
   });
 
   return (
-    <section id="experience" data-section="03" data-section-label="Experience" aria-labelledby="experience-title" className="overflow-x-clip px-4 py-16 md:px-8 md:py-24">
+    <section
+      id="experience"
+      data-section="04"
+      data-section-label="Path"
+      data-theme="ink"
+      aria-labelledby="experience-title"
+      className="overflow-x-clip px-4 py-24 md:px-8 md:py-36"
+    >
       <div className="mb-16 md:mb-24">
-        <p className="label mb-6 text-muted">
-          <Scramble text="(03) Experience" />
-        </p>
-        <DriftTitle id="experience-title" lines={["Where", "I build"]} accentLine={1} className="display text-[22vw] md:text-[13vw]" />
+        <p className="label mb-6 text-muted">Ch. 04 · Path</p>
+        <Reveal as="h2" id="experience-title" mode="words" className="display text-[22vw] md:text-[13vw]">
+          Where <span className="text-accent">I build</span>
+        </Reveal>
       </div>
 
       {/* Same 12-column grid and md:px-4 inset as a row, so the card reads as a row that stays filled. */}

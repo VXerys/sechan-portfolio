@@ -12,8 +12,8 @@ const LOADING_WORDS = ["client", "recruiter", "founder", "friend"];
 const FINAL_WORD = "I'm Sechan.";
 const CHARS = "abcdefghijklmnopqrstuvwxyz";
 // The loading phase always lasts at least this long so the morph reads as intentional, and never longer than the cap.
-const MIN_LOADING_MS = 2600;
-const MAX_LOADING_MS = 4500;
+const MIN_LOADING_MS = 1600;
+const MAX_LOADING_MS = 3500;
 const SAFETY_MS = 10000;
 
 const delay = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
@@ -115,14 +115,14 @@ export function Intro() {
 
   return (
     <div ref={root} className="intro-overlay fixed inset-y-0 left-0 z-[90] w-screen" aria-hidden="true">
-      <div className="absolute inset-0 bg-paper" />
-      <div data-curtain className="absolute inset-0 bg-accent will-change-transform" style={{ transform: "translateY(130%)" }}>
-        <div data-curtain-lip className="absolute -top-[14vh] left-[-15%] h-[28vh] w-[130%] origin-bottom rounded-[50%] bg-accent" />
+      <div className="absolute inset-0 bg-brand-paper" />
+      <div data-curtain className="absolute inset-0 bg-brand-lime will-change-transform" style={{ transform: "translateY(130%)" }}>
+        <div data-curtain-lip className="absolute -top-[14vh] left-[-15%] h-[28vh] w-[130%] origin-bottom rounded-[50%] bg-brand-lime" />
       </div>
       {/* Hangs fully below the overlay as a half ellipse, so it is off screen until the overlay lifts and it trails as a curve. */}
-      <div data-exit-lip className="absolute left-[-15%] top-full h-[14vh] w-[130%] origin-top rounded-b-[50%_100%] bg-accent" />
+      <div data-exit-lip className="absolute left-[-15%] top-full h-[14vh] w-[130%] origin-top rounded-b-[50%_100%] bg-brand-lime" />
 
-      <div data-intro-text className="relative z-10 flex h-full flex-col items-center justify-center text-ink">
+      <div data-intro-text className="relative z-10 flex h-full flex-col items-center justify-center text-brand-ink">
         {/* The greeting and labels animate in pure CSS, so text is on screen from the first paint, before JavaScript runs. */}
         {/* Bottom padding keeps the comma's descender inside the mask that the letters rise through. */}
         <p className="display flex overflow-hidden pb-[0.14em] text-[26vw] md:text-[15vw]">

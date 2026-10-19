@@ -6,7 +6,7 @@ import { gsap, MOTION_OK, ScrollTrigger } from "@/lib/motion/gsap";
 
 export type CurrentSection = { id: string; label: string; number: string } | null;
 
-// Reports the section whose body crosses the middle of the viewport; sections opt in with data-section.
+// Reports the chapter whose body crosses the middle of the viewport; chapters opt in with data-section.
 export function useCurrentSection() {
   const [current, setCurrent] = useState<CurrentSection>(null);
 
@@ -29,31 +29,43 @@ export function useCurrentSection() {
   return current;
 }
 
-// The label decodes into the new section name, the same scramble the section labels use.
+// The chapter name rises into place when it changes and is announced once; the reading progress beside it updates
+// every frame, so it stays out of the live region.
 export function SectionIndicator({ current, className }: { current: CurrentSection; className?: string }) {
   const text = useRef<HTMLSpanElement>(null);
-  const value = current ? `(${current.number}) ${current.label}` : "";
+  const percent = useRef<HTMLSpanElement>(null);
+  const value = current ? `Ch. ${current.number} · ${current.label}` : "";
 
   useEffect(() => {
     const el = text.current;
     if (!el) return;
-    if (!window.matchMedia(MOTION_OK).matches) {
-      el.textContent = value;
-      return;
-    }
-    const tween = gsap.to(el, {
-      duration: 0.6,
-      ease: "none",
-      scrambleText: { text: value || " ", chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", speed: 0.6 },
-    });
+    el.textContent = value;
+    if (!value || !window.matchMedia(MOTION_OK).matches) return;
+    const tween = gsap.fromTo(el, { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.6, ease: "expo.out" });
     return () => {
       tween.kill();
     };
   }, [value]);
 
+  useEffect(() => {
+    const el = percent.current;
+    if (!el) return;
+    const trigger = ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate: (self) => {
+        el.textContent = `${String(Math.round(self.progress * 100)).padStart(2, "0")}%`;
+      },
+    });
+    return () => trigger.kill();
+  }, []);
+
   return (
-    <span className={className} aria-live="polite">
-      <span ref={text} />
+    <span className={className}>
+      <span className="inline-block overflow-hidden align-bottom" aria-live="polite">
+        <span ref={text} className="inline-block" />
+      </span>
+      <span ref={percent} aria-hidden="true" className={`ml-3 tabular-nums ${value ? "" : "hidden"}`} />
     </span>
   );
 }

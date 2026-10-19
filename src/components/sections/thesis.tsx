@@ -3,11 +3,12 @@
 import { useRef } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
-import { Scramble } from "@/components/motion/scramble";
+import { Marquee } from "@/components/sections/marquee";
 import type { Profile } from "@/content/portfolio";
 import { gsap, MOTION_OK, SplitText, useGSAP } from "@/lib/motion/gsap";
 
-export function About({ profile }: { profile: Profile }) {
+// Chapter 01: why the work exists, before any of the work is shown.
+export function Thesis({ profile, stack }: { profile: Profile; stack: string[] }) {
   const section = useRef<HTMLElement>(null);
   const statement = useRef<HTMLParagraphElement>(null);
   const glyph = useRef<HTMLSpanElement>(null);
@@ -45,18 +46,38 @@ export function About({ profile }: { profile: Profile }) {
   ];
 
   return (
-    <section ref={section} id="about" data-section="01" data-section-label="About" aria-labelledby="about-title" className="relative overflow-hidden px-4 py-16 md:px-8 md:py-24">
+    <section
+      ref={section}
+      id="about"
+      data-section="01"
+      data-section-label="Why I build"
+      data-theme="paper"
+      aria-labelledby="about-title"
+      className="relative overflow-hidden px-4 pb-16 pt-24 md:px-8 md:pb-24 md:pt-36"
+    >
       <span
         ref={glyph}
         aria-hidden="true"
-        className="pointer-events-none absolute -right-[18vw] top-0 select-none font-serif text-[95vw] leading-none text-ink-2 md:-right-[8vw] md:text-[62vw]"
+        className="pointer-events-none absolute -right-[18vw] top-[30%] select-none font-serif text-[95vw] leading-none text-ink-2 md:-right-[8vw] md:text-[62vw]"
       >
         ✳
       </span>
-      <div className="relative grid gap-10 md:grid-cols-12">
-        <h2 id="about-title" className="label text-muted md:col-span-3">
-          <Scramble text="(01) How I work" />
-        </h2>
+
+      <div className="relative">
+        <p className="label text-muted">Ch. 01 · Why I build</p>
+        <Reveal as="h2" id="about-title" mode="words" className="display mt-6 max-w-[14ch] text-[13vw] md:text-[7.4vw]">
+          {profile.thesis.line}
+        </Reveal>
+        <Reveal as="p" delay={0.15} className="statement mt-4 text-[2.4rem] italic text-accent md:text-[4vw]">
+          {profile.thesis.accent}
+        </Reveal>
+        <Reveal as="p" delay={0.25} className="mt-10 max-w-2xl text-[1.15rem] leading-relaxed text-paper/80 md:ml-[33%] md:text-[1.3rem]">
+          {profile.thesis.proof}
+        </Reveal>
+      </div>
+
+      <div className="relative mt-28 grid gap-10 md:mt-40 md:grid-cols-12">
+        <h3 className="label text-muted md:col-span-3">How I work</h3>
         <p ref={statement} className="statement text-[2.6rem] md:col-span-9 md:text-[5.2vw]">
           {profile.manifesto.text} <em>{profile.manifesto.accent}</em>
         </p>
@@ -65,12 +86,12 @@ export function About({ profile }: { profile: Profile }) {
       <div className="relative mt-20 grid gap-px overflow-hidden border border-line bg-line md:mt-28 md:grid-cols-3">
         {facts.map((fact, index) => (
           <Reveal key={fact.label} mode="clip" delay={index * 0.1} className="group relative bg-ink p-6 transition-colors duration-500 hover:bg-ink-2 md:p-8">
-            <h3 className="label flex items-center justify-between text-accent">
+            <h4 className="label flex items-center justify-between text-accent">
               {fact.label}
               <span aria-hidden="true" className="text-muted transition-transform duration-500 ease-[var(--ease-expo)] group-hover:rotate-90">
                 +
               </span>
-            </h3>
+            </h4>
             <p className="mt-4 text-[1.0625rem] leading-relaxed text-paper/80">{fact.body}</p>
           </Reveal>
         ))}
@@ -86,6 +107,11 @@ export function About({ profile }: { profile: Profile }) {
           <dd className="normal-case tracking-normal">{profile.availability}</dd>
         </div>
       </dl>
+
+      {/* The stack line closes the chapter instead of standing as its own band between the hero and the story. */}
+      <div className="relative -mx-4 mt-20 md:-mx-8 md:mt-28">
+        <Marquee items={stack} />
+      </div>
     </section>
   );
 }

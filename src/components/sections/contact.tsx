@@ -2,7 +2,7 @@
 
 import { useRef, type MouseEvent } from "react";
 
-import { DriftTitle } from "@/components/motion/drift-title";
+import { Reveal } from "@/components/motion/reveal";
 import { Magnetic } from "@/components/motion/magnetic";
 import { RollText } from "@/components/motion/roll-text";
 import { PillLink } from "@/components/motion/pill";
@@ -72,11 +72,21 @@ export function Contact({ profile, number }: { profile: Profile; number: string 
   };
 
   return (
-    <footer ref={footer} id="contact" data-section={number} data-section-label="Contact" aria-labelledby="contact-title" className="relative z-0 -mt-16 overflow-hidden bg-ink-2 md:-mt-24">
+    <footer
+      ref={footer}
+      id="contact"
+      data-section={number}
+      data-section-label="Let's build"
+      data-theme="lime"
+      aria-labelledby="contact-title"
+      className="relative z-0 -mt-16 overflow-hidden bg-ink-2 md:-mt-24"
+    >
       <div data-footer-inner className="px-4 pb-8 pt-44 md:px-8 md:pt-56">
-        <p className="label mb-6 text-muted">({number}) Contact</p>
+        <p className="label mb-6 text-muted">Ch. {number} · Let&apos;s build</p>
         <div data-footer-title>
-          <DriftTitle id="contact-title" lines={["Let's", "build"]} accentLine={1} className="display text-[26vw] md:text-[17vw]" />
+          <Reveal as="h2" id="contact-title" mode="words" className="display text-[26vw] md:text-[17vw]">
+            Let&apos;s <span className="text-accent">build</span>
+          </Reveal>
         </div>
 
         <div className="mt-16 grid items-end gap-16 md:grid-cols-12">
