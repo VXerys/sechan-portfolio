@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b -->
+source_hash: 532b09a269805c4ad2db00d31352c5223a50009a9f3302899b47cbe94c29e8f1 -->
 
 # Project State
 
-- Generated at: 2026-10-19T04:08:09.104Z
+- Generated at: 2026-10-19T05:03:52.992Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 1
@@ -29,15 +29,15 @@ source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b --
 <!-- GENERATED:GIT_FACTS:START -->
 ## Git
 
-- Branch: `feat/F-011-experience-highlights`
-- HEAD: `4b31c17`
+- Branch: `fix/more-work-gallery-copy`
+- HEAD: `25d08a5`
 - Worktree: dirty
 
 Recent commits:
 
-- `4b31c17 docs(F-011): record verification, close tasks, update handoff`
-- `5f272df fix(F-011): move focus with in-page jumps and tidy project chips`
-- `3927180 docs(F-011): align design with the chip flow, supersede F-002 AC-013`
-- `d0877b9 feat(F-011): render Asah highlight, education row, and project chips`
-- `4e6515a fix(F-011): use about-me wording for program and degree`
+- `25d08a5 fix(F-010): show panel covers on desktop, hold tapped row, Cartify cover, manifesto copy`
+- `78d8812 Merge pull request #11 from VXerys/feat/F-011-experience-highlights`
+- `c4fbf26 Merge main (F-010) into F-011 and resolve conflicts`
+- `8b24980 Merge pull request #12 from VXerys/feat/F-010-listing-images`
+- `207a3e2 fix(F-010): address the final review of the listing gallery`
 <!-- GENERATED:GIT_FACTS:END -->

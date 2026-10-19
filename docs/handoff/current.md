@@ -2,11 +2,11 @@
 status: active
 owner: "M Sechan Alfarisi"
 session_date: "2026-10-19"
-branch: "feat/F-011-experience-highlights"
-base_commit: "8b24980"
-current_commit: "8b24980"
-feature_id: "F-011"
-task_id: "T-039"
+branch: "fix/more-work-gallery-copy"
+base_commit: "78d8812"
+current_commit: "25d08a5"
+feature_id: "F-010"
+task_id: "T-050"
 expires_after: "2026-10-26"
 ---
 
@@ -14,25 +14,27 @@ expires_after: "2026-10-26"
 
 ## Session objective
 
-Land F-011 (Asah highlight, Universitas Nusa Putra row with projects built while studying, Klinik Cikidang Medika named) on top of F-010, which merged first (PR #12).
+Owner feedback after F-010 and F-011 merged: rewrite the About manifesto, fix the More work panels (no visual on laptops, "+" on a phone landing at the end of another project's details), and give Cartify a cover from the owner's collage.
 
 ## Completed
 
-- F-010 merged into `main` (8b24980): listing kit, eight listing sets, site gallery; EV-040 to EV-043.
-- F-011: T-037 to T-039 `done` with EV-029 to EV-031; `main` merged into the branch and the conflicts resolved (rendered views re-rendered, both `_index.md` rows kept, `project-index.tsx` keeps the F-011 chip listener and anchors plus the F-010 strip and preview guard).
-- A-001 and A-004 confirmed.
+- Manifesto and the matching About paragraph rewritten in `src/content/portfolio.ts`.
+- More work panel shows the project cover on every screen, beside the summary on desktop (`project-index.tsx`).
+- Opening a row below an open one holds the tapped row in place while the other panel collapses (`holdInPlace`).
+- Cartify cover composed from the owner's collage (email lines masked) at `src/assets/images/cartify-cover.webp`; composed covers skip zoom and scaled parallax (`media.ts`, `project-media.tsx`).
+- Checked in a production build at 375 px (row stays under the finger) and 1280 px (panel cover, Cartify cover uncropped, manifesto).
 
 ## Changed files
 
-Merge resolution only: `docs/context/ASSUMPTIONS.md`, `docs/specs/_index.md`, `docs/handoff/current.md`, `src/components/sections/project-index.tsx`, rendered `docs/context/*`.
+`src/components/sections/project-index.tsx`, `src/components/sections/project-media.tsx`, `src/content/media.ts`, `src/content/portfolio.ts`, `src/assets/images/cartify-cover.webp`, `docs/handoff/current.md`.
 
 ## Commands executed
 
-`npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run context:render`, `npm run context:validate -- --strict` on the merged branch.
+`npm run lint` clean, `npm run typecheck` 0 errors, `npm test` 76/76, `npm run build` static output.
 
 ## Uncommitted work
 
-None after the merge commit.
+None after the fix commit; the branch is not pushed.
 
 ## Blockers
 
@@ -40,7 +42,7 @@ None after the merge commit.
 
 ## Exact next step
 
-Owner merges PR #11. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 (clinic permission) and 07:132 (ArtConnect course name); push or close `chore/F-008-renumber-ids` (unpushed, ids FR-030..032, AC-051..053, T-035..036, EV-025..027).
+Owner approves the push and a PR of `fix/more-work-gallery-copy` to `main`. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 and 07:132; push or close `chore/F-008-renumber-ids`.
 
 ## Do not do next
 
