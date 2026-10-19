@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { LineRows } from "@/components/motion/line-rows";
+import { jumpToTarget } from "@/components/motion/smooth-scroll";
 import { ListingStrip } from "@/components/sections/listing-strip";
 import { ProjectPoster } from "@/components/sections/project-poster";
 import { ProjectQuote } from "@/components/sections/project-quote";
@@ -16,6 +17,20 @@ import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
 import { quoteForProject, type TestimonialView } from "@/lib/testimonials";
 
 const pad = (n: number) => String(n).padStart(2, "0");
+
+// Opening a row closes the one that was open; when that one sits above, its panel collapses and drags the tapped row
+// (and the page) upward, so the visitor lands at the end of another project's details. Holding the tapped row where it
+// was for the length of the collapse keeps it under the finger.
+function holdInPlace(button: HTMLElement) {
+  const start = button.getBoundingClientRect().top;
+  const until = performance.now() + 800;
+  const hold = () => {
+    const drift = button.getBoundingClientRect().top - start;
+    if (Math.abs(drift) > 0.5) jumpToTarget(window.scrollY + drift);
+    if (performance.now() < until) requestAnimationFrame(hold);
+  };
+  requestAnimationFrame(hold);
+}
 
 type Props = { projects: Project[]; offset: number; quotes: TestimonialView[] };
 
@@ -46,6 +61,13 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
     window.addEventListener(PROJECT_OPEN, onOpen);
     return () => window.removeEventListener(PROJECT_OPEN, onOpen);
   }, [projects]);
+
+  const toggleRow = (slug: string, button: HTMLElement) => {
+    const opening = openSlug !== slug;
+    const index = (target: string | null) => projects.findIndex((project) => project.slug === target);
+    setOpenSlug(opening ? slug : null);
+    if (opening && openSlug !== null && index(openSlug) < index(slug)) holdInPlace(button);
+  };
 
   useGSAP(
     () => {
@@ -123,7 +145,7 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
                     type="button"
                     aria-expanded={open}
                     aria-controls={panelId}
-                    onClick={() => setOpenSlug(open ? null : project.slug)}
+                    onClick={(event) => toggleRow(project.slug, event.currentTarget)}
                     className="group grid w-full origin-left grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 py-6 text-left transition-[scale] duration-200 active:scale-[0.985] md:grid-cols-[3.5rem_1fr_12rem_4rem_2rem] md:py-8"
                   >
                     <span className="label text-muted transition-colors duration-300 group-hover:text-accent">{pad(offset + index + 1)}</span>
@@ -148,15 +170,23 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
                   <div className="overflow-hidden" inert={!open}>
                     <div className="grid gap-8 pb-10 md:grid-cols-[3.5rem_1fr_1fr] md:gap-10">
                       <div className="hidden md:block" />
-                      {/* Touch screens never see the floating preview, so the visual sits inside the open panel. */}
-                      <div className="relative aspect-[16/10] w-full overflow-hidden md:hidden" aria-hidden="true">
-                        {projectMedia[project.slug] ? (
-                          <Image src={projectMedia[project.slug]!.src} alt="" fill sizes="100vw" className="object-cover" />
-                        ) : (
-                          <ProjectPoster project={project} size="sm" />
-                        )}
-                      </div>
                       <div>
+                        {/* The floating preview never shows over an open panel (and touch screens never get it), so the panel
+                            carries its own visual; otherwise a laptop opens to text only, with the screens below the fold. */}
+                        <div className="relative mb-8 aspect-[16/10] w-full overflow-hidden rounded-sm" aria-hidden="true">
+                          {projectMedia[project.slug] ? (
+                            <Image
+                              src={projectMedia[project.slug]!.src}
+                              alt=""
+                              fill
+                              sizes="(min-width: 768px) 45vw, 100vw"
+                              className="object-cover"
+                              style={{ background: projectMedia[project.slug]!.background }}
+                            />
+                          ) : (
+                            <ProjectPoster project={project} size="sm" />
+                          )}
+                        </div>
                         <p className="statement text-[1.7rem]">{project.summary}</p>
                         <p className="mt-4 text-[1.0625rem] leading-relaxed text-paper/75">{project.problem}</p>
                         <p className="label mt-6 text-muted">

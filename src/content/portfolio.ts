@@ -70,11 +70,11 @@ export const profile: Profile = {
     "I study Informatics Engineering at Universitas Nusa Putra (GPA 3.73/4.00, expected graduation 2027) and work across Flutter, React Native, Next.js and Supabase, with applied AI on top.",
     "I'm Co-Founder and CTO of Marketiv, a marketplace that connects Indonesian MSMEs with local micro-creators. The team was funded by P2MW 2026 and received Juara Harapan 2 at KMI EXPO 2026. I'm also a Mobile Software Engineer Intern at Mangcoding, where I'm the main contributor to BookMate on Google Play, and I take freelance full-stack work for local businesses.",
     "On the AI side, I was first author of a SENTIMETER 2026 paper on a voice shopping assistant that runs speech recognition on the phone and sends only text to an LLM, so it stays usable on weak in-store signal. I'm currently in the Next-Gen AI Engineer path of Asah led by Dicoding.",
-    "How I work: specs before code, tests on the logic that handles money or health data, and database rules that hold even when the UI is wrong.",
+    "How I work: I plan before I build, test every rule that touches money or patient data, and enforce access in the database, so a broken screen can't get around it.",
   ],
   manifesto: {
-    text: "Specs before code, tests on the logic that handles money or health data, and database rules that hold",
-    accent: "even when the UI is wrong.",
+    text: "I plan before I build, test every rule that touches money or patient data, and enforce access in the database,",
+    accent: "so a broken screen can't get around it.",
   },
   email: "sehanalfarisi9@gmail.com",
   links: [

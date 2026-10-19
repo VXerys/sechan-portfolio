@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b -->
+source_hash: 8d2ae983c6a0fe6768ab5f4ee5167d05994ab01168f153f35b72dd38177b52a3 -->
 
 # Brief
 
@@ -50,7 +50,7 @@ None.
 ## Handoff
 Next step:
 
-Owner merges PR #11. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 (clinic permission) and 07:132 (ArtConnect course name); push or close `chore/F-008-renumber-ids` (unpushed, ids FR-030..032, AC-051..053, T-035..036, EV-025..027).
+Owner approves the push and a PR of `fix/more-work-gallery-copy` to `main`. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 and 07:132; push or close `chore/F-008-renumber-ids`.
 
 ## Other open tasks
 None.
