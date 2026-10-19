@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { after, test } from 'node:test';
 
@@ -8,6 +9,7 @@ import {
   EMULATOR_HOST,
   assertDemoProjectId,
   emulatorDir,
+  emulatorEnv,
   firebaseEmulator,
   resolvePorts,
   toFirestoreFields,
@@ -88,4 +90,47 @@ test('seeding before start is refused instead of writing to whatever listens on 
   const emulator = firebaseEmulator({ slug: SLUG, projectId: 'demo-listing-test' });
   await assert.rejects(emulator.seed({}, { collections: { orders: [{ id: 'o1' }] } }), /start the emulator before seeding/);
   await emulator.stop();
+});
+
+test('the emulator env drops a Firebase CI token and service-account path, whatever their case', () => {
+  const env = emulatorEnv(
+    { FIREBASE_TOKEN: 't', google_application_credentials: 'c', Path: '/usr/bin', java_home: '/old', KEEP: 'yes' },
+    '/jbr',
+  );
+  assert.deepEqual(Object.keys(env).sort(), ['JAVA_HOME', 'KEEP', 'NO_UPDATE_NOTIFIER', 'PATH']);
+  assert.equal(env.JAVA_HOME, '/jbr');
+  assert.equal(env.PATH, `${path.join('/jbr', 'bin')}${path.delimiter}/usr/bin`);
+});
+
+// Drives the real start() with a stand-in CLI that records the env names it was given and exits, so the test proves
+// the spawned child, not just the helper, never sees the two variables.
+test('start() spawns the CLI without FIREBASE_TOKEN or GOOGLE_APPLICATION_CREDENTIALS', async () => {
+  const work = fs.mkdtempSync(path.join(os.tmpdir(), 'listing-emulator-env-'));
+  const javaHome = path.join(work, 'jbr');
+  fs.mkdirSync(path.join(javaHome, 'bin'), { recursive: true });
+  fs.writeFileSync(path.join(javaHome, 'bin', process.platform === 'win32' ? 'java.exe' : 'java'), '');
+  const dump = path.join(work, 'env.json');
+  const cli = path.join(work, 'fake-firebase.mjs');
+  fs.writeFileSync(cli, `import fs from 'node:fs';
+fs.writeFileSync(${JSON.stringify(dump)}, JSON.stringify(Object.keys(process.env)));
+`);
+  const saved = { FIREBASE_TOOLS_BIN: process.env.FIREBASE_TOOLS_BIN, FIREBASE_TOKEN: process.env.FIREBASE_TOKEN, GOOGLE_APPLICATION_CREDENTIALS: process.env.GOOGLE_APPLICATION_CREDENTIALS };
+  process.env.FIREBASE_TOOLS_BIN = cli;
+  process.env.FIREBASE_TOKEN = 'not-a-real-token';
+  process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(work, 'not-a-real-key.json');
+  try {
+    const emulator = firebaseEmulator({ slug: SLUG, projectId: 'demo-listing-test', javaHome, ports: { auth: 9499, firestore: 8499, firestoreWebsocket: 9498, hub: 4498, logging: 4497 }, startTimeoutMs: 10_000 });
+    await assert.rejects(emulator.start(), /exited early/);
+    const names = JSON.parse(fs.readFileSync(dump, 'utf8')).map((name) => name.toUpperCase());
+    assert.equal(names.includes('FIREBASE_TOKEN'), false);
+    assert.equal(names.includes('GOOGLE_APPLICATION_CREDENTIALS'), false);
+    assert.equal(names.includes('JAVA_HOME'), true);
+    assert.equal(names.includes('FIREBASE_TOOLS_BIN'), true, 'the rest of the env still reaches the child');
+  } finally {
+    for (const [name, value] of Object.entries(saved)) {
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+    }
+    fs.rmSync(work, { recursive: true, force: true });
+  }
 });

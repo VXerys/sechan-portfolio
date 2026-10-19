@@ -67,13 +67,16 @@ async function capture(slug) {
   } catch (error) {
     failure = error;
   } finally {
-    await session?.close();
-    await server?.close();
-    // Runs even when setup threw, so an emulator a project started is never left running.
-    if (project.teardown) {
-      await project.teardown().catch((error) => {
-        failure ??= error;
-      });
+    // Each step settles on its own: a browser or server that fails to close must not skip the emulator teardown, and a
+    // teardown that throws synchronously (a plain function) is caught like a rejected one.
+    const steps = [() => session?.close(), () => server?.close()];
+    if (project.teardown) steps.push(() => project.teardown());
+    for (const step of steps) {
+      await Promise.resolve()
+        .then(step)
+        .catch((error) => {
+          failure ??= error;
+        });
     }
   }
 

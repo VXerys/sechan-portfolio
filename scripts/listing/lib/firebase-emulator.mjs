@@ -94,6 +94,24 @@ export function toFirestoreFields(object) {
   return fields;
 }
 
+// A CI token or service-account path in the caller's shell would let the CLI act as a real account; the emulator never
+// needs either, so they are dropped. Windows env names are case-insensitive, so the match is too.
+const DROPPED_ENV = new Set(['FIREBASE_TOKEN', 'GOOGLE_APPLICATION_CREDENTIALS']);
+
+export function emulatorEnv(baseEnv, javaHome) {
+  const entries = Object.entries(baseEnv);
+  const basePath = entries.find(([name]) => name.toUpperCase() === 'PATH')?.[1] ?? '';
+  // JAVA_HOME and PATH change for this child only; the CLI looks Java up on PATH, and the machine has none.
+  const overrides = { JAVA_HOME: javaHome, PATH: `${path.join(javaHome, 'bin')}${path.delimiter}${basePath}`, NO_UPDATE_NOTIFIER: '1' };
+  const env = {};
+  for (const [name, value] of entries) {
+    const upper = name.toUpperCase();
+    // A "Path" next to the new "PATH" would leave Windows to pick one of the two.
+    if (!DROPPED_ENV.has(upper) && !Object.hasOwn(overrides, upper)) env[name] = value;
+  }
+  return { ...env, ...overrides };
+}
+
 function firebaseCli() {
   if (process.env.FIREBASE_TOOLS_BIN) return process.env.FIREBASE_TOOLS_BIN;
   const globalRoot =
@@ -212,8 +230,7 @@ export function firebaseEmulator({ slug, projectId, ports, javaHome = process.en
     const { dir, file } = writeEmulatorConfig(slug, resolved);
     const logFile = path.join(dir, 'emulator.log');
     const logStream = fs.createWriteStream(logFile);
-    // JAVA_HOME and PATH change for this child only; the CLI looks Java up on PATH, and the machine has none.
-    const env = { ...process.env, JAVA_HOME: javaHome, PATH: `${path.join(javaHome, 'bin')}${path.delimiter}${process.env.PATH ?? ''}`, NO_UPDATE_NOTIFIER: '1' };
+    const env = emulatorEnv(process.env, javaHome);
     child = spawn(process.execPath, [cli, 'emulators:start', '--only', 'auth,firestore', '--project', id, '--config', file], {
       cwd: dir,
       env,

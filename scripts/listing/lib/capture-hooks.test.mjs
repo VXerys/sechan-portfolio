@@ -19,7 +19,9 @@ function freePort() {
   });
 }
 
-async function runCapture({ setupThrows }) {
+// closeBreaks makes the browser close reject after it really closes; teardownThrows makes teardown a plain function
+// that throws before returning anything.
+async function runCapture({ setupThrows = false, closeBreaks = false, teardownThrows = false } = {}) {
   const slug = `_guard-test-${process.pid}-${Math.random().toString(36).slice(2, 8)}`;
   const projectFile = path.join(kitDir, 'projects', `${slug}.mjs`);
   const dir = cacheDir(slug);
@@ -35,8 +37,15 @@ const project = {
   baseUrl: 'http://127.0.0.1:${port}',
   serve: ${JSON.stringify(path.join(kitDir, 'fixtures'))},
   viewport: { width: 800, height: 600, deviceScaleFactor: 1 },
-  setup: async () => { ${setupThrows ? "throw new Error('setup broke on purpose');" : ''} },
-  teardown: async () => fs.writeFileSync(${JSON.stringify(marker)}, 'stopped'),
+  setup: async (context) => {
+    ${closeBreaks ? "const browser = context.browser(); const close = browser.close.bind(browser); browser.close = async () => { await close(); throw new Error('browser close broke on purpose'); };" : ''}
+    ${setupThrows ? "throw new Error('setup broke on purpose');" : ''}
+  },
+  teardown: ${
+    teardownThrows
+      ? `() => { fs.writeFileSync(${JSON.stringify(marker)}, 'stopped'); throw new Error('teardown broke on purpose'); }`
+      : `async () => fs.writeFileSync(${JSON.stringify(marker)}, 'stopped')`
+  },
   shots: [{ name: 'page', path: '/selfcheck.html', waitUntil: 'load', waitFor: 'body' }],
 };
 
@@ -65,6 +74,23 @@ test('a load-wait shot captures and teardown runs after a clean run', async () =
   assert.equal(run.status, 0, run.stderr);
   assert.equal(tornDown, true, 'teardown did not run');
   assert.equal(pngKept, true);
+});
+
+test('teardown still runs when closing the browser rejects, and the close error fails the run', async () => {
+  const { run, tornDown, pngKept } = await runCapture({ closeBreaks: true });
+  assert.equal(run.status, 1, run.stderr);
+  assert.match(run.stderr, /browser close broke on purpose/);
+  assert.equal(tornDown, true, 'teardown was skipped after a failed close');
+  assert.equal(pngKept, false);
+});
+
+test('a teardown that throws synchronously fails the run instead of crashing past the host log', async () => {
+  const { run, tornDown, pngKept } = await runCapture({ teardownThrows: true });
+  assert.equal(run.status, 1, run.stderr);
+  assert.match(run.stderr, /FAIL: teardown broke on purpose/);
+  assert.match(run.stdout, /hosts log:/);
+  assert.equal(tornDown, true);
+  assert.equal(pngKept, false);
 });
 
 test('the config check rejects a teardown that is not a function and an unknown waitUntil', () => {
