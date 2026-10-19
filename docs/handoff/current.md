@@ -2,11 +2,11 @@
 status: active
 owner: "M Sechan Alfarisi"
 session_date: "2026-10-19"
-branch: "feat/F-010-listing-images"
-base_commit: "0733e02"
-current_commit: "9fd6752"
-feature_id: "F-010"
-task_id: "T-049"
+branch: "feat/F-011-experience-highlights"
+base_commit: "8b24980"
+current_commit: "8b24980"
+feature_id: "F-011"
+task_id: "T-039"
 expires_after: "2026-10-26"
 ---
 
@@ -14,26 +14,25 @@ expires_after: "2026-10-26"
 
 ## Session objective
 
-F-010: Play Store style listing sets for every in-scope project, built from the real apps with invented data and never touching production or staging, plus a gallery on the site.
+Land F-011 (Asah highlight, Universitas Nusa Putra row with projects built while studying, Klinik Cikidang Medika named) on top of F-010, which merged first (PR #12).
 
 ## Completed
 
-- Listing kit in `scripts/listing/`: host allowlist guard (browser and Node side), strict Supabase stub, Firebase emulator helper (`demo-` ids only), compose templates with cover regions for sensitive values.
-- Eight sets in `src/assets/images/listings/`: Klinik Cikidang Medika, VisualKain Finance, InztaMoto ERP, ArtConnect, Gunung Puyuh WebGIS, BookMate, Welling and Ayah Hebat. Marketiv deferred (landing page revamp).
-- Gallery: covers replace posters (frames now 16:10), a screen strip in each case study and More work panel, sample-data notice.
-- T-040 to T-049 `done` with EV-040 to EV-043; A-004 confirmed 2026-10-18. Repos cloned for the owner: `D:\Projects\accessibility-gap-analysis-webgis`, `D:\Projects\artconnect-crm`. Temporary client worktrees removed.
+- F-010 merged into `main` (8b24980): listing kit, eight listing sets, site gallery; EV-040 to EV-043.
+- F-011: T-037 to T-039 `done` with EV-029 to EV-031; `main` merged into the branch and the conflicts resolved (rendered views re-rendered, both `_index.md` rows kept, `project-index.tsx` keeps the F-011 chip listener and anchors plus the F-010 strip and preview guard).
+- A-001 and A-004 confirmed.
 
 ## Changed files
 
-`scripts/listing/**`, `src/assets/images/listings/**`, `src/content/{listing-copy,listing-copy.test,listings,media}.ts`, `src/components/sections/{listing-strip,project-media,project-index}.tsx`, `package.json` (playwright-core dev dependency, kit scripts, kit tests in `npm test`), `.gitignore`, F-010 spec, `docs/context/ASSUMPTIONS.md`.
+Merge resolution only: `docs/context/ASSUMPTIONS.md`, `docs/specs/_index.md`, `docs/handoff/current.md`, `src/components/sections/project-index.tsx`, rendered `docs/context/*`.
 
 ## Commands executed
 
-`npm run lint`, `npm run typecheck`, `npm test` (73 pass), `npm run build`, every `listing:capture` and `listing:compose` run, `next start` with the in-app browser at 1280 and 375 px, `npm run context:render`, `npm run context:validate -- --strict`.
+`npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run context:render`, `npm run context:validate -- --strict` on the merged branch.
 
 ## Uncommitted work
 
-None after the closing docs commit; not pushed.
+None after the merge commit.
 
 ## Blockers
 
@@ -41,12 +40,13 @@ None after the closing docs commit; not pushed.
 
 ## Exact next step
 
-Owner approves pushing F-011 and F-010. Merge order: F-011 first (names the clinic), then F-010; F-008's renumber branch (`chore/F-008-renumber-ids`, unpushed) can go before or after. Each later merge re-runs `npm run context:render` and resolves the `_index.md` and rendered-view conflicts. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo), update about-me 07:534 and 07:132.
+Owner merges PR #11. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 (clinic permission) and 07:132 (ArtConnect course name); push or close `chore/F-008-renumber-ids` (unpushed, ids FR-030..032, AC-051..053, T-035..036, EV-025..027).
 
 ## Do not do next
 
 - Never run a client app with its real env, its `predev`, or `dev:prod`; never use VisualKain's `seed-data.ts`.
 - Do not put a Tailwind `transition-transform` on an element GSAP animates.
+- Do not add the Asah capstone partner before about-me records it as VERIFIED.
 - Do not commit placeholder testimonials.
 
 ## Validity

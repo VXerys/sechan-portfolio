@@ -74,5 +74,5 @@ Out of scope: deployment and custom domain (moved to F-005).
 
 ## Open questions
 
-- A-001: client names may be shown publicly, blocking: no (local), yes (deploy)
+- A-001: client names may be shown publicly, blocking: no (local), yes (deploy). Confirmed 2026-10-17 (F-011).
 - A-002: BookMate and Marketiv screenshots may be shown publicly, blocking: no (local), yes (deploy)

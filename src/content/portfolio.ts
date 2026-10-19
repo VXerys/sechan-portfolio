@@ -34,6 +34,20 @@ export type Project = {
 };
 // legalName is shown small under the brand, so a reader can match the company on official records.
 export type Experience = { company: string; legalName?: string; role: string; period: string; points: string[] };
+// No capstone field: about-me records no VERIFIED capstone partner, so the card cannot name one (BR-011).
+export type Program = { name: string; path: string; role: string; period: string; status: string };
+// Projects are referenced by slug so a chip can only point at a case study or More work row that exists.
+// context is null where about-me records no course or context for the project.
+export type EducationProject = { slug: string; context: string | null };
+export type Education = {
+  label: string;
+  institution: string;
+  degree: string;
+  period: string;
+  gpa: string;
+  projectsLabel: string;
+  projects: EducationProject[];
+};
 export type Achievement = { title: string; issuer: string; year: string; note: string | null };
 export type SkillGroup = { group: string; items: string[] };
 // Availability copy follows the owner's positioning decision of 2026-10-16: freelance first, then full-time, then internships.
@@ -165,8 +179,8 @@ export const projects: Project[] = [
   {
     slug: "clinic-information-system",
     title: "Clinic Information System",
-    // Unnamed until the clinic approves being named (assumption A-001).
-    client: "A primary care clinic in Sukabumi",
+    // Named with the clinic's approval (assumption A-001, confirmed 2026-10-17).
+    client: "Klinik Cikidang Medika",
     year: "2026",
     role: "Freelance full-stack developer (sole developer)",
     category: "Clinic system",
@@ -375,13 +389,37 @@ export const experience: Experience[] = [
     role: "Freelance Full-Stack Developer",
     period: "May 2026 - Present",
     points: [
-      "A primary care clinic in Sukabumi: sole developer of a clinic information system on Next.js 16 and Supabase, including a migration of 7,493 legacy rows.",
+      "Klinik Cikidang Medika: sole developer of a clinic information system on Next.js 16 and Supabase, including a migration of 7,493 legacy rows.",
       "VisualKain: built a finance system for a garment manufacturer with its money rules covered by 21 test files.",
       "InztaMoto: moved a JavaScript ERP into a Next.js 14 shell without stopping daily operations.",
       "Also built a wedding invitation site with a live RSVP guestbook and an admin panel (Next.js 16, Supabase).",
     ],
   },
 ];
+
+// The Asah achievement below stays as the certificate line in Proof; this is the Experience highlight.
+export const program: Program = {
+  name: "Asah 2026 led by Dicoding supported by GoTo",
+  path: "Next-Gen AI Engineer path",
+  role: "Fellow",
+  period: "Aug 2026 - Jan 2027",
+  status: "In progress",
+};
+
+export const education: Education = {
+  label: "Education",
+  institution: "Universitas Nusa Putra",
+  degree: "S.Kom. Informatics Engineering",
+  period: "Sep 2023 - 2027 (expected)",
+  gpa: "3.73",
+  projectsLabel: "Built while studying",
+  projects: [
+    { slug: "webgis-gunung-puyuh", context: null },
+    { slug: "artconnect", context: "Web Programming course" },
+    { slug: "cartify", context: "Research Methodology and Mobile Programming" },
+    { slug: "fluxa", context: "Independent" },
+  ],
+};
 
 export const achievements: Achievement[] = [
   {

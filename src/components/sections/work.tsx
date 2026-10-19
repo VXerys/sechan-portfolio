@@ -36,7 +36,14 @@ function CaseStudy({ project, index, quote }: { project: Project; index: number;
   ];
 
   return (
-    <article aria-labelledby={`${project.slug}-title`} className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+    // Project chips in Experience jump up to this id, which brings the header back; scroll-mt keeps it off the label.
+    // data-section-label names the slice transition; data-section is left off so the header does not treat it as a page section.
+    <article
+      id={project.slug}
+      data-section-label={project.title}
+      aria-labelledby={`${project.slug}-title`}
+      className="grid scroll-mt-24 gap-8 lg:grid-cols-12 lg:gap-10"
+    >
       {/* overflow-x-clip on the section, not overflow-hidden: a hidden overflow would turn off this sticky column. */}
       <div className="self-start lg:sticky lg:top-24 lg:col-span-5">
         <p className="label text-muted">

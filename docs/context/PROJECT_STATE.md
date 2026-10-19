@@ -1,13 +1,13 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b -->
+source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b -->
 
 # Project State
 
-- Generated at: 2026-10-19T03:51:44.636Z
+- Generated at: 2026-10-19T04:08:09.104Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
-- Open assumptions: 2
+- Open assumptions: 1
 - Blocked tasks: none
 
 ## Features
@@ -24,19 +24,20 @@ source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b --
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 0 | 0 | 0 | 0 | 2 | 0 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 0 | 0 | 0 | 1 | 4 | 0 |
 | F-010 Project listing images | verification | complete | 0 | 0 | 0 | 0 | 10 | 1 |
+| F-011 Experience highlights and clinic naming | verification | complete | 0 | 0 | 0 | 0 | 3 | 0 |
 
 <!-- GENERATED:GIT_FACTS:START -->
 ## Git
 
-- Branch: `feat/F-010-listing-images`
-- HEAD: `9fd6752`
+- Branch: `feat/F-011-experience-highlights`
+- HEAD: `4b31c17`
 - Worktree: dirty
 
 Recent commits:
 
-- `9fd6752 feat(F-010): add the Welling and Ayah Hebat set to the gallery`
-- `c0b980d Merge branch 'feat/F-010-gallery' into feat/F-010-listing-images`
-- `2fee395 fix(F-010): cover reader handles in the BookMate set`
-- `47b6673 feat(F-010): add Welling and Ayah Hebat listing set`
-- `532d6b7 feat(F-010): show listing covers and screen strips on the site`
+- `4b31c17 docs(F-011): record verification, close tasks, update handoff`
+- `5f272df fix(F-011): move focus with in-page jumps and tidy project chips`
+- `3927180 docs(F-011): align design with the chip flow, supersede F-002 AC-013`
+- `d0877b9 feat(F-011): render Asah highlight, education row, and project chips`
+- `4e6515a fix(F-011): use about-me wording for program and degree`
 <!-- GENERATED:GIT_FACTS:END -->

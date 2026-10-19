@@ -21,6 +21,22 @@ export function jumpTo(target: Target) {
 
 const SLICES = 5;
 
+// The slice jump replaces the native anchor jump, which would have moved focus too; without this, keyboard and
+// screen-reader users are left on the link they pressed while the page has moved on.
+function focusTarget(target: Target) {
+  if (typeof target !== "string") return;
+  const el = document.querySelector<HTMLElement>(target);
+  if (!el) return;
+  // A More work row is reached through its toggle, which also announces that the row is now expanded.
+  const toggle = el.matches("li") ? el.querySelector<HTMLElement>("button[aria-expanded]") : null;
+  if (toggle) {
+    toggle.focus({ preventScroll: true });
+    return;
+  }
+  if (!el.hasAttribute("tabindex") && el.tabIndex < 0) el.setAttribute("tabindex", "-1");
+  el.focus({ preventScroll: true });
+}
+
 function labelFor(target: Target) {
   if (typeof target !== "string") return "Top";
   const section = document.querySelector<HTMLElement>(target);
@@ -57,6 +73,7 @@ export function SliceTransition() {
           // The jump happens while the screen is covered, then triggers catch up before the slices leave.
           .add(() => {
             jumpToTarget(target);
+            focusTarget(target);
             ScrollTrigger.update();
           })
           .to(label.current, { yPercent: -110, duration: 0.4, ease: "expo.in" }, "+=0.15")

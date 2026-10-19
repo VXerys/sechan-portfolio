@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b -->
+source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b -->
 
 # Project Progress
 
@@ -100,3 +100,11 @@ source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b --
 | T-048 Site gallery and notice | done | FR-039 | T-041 | EV-043 |
 | T-049 Verification | done | FR-036, FR-037, FR-038, FR-039 | T-042, T-043, T-045, T-046, T-048 | EV-040, EV-041, EV-042, EV-043 |
 | T-050 Marketiv listing | deferred | FR-037 | T-040 |  |
+
+## F-011 — Experience highlights and clinic naming (`verification`, complete)
+
+| Task | Status | Requirements | Depends on | Evidence |
+|---|---|---|---|---|
+| T-037 Content and tests | done | FR-033, FR-034, FR-035 |  | EV-029 |
+| T-038 Experience UI and project chips | done | FR-033, FR-034 | T-037 | EV-029, EV-030, EV-031 |
+| T-039 Verification | done | FR-033, FR-034, FR-035 | T-037, T-038 | EV-029, EV-030, EV-031 |

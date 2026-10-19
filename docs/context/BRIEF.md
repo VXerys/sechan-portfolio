@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b -->
+source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b -->
 
 # Brief
 
@@ -45,12 +45,12 @@ Generated: `docs/context/state.yaml`, `docs/context/PROJECT_STATE.md`, `docs/con
 Frozen: none
 
 ## Open assumptions
-- A-001 — Client names may appear on the public site (F-001)
+None.
 
 ## Handoff
 Next step:
 
-Owner approves pushing F-011 and F-010. Merge order: F-011 first (names the clinic), then F-010; F-008's renumber branch (`chore/F-008-renumber-ids`, unpushed) can go before or after. Each later merge re-runs `npm run context:render` and resolves the `_index.md` and rendered-view conflicts. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo), update about-me 07:534 and 07:132.
+Owner merges PR #11. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 (clinic permission) and 07:132 (ArtConnect course name); push or close `chore/F-008-renumber-ids` (unpushed, ids FR-030..032, AC-051..053, T-035..036, EV-025..027).
 
 ## Other open tasks
 None.
@@ -68,3 +68,4 @@ None.
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 2/2 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 4/5 |
 | F-010 Project listing images | verification | complete | 10/11 |
+| F-011 Experience highlights and clinic naming | verification | complete | 3/3 |

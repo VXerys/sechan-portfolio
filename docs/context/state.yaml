@@ -558,16 +558,55 @@ features:
         depends_on:
           - T-040
         evidence: []
+  - id: F-011
+    title: Experience highlights and clinic naming
+    status: verification
+    phase: complete
+    spec_path: docs/specs/F-011-experience-highlights
+    tasks:
+      - id: T-037
+        title: Content and tests
+        status: done
+        requirements:
+          - FR-033
+          - FR-034
+          - FR-035
+        depends_on: []
+        evidence:
+          - EV-029
+      - id: T-038
+        title: Experience UI and project chips
+        status: done
+        requirements:
+          - FR-033
+          - FR-034
+        depends_on:
+          - T-037
+        evidence:
+          - EV-029
+          - EV-030
+          - EV-031
+      - id: T-039
+        title: Verification
+        status: done
+        requirements:
+          - FR-033
+          - FR-034
+          - FR-035
+        depends_on:
+          - T-037
+          - T-038
+        evidence:
+          - EV-029
+          - EV-030
+          - EV-031
 active:
   feature_id: F-001
   task_id: T-005
 assumptions_open:
-  - id: A-001
-    feature: F-001
-    title: Client names may appear on the public site
   - id: A-003
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-19T03:51:44.636Z
-source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b
+generated_at: 2026-10-19T04:08:09.104Z
+source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b
