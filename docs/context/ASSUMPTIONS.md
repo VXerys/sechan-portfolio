@@ -3,7 +3,7 @@ id: ASSUMPTIONS
 title: Assumptions Log
 status: active
 owner: "M Sechan Alfarisi"
-last_updated: "2026-10-17"
+last_updated: "2026-10-18"
 ---
 
 # Assumptions
@@ -51,9 +51,9 @@ The project list names Klinik Cikidang Medika, VisualKain, InztaMoto, and PT Man
 The testimonials section renders only entries with a recorded consent date. No quote exists yet; the owner is requesting them with `docs/outreach/client-testimonial-templates.md`. A quote is never written or edited by the agent beyond typo fixes the client approves.
 
 ### A-004 — Mangcoding allows Welling and Ayah Hebat listing images
-- status: open
+- status: confirmed
 - feature: F-010
 - raised: 2026-10-17
-- resolution:
+- resolution: 2026-10-18, owner in chat: Mangcoding has given permission. Real end-user names and photos in the Welling screens are still covered with sample values (BR-013).
 
 The owner asked (2026-10-17) for a "UI slicing" listing set for Welling and Ayah Hebat, built from existing screenshots. A-002 kept those screenshots off the site because Welling's show real end users' names and photos. The plan covers every real name and photo with sample values; what is not recorded is whether Mangcoding, which owns the client relationship, allows the set. T-047 stays blocked until the owner confirms. If Mangcoding declines, the project keeps its poster.

@@ -447,7 +447,7 @@ features:
   - id: F-010
     title: Project listing images
     status: implementing
-    phase: blocked
+    phase: not_started
     spec_path: docs/specs/F-010-listing-images
     tasks:
       - id: T-040
@@ -507,7 +507,7 @@ features:
         evidence: []
       - id: T-047
         title: Welling and Ayah Hebat listing
-        status: blocked
+        status: planned
         requirements:
           - FR-038
         depends_on:
@@ -554,12 +554,6 @@ assumptions_open:
   - id: A-003
     feature: F-002
     title: Testimonials are real, attributed, and approved
-  - id: A-004
-    feature: F-010
-    title: Mangcoding allows Welling and Ayah Hebat listing images
-blockers:
-  - feature_id: F-010
-    task_id: T-047
-    title: Welling and Ayah Hebat listing
-generated_at: 2026-10-18T04:27:11.114Z
-source_hash: 0bb977dae142545c56b1ae99ae452056feeaff095fff1b20f1d0bd8c8e2243b0
+blockers: []
+generated_at: 2026-10-19T02:03:36.049Z
+source_hash: c8e0890c805cb7d948d6865bfdb044bfcddcc35e3f4e31f3d233c89d2455b79e

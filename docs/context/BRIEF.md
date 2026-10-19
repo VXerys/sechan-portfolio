@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 0bb977dae142545c56b1ae99ae452056feeaff095fff1b20f1d0bd8c8e2243b0 -->
+source_hash: c8e0890c805cb7d948d6865bfdb044bfcddcc35e3f4e31f3d233c89d2455b79e -->
 
 # Brief
 
@@ -67,4 +67,4 @@ None.
 | F-007 Stack marquee redesign | implementing | in_progress | 1/2 |
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 2/2 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 4/5 |
-| F-010 Project listing images | implementing | blocked | 0/11 |
+| F-010 Project listing images | implementing | not_started | 0/11 |

@@ -79,12 +79,12 @@ Temp worktree from the branch the live site deploys (record the ruling); emulato
 Compose from the existing raw screens in `Downloads\listing-bookmate\` into a cover and four or five phone-frame slides labelled "Full-stack"; replaces `bookmate-listing.webp`. Acceptance: AC-066.
 
 ### T-047 — Welling and Ayah Hebat listing
-- status: blocked
+- status: planned
 - requirements: [FR-038]
 - depends_on: [T-040]
 - evidence: []
 
-Blocked by A-004. Then compose one shared set labelled "UI slicing"; cover every real end-user name and photo in the Welling screens with sample values, crop Korean dev traces; Ayah Hebat names are test data. Acceptance: AC-067.
+A-004 confirmed 2026-10-18. Compose one shared set labelled "UI slicing"; cover every real end-user name and photo in the Welling screens with sample values, crop Korean dev traces; Ayah Hebat names are test data. Acceptance: AC-067.
 
 ### T-048 — Site gallery and notice
 - status: planned
