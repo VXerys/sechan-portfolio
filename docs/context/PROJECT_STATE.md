@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: c8e0890c805cb7d948d6865bfdb044bfcddcc35e3f4e31f3d233c89d2455b79e -->
+source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b -->
 
 # Project State
 
-- Generated at: 2026-10-19T02:03:36.049Z
+- Generated at: 2026-10-19T03:51:44.636Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 2
@@ -23,20 +23,20 @@ source_hash: c8e0890c805cb7d948d6865bfdb044bfcddcc35e3f4e31f3d233c89d2455b79e --
 | F-007 Stack marquee redesign | implementing | in_progress | 1 | 0 | 0 | 0 | 1 | 0 |
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 0 | 0 | 0 | 0 | 2 | 0 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 0 | 0 | 0 | 1 | 4 | 0 |
-| F-010 Project listing images | implementing | not_started | 10 | 0 | 0 | 0 | 0 | 1 |
+| F-010 Project listing images | verification | complete | 0 | 0 | 0 | 0 | 10 | 1 |
 
 <!-- GENERATED:GIT_FACTS:START -->
 ## Git
 
 - Branch: `feat/F-010-listing-images`
-- HEAD: `0ad7fc7`
+- HEAD: `9fd6752`
 - Worktree: dirty
 
 Recent commits:
 
-- `0ad7fc7 feat(F-010): add Klinik Cikidang Medika listing set`
-- `4c3d5f8 feat(F-010): answer stub errors with 500 and add a strict stub mode`
-- `0ae7aeb feat(F-010): add ArtConnect listing set and Supabase stub helper`
-- `8ea19fb fix(F-010): use the WebGIS landing hero instead of the splash`
-- `6a4ecb3 feat(F-010): add Gunung Puyuh WebGIS listing set`
+- `9fd6752 feat(F-010): add the Welling and Ayah Hebat set to the gallery`
+- `c0b980d Merge branch 'feat/F-010-gallery' into feat/F-010-listing-images`
+- `2fee395 fix(F-010): cover reader handles in the BookMate set`
+- `47b6673 feat(F-010): add Welling and Ayah Hebat listing set`
+- `532d6b7 feat(F-010): show listing covers and screen strips on the site`
 <!-- GENERATED:GIT_FACTS:END -->

@@ -2,7 +2,7 @@
 id: F-010
 title: "Project listing images"
 type: requirements
-status: implementing
+status: verification
 tier: full
 owner: "M Sechan Alfarisi"
 created: 2026-10-17
@@ -61,7 +61,7 @@ The repository shall hold a local kit that captures screens from a running app w
 ### FR-039 — Site gallery
 
 - AC-068: Given a project with a listing set, when its case study or More work panel renders, then the cover replaces the poster and the slides sit in a horizontal strip that scrolls by drag, touch swipe, wheel, and keyboard.
-- AC-069: Given a strip with sample-data slides, when shown, then the line under it reads "Screens use sample data; the project is shown with the client's approval."
+- AC-069: Given a strip with sample-data slides, when shown, then the line under it reads "Screens use sample data; the project is shown with the client's approval." for client work, and "Screens use sample data." for the owner's own projects (amended 2026-10-19: own projects have no client approval to cite).
 - AC-070: Given reduced motion or no JavaScript, when the strip renders, then every slide stays reachable by native horizontal scroll.
 
 ## Business and validation rules

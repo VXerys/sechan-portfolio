@@ -446,84 +446,94 @@ features:
           - EV-028
   - id: F-010
     title: Project listing images
-    status: implementing
-    phase: not_started
+    status: verification
+    phase: complete
     spec_path: docs/specs/F-010-listing-images
     tasks:
       - id: T-040
         title: Listing kit
-        status: planned
+        status: done
         requirements:
           - FR-036
         depends_on: []
-        evidence: []
+        evidence:
+          - EV-040
       - id: T-041
         title: Gunung Puyuh WebGIS listing
-        status: planned
+        status: done
         requirements:
           - FR-037
         depends_on:
           - T-040
-        evidence: []
+        evidence:
+          - EV-040
+          - EV-041
       - id: T-042
         title: ArtConnect listing
-        status: planned
+        status: done
         requirements:
           - FR-037
         depends_on:
           - T-040
-        evidence: []
+        evidence:
+          - EV-041
       - id: T-043
         title: Klinik Cikidang Medika listing
-        status: planned
+        status: done
         requirements:
           - FR-037
         depends_on:
           - T-040
-        evidence: []
+        evidence:
+          - EV-041
       - id: T-044
         title: VisualKain Finance listing
-        status: planned
+        status: done
         requirements:
           - FR-037
         depends_on:
           - T-040
-        evidence: []
+        evidence:
+          - EV-041
       - id: T-045
         title: InztaMoto ERP listing
-        status: planned
+        status: done
         requirements:
           - FR-037
         depends_on:
           - T-044
-        evidence: []
+        evidence:
+          - EV-041
       - id: T-046
         title: BookMate listing
-        status: planned
+        status: done
         requirements:
           - FR-038
         depends_on:
           - T-040
-        evidence: []
+        evidence:
+          - EV-042
       - id: T-047
         title: Welling and Ayah Hebat listing
-        status: planned
+        status: done
         requirements:
           - FR-038
         depends_on:
           - T-040
-        evidence: []
+        evidence:
+          - EV-042
       - id: T-048
         title: Site gallery and notice
-        status: planned
+        status: done
         requirements:
           - FR-039
         depends_on:
           - T-041
-        evidence: []
+        evidence:
+          - EV-043
       - id: T-049
         title: Verification
-        status: planned
+        status: done
         requirements:
           - FR-036
           - FR-037
@@ -535,7 +545,11 @@ features:
           - T-045
           - T-046
           - T-048
-        evidence: []
+        evidence:
+          - EV-040
+          - EV-041
+          - EV-042
+          - EV-043
       - id: T-050
         title: Marketiv listing
         status: deferred
@@ -555,5 +569,5 @@ assumptions_open:
     feature: F-002
     title: Testimonials are real, attributed, and approved
 blockers: []
-generated_at: 2026-10-19T02:03:36.049Z
-source_hash: c8e0890c805cb7d948d6865bfdb044bfcddcc35e3f4e31f3d233c89d2455b79e
+generated_at: 2026-10-19T03:51:44.636Z
+source_hash: f5fe593a6cb5090a790e6eb96d9792c3fd4e94231f8f910ae9b255e5098ae15b

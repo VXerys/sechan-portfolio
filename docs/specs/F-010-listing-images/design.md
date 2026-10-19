@@ -2,7 +2,7 @@
 id: F-010
 title: "Project listing images"
 type: design
-status: implementing
+status: verification
 tier: full
 owner: "M Sechan Alfarisi"
 created: 2026-10-17
@@ -37,8 +37,8 @@ A small kit in `scripts/listing/*` (new) captures each app on localhost through 
 | `src/content/listings.ts` | per slug: cover and slides as static imports, caption per slide, label, `sampleData` | site data |
 | `src/content/listings.test.ts` | captions obey copy rules; 4 or 5 slides; every set with `sampleData` renders the notice; slugs exist in `projects` | BR-016 |
 | `src/content/media.ts` | cover from `listings` for each slug that has a set | poster fallback stays |
-| `src/components/sections/listing-strip.tsx` | client component: scroll-snap row, `data-lenis-prevent`, drag to scroll for fine pointers, focusable `role="region"` with `aria-label`, lazy `next/image` | AC-068, AC-070 |
-| `src/components/sections/project-media.tsx`, `project-index.tsx` | render the strip and the notice under the cover | AC-069 |
+| `src/components/sections/listing-strip.tsx` | client component: scroll-snap row, mouse drag to scroll, focusable `role="region"` with `aria-label`, lazy `next/image`; no `data-lenis-prevent`, since Lenis leaves horizontal wheel alone | AC-068, AC-070 |
+| `src/components/sections/project-media.tsx`, `project-index.tsx` | render the strip and the notice under the cover; project frames move to 16:10 to match the covers | AC-069 |
 
 ## Projects
 

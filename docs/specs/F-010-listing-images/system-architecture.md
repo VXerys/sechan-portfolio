@@ -2,7 +2,7 @@
 id: F-010
 title: "Project listing images"
 type: system-architecture
-status: implementing
+status: verification
 tier: full
 owner: "M Sechan Alfarisi"
 created: 2026-10-17
