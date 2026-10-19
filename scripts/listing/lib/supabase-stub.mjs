@@ -84,9 +84,14 @@ function splitTopLevel(text) {
   return parts.map((part) => part.trim()).filter(Boolean);
 }
 
+const EMBED = /^(?:([A-Za-z_]\w*):)?([A-Za-z_]\w*)\((.*)\)$/s;
+
+// An embed (alias:table(columns)) is kept as its own entry; a hint (table!fk or !inner) or a JSON path changes what
+// PostgREST returns in ways the stub does not model, so those are reported instead of guessed.
 export function parseSelect(select) {
-  if (!select) return { all: true, columns: [], unsupported: [] };
+  if (!select) return { all: true, columns: [], embeds: [], unsupported: [] };
   const columns = [];
+  const embeds = [];
   const unsupported = [];
   let all = false;
   for (const entry of splitTopLevel(select)) {
@@ -94,7 +99,17 @@ export function parseSelect(select) {
       all = true;
       continue;
     }
-    if (entry.includes('(') || entry.includes('->')) {
+    if (entry.includes('(')) {
+      const embed = entry.match(EMBED);
+      if (!embed) {
+        unsupported.push(entry);
+        continue;
+      }
+      const [, alias, table, inner] = embed;
+      embeds.push({ alias: alias ?? table, table, select: parseSelect(inner), entry });
+      continue;
+    }
+    if (entry.includes('->') || entry.includes('!')) {
       unsupported.push(entry);
       continue;
     }
@@ -102,7 +117,7 @@ export function parseSelect(select) {
     const column = (right ?? left).trim();
     columns.push({ alias: left.trim(), column });
   }
-  return { all, columns, unsupported };
+  return { all, columns, embeds, unsupported };
 }
 
 function parseList(text) {
@@ -176,23 +191,44 @@ function sortRows(rows, terms) {
   });
 }
 
-function project(row, selection) {
-  if (selection.all && !selection.columns.length) return { ...row };
+function project(row, selection, resolveEmbed) {
   const picked = selection.all ? { ...row } : {};
   for (const { alias, column } of selection.columns) picked[alias] = row[column] ?? null;
+  for (const embed of selection.embeds) {
+    const relation = resolveEmbed(embed.table);
+    if (!relation) continue;
+    const related = relation.rows.filter((other) => other[relation.foreign] !== undefined && other[relation.foreign] === row[relation.local]);
+    const shaped = related.map((other) => project(other, embed.select, () => null));
+    picked[embed.alias] = relation.many ? shaped : (shaped[0] ?? null);
+  }
   return picked;
 }
 
+// Every embed must name a relation the fixtures declare; nested embeds are not modelled.
+function selectProblems(selection, resolveEmbed) {
+  const problems = selection.unsupported.map((entry) => `select ${entry}`);
+  for (const embed of selection.embeds) {
+    if (!resolveEmbed(embed.table)) problems.push(`select ${embed.entry} (no relation)`);
+    else if (embed.select.embeds.length || embed.select.unsupported.length) problems.push(`select ${embed.entry} (nested)`);
+  }
+  return problems;
+}
+
 // Pure PostgREST read: filter, then count, then order and slice, as the server does, so a count=exact answer
-// reports every matching row while the body holds only the requested page.
-export function queryRows(rows, searchParams) {
+// reports every matching row while the body holds only the requested page. resolveEmbed(table) answers the
+// relation for an embedded table, { rows, local, foreign, many }, or null when the fixtures declare none.
+export function queryRows(rows, searchParams, resolveEmbed = () => null) {
   const selection = parseSelect(searchParams.get('select'));
   const filters = [];
-  const unsupported = selection.unsupported.map((entry) => `select ${entry}`);
+  const unsupported = selectProblems(selection, resolveEmbed);
   for (const [key, raw] of searchParams) {
     if (READ_PARAMS.has(key)) continue;
     if (key === 'or' || key === 'and' || key === 'not') {
       unsupported.push(`${key} filter`);
+      continue;
+    }
+    if (key.includes('.')) {
+      unsupported.push(`${key} filter on an embed`);
       continue;
     }
     const filter = parseFilter(key, raw);
@@ -204,7 +240,7 @@ export function queryRows(rows, searchParams) {
   const offset = Number(searchParams.get('offset') ?? 0) || 0;
   const limitParam = searchParams.get('limit');
   const limit = limitParam === null ? Infinity : Number(limitParam);
-  const page = sorted.slice(offset, offset + limit).map((row) => project(row, selection));
+  const page = sorted.slice(offset, offset + limit).map((row) => project(row, selection, resolveEmbed));
   return { rows: page, total: matched.length, offset, unsupported };
 }
 
@@ -224,7 +260,7 @@ function corsHeaders(headers) {
 const json = (status, body, extra = {}) => ({ status, headers: { 'content-type': 'application/json; charset=utf-8', ...extra }, body: body === undefined ? '' : JSON.stringify(body) });
 const notFound = (message) => json(404, { code: 'STUB404', message, details: null, hint: 'add it to the project stub fixtures' });
 
-export function createSupabaseStub({ origin, user, session, tables = {}, rpc = {}, files = {}, storageKey, signedOutPaths = [], strict = false, log = (line) => console.log(line) }) {
+export function createSupabaseStub({ origin, user, session, tables = {}, relations = {}, rpc = {}, files = {}, storageKey, signedOutPaths = [], strict = false, log = (line) => console.log(line) }) {
   const stubOrigin = assertStubOrigin(origin);
   if (!user?.id || !user?.email) throw new Error('Supabase stub needs a sample user with id and email (see sampleUser)');
   const activeSession = session ?? sampleSession(user, { origin: stubOrigin });
@@ -279,7 +315,12 @@ export function createSupabaseStub({ origin, user, session, tables = {}, rpc = {
       miss(`table ${table} (answered [])`);
       return json(200, [], { 'content-range': '*/0' });
     }
-    const { rows, total, offset, unsupported } = queryRows(tables[table], url.searchParams);
+    // relations: { visits: { patients: { local: 'pasien_id' } } } embeds the patient whose id equals visits.pasien_id.
+    const resolveEmbed = (embedded) => {
+      const relation = relations[table]?.[embedded];
+      return relation && embedded in tables ? { rows: tables[embedded], foreign: 'id', many: false, ...relation } : null;
+    };
+    const { rows, total, offset, unsupported } = queryRows(tables[table], url.searchParams, resolveEmbed);
     for (const entry of unsupported) miss(`${table} query ${entry} (ignored)`);
     serve(`table ${table}`);
     const counted = /count=(exact|planned|estimated)/.test(headers.prefer ?? '');

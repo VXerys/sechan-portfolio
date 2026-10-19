@@ -37,7 +37,7 @@ test('the stub origin must be a reserved .test name and never a Supabase domain'
   assert.throws(() => createSupabaseStub({ origin: 'https://xyz.supabase.co', user: USER }), /real Supabase domain/);
 });
 
-test('select lists pick and alias columns, and embeds are reported instead of guessed', () => {
+test('select lists pick and alias columns, parse embeds, and report hints and JSON paths instead of guessing', () => {
   assert.deepEqual(parseSelect('id, title:name, price::text'), {
     all: false,
     columns: [
@@ -45,9 +45,46 @@ test('select lists pick and alias columns, and embeds are reported instead of gu
       { alias: 'title', column: 'name' },
       { alias: 'price', column: 'price' },
     ],
+    embeds: [],
     unsupported: [],
   });
-  assert.deepEqual(parseSelect('*, contacts(name, email)').unsupported, ['contacts(name, email)']);
+  const embedded = parseSelect('*,owner:users(id,name),contacts(*)');
+  assert.deepEqual(
+    embedded.embeds.map(({ alias, table, select }) => ({ alias, table, columns: select.columns.map((column) => column.column), all: select.all })),
+    [
+      { alias: 'owner', table: 'users', columns: ['id', 'name'], all: false },
+      { alias: 'contacts', table: 'contacts', columns: [], all: true },
+    ],
+  );
+  assert.deepEqual(parseSelect('*,users!inner(id),meta->>size').unsupported, ['users!inner(id)', 'meta->>size']);
+  assert.deepEqual(parseSelect('*,users!inner(id)').embeds, []);
+  assert.deepEqual(parseSelect('*,users!inner(id)').unsupported, ['users!inner(id)']);
+});
+
+test('an embed answers from a declared relation, and an undeclared or nested one is reported', () => {
+  const { stub, lines } = makeStub({
+    tables: {
+      artworks: ROWS,
+      users: [
+        { id: 'u1', name: 'Sample Artist', city: 'Kota Contoh' },
+        { id: 'u2', name: 'Other Sample', city: 'Kota Lain' },
+      ],
+    },
+    relations: { artworks: { users: { local: 'user_id' } } },
+  });
+  const rows = body(get(stub, '/rest/v1/artworks?select=id,owner:users(name),users(*)&order=id.asc&limit=2'));
+  assert.deepEqual(rows, [
+    { id: 'a1', owner: { name: 'Sample Artist' }, users: { id: 'u1', name: 'Sample Artist', city: 'Kota Contoh' } },
+    { id: 'a2', owner: { name: 'Sample Artist' }, users: { id: 'u1', name: 'Sample Artist', city: 'Kota Contoh' } },
+  ]);
+  get(stub, '/rest/v1/artworks?select=*,buyers(name)');
+  get(stub, '/rest/v1/artworks?select=*,users(name,friends(name))');
+  get(stub, '/rest/v1/artworks?select=*,users(name)&users.city=eq.Kota%20Contoh');
+  assert.deepEqual(lines.filter((line) => line.includes('MISSING')), [
+    '  supabase stub: MISSING artworks query select buyers(name) (no relation) (ignored)',
+    '  supabase stub: MISSING artworks query select users(name,friends(name)) (nested) (ignored)',
+    '  supabase stub: MISSING artworks query users.city filter on an embed (ignored)',
+  ]);
 });
 
 test('eq filters, order, limit, and offset follow PostgREST, and the count covers every match', () => {
