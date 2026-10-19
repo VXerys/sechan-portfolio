@@ -180,11 +180,24 @@ body > :not(.ghost) {
   background: var(--ink-2);
   box-shadow: 0 48px 90px -40px rgba(0, 0, 0, 0.9);
 }
-.phone .shot {
-  display: block;
+.phone .screen {
+  position: relative;
   height: 100%;
   aspect-ratio: var(--shot-ratio);
+  overflow: hidden;
   border-radius: 46px;
+}
+.phone .shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.cover-mask {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-sans);
 }
 
 .cover .meta {

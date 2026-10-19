@@ -72,6 +72,27 @@ export function checkCaptureConfig(project) {
   return project;
 }
 
+const COVER_KINDS = ['name', 'avatar', 'block'];
+// Colors land in SVG attributes, so only plain hex is accepted.
+const HEX = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
+
+function checkCoverRegion(slug, field, region) {
+  const { x, y, w, h, kind, value, fill, color, size, weight, radius } = region ?? {};
+  if (![x, y].every((n) => Number.isFinite(n) && n >= 0) || ![w, h].every((n) => Number.isFinite(n) && n > 0)) {
+    fail(slug, `${field} needs x, y, w, h in source pixels`);
+  }
+  if (!COVER_KINDS.includes(kind)) fail(slug, `${field}.kind must be one of ${COVER_KINDS.join(', ')}`);
+  if (kind === 'name' && !(typeof value === 'string' && value.trim())) fail(slug, `${field} is a name and needs a sample value`);
+  if (value !== undefined && typeof value !== 'string') fail(slug, `${field}.value must be a string`);
+  if (kind !== 'avatar' && fill === undefined) fail(slug, `${field} needs a fill matched to the surrounding UI`);
+  for (const [key, paint] of Object.entries({ fill, color })) {
+    if (paint !== undefined && !HEX.test(String(paint))) fail(slug, `${field}.${key} must be a hex color`);
+  }
+  for (const [key, number] of Object.entries({ size, weight, radius })) {
+    if (number !== undefined && !(Number.isFinite(number) && number >= 0)) fail(slug, `${field}.${key} must be a non-negative number`);
+  }
+}
+
 function checkCopy(slug, field, text) {
   if (typeof text !== 'string' || !text.trim()) fail(slug, `${field} must be a non-empty string`);
   if (COPY_RULE.test(text)) fail(slug, `${field} breaks the copy rules (hype word or em dash): "${text}"`);
@@ -86,9 +107,15 @@ export function checkListingConfig(project) {
   checkCopy(slug, 'listing.title', listing.title);
   checkCopy(slug, 'listing.tagline', listing.tagline);
 
-  const sources = listing.sources ?? {};
-  for (const [shot, file] of Object.entries(sources)) {
+  const sources = {};
+  for (const [shot, entry] of Object.entries(listing.sources ?? {})) {
+    const { file, cover = [] } = typeof entry === 'string' ? { file: entry } : (entry ?? {});
     if (typeof file !== 'string' || !path.isAbsolute(file)) fail(slug, `listing.sources.${shot} must be an absolute path`);
+    if (!Array.isArray(cover)) fail(slug, `listing.sources.${shot}.cover must be a list of regions`);
+    // Only the phone frame draws cover regions; a web slide would silently show the uncovered values.
+    if (cover.length && listing.type !== 'mobile') fail(slug, `listing.sources.${shot}.cover is only drawn on mobile slides`);
+    cover.forEach((region, index) => checkCoverRegion(slug, `listing.sources.${shot}.cover[${index}]`, region));
+    sources[shot] = { file, cover };
   }
   const known = new Set([...(project.shots ?? []).map((shot) => shot.name), ...Object.keys(sources)]);
   const requireShot = (field, name) => {

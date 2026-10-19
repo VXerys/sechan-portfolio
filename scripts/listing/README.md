@@ -37,12 +37,34 @@ const project = {
     title: "Project title", tagline: "One line",
     cover: { shot: "dashboard" },
     slides: [{ shot: "dashboard", caption: "One-line benefit" }], // caption doubles as alt text (BR-016)
-    sources: {},                            // shot name -> absolute path of an existing screenshot (mobile)
+    sources: {},                            // shot name -> absolute path of an existing screenshot (mobile), or { file, cover }
   },
 };
 
 export default project;
 ```
+
+### Covering values on existing screenshots (mobile)
+
+Existing phone screenshots can show real people (EC-003 allows covering only there; live captures are fixed at the stub). Give the source as `{ file, cover: [regions] }`; each region is in the source image's own pixels, and the phone frame draws it in an SVG that shares the screenshot's pixel grid, so it sits exactly over those pixels at any frame size (cover and slide alike).
+
+```js
+sources: {
+  ranking: {
+    file: 'C:/shots/ranking.jpg',
+    cover: [
+      { x: 230, y: 672, w: 200, h: 46, kind: 'name', value: 'Farhan', fill: '#ffffff', color: '#18181b', size: 27, weight: 600 },
+      { x: 136, y: 654, w: 82, h: 82, kind: 'avatar', value: 'Farhan', fill: '#ffffff' },
+      { x: 38, y: 600, w: 636, h: 296, kind: 'block', fill: '#3b3b3b', radius: 40 },
+    ],
+  },
+},
+```
+
+- `name`: a `fill` rectangle matched to the surrounding UI with the sample `value` left-aligned and vertically centred in the site sans; `size` (default 70% of `h`), `weight` (600) and `color` (`#18181b`) are in source pixels and CSS terms.
+- `avatar`: a neutral grey circle as wide as the shorter side, with the first letter of `value` if given; an optional `fill` paints the square behind it to hide the rim of a round photo.
+- `block`: a `fill` rectangle with an optional corner `radius`, for photos, development traces, or anything with no sensible sample value.
+- Colors are hex only. A region outside the image, an unknown kind, a name without a value, or a `cover` on a web listing fails compose. Set `sampleData: true` on a set with covered values.
 
 Each shot waits for network idle (or the shot's `waitUntil`: `load` for apps that keep a request open for good, such as a Firestore listen channel, where `before` must then prove the data arrived), `document.fonts.ready`, its `waitFor` selector, and loaded images, runs `before`, settles, then screenshots; a timeout retries once and then fails with the pending requests.
 

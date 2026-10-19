@@ -37,9 +37,9 @@ async function loadShots(project, listing) {
   if ([...names].some((name) => !listing.sources[name])) assertCleanCapture(dir);
   const images = new Map();
   for (const name of names) {
-    const file = listing.sources[name] ?? path.join(dir, `${name}.png`);
+    const { file = path.join(dir, `${name}.png`), cover = [] } = listing.sources[name] ?? {};
     if (!fs.existsSync(file)) throw new Error(`shot "${name}" has no image at ${file}`);
-    images.set(name, await readImage(file));
+    images.set(name, { ...(await readImage(file)), cover });
   }
   return images;
 }
