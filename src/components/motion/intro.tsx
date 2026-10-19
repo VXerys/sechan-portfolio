@@ -7,7 +7,7 @@ import { finishIntro } from "@/lib/motion/intro-state";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
 
 // Greets whoever opened the link, cycling through who that might be, then introduces Sechan by name.
-const GREETING = "HELLO,";
+const GREETING = "HELLO";
 const LOADING_WORDS = ["client", "recruiter", "founder", "friend"];
 const FINAL_WORD = "I'm Sechan.";
 const CHARS = "abcdefghijklmnopqrstuvwxyz";
@@ -125,7 +125,7 @@ export function Intro() {
       <div data-intro-text className="relative z-10 flex h-full flex-col items-center justify-center text-brand-ink">
         {/* The greeting and labels animate in pure CSS, so text is on screen from the first paint, before JavaScript runs. */}
         {/* Bottom padding keeps the comma's descender inside the mask that the letters rise through. */}
-        <p className="display flex overflow-hidden pb-[0.14em] text-[26vw] md:text-[15vw]">
+        <p className="display flex overflow-hidden pb-[0.14em] text-[19vw] md:text-[10vw]">
           {GREETING.split("").map((char, index) => (
             <span key={`${char}-${index}`} className="intro-char inline-block" style={{ animationDelay: `${0.1 + index * 0.05}s` }}>
               {char}
