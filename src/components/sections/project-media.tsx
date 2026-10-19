@@ -3,7 +3,10 @@
 import Image from "next/image";
 import { useRef } from "react";
 
+import { ListingStrip } from "@/components/sections/listing-strip";
 import { ProjectPoster } from "@/components/sections/project-poster";
+import { listingNotice } from "@/content/listing-copy";
+import { listings } from "@/content/listings";
 import type { Project } from "@/content/portfolio";
 import { projectMedia } from "@/content/media";
 import { DESKTOP_MOTION, gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
@@ -12,6 +15,7 @@ export function ProjectMedia({ project }: { project: Project }) {
   const frame = useRef<HTMLDivElement>(null);
   const media = projectMedia[project.slug];
   const link = project.links[0];
+  const listing = listings[project.slug];
 
   useGSAP(
     () => {
@@ -50,7 +54,7 @@ export function ProjectMedia({ project }: { project: Project }) {
     <div
       ref={frame}
       data-cursor-label={link ? "Open ↗" : undefined}
-      className="group relative aspect-[4/3] w-full overflow-hidden"
+      className="group relative aspect-[16/10] w-full overflow-hidden"
       style={{ background: media?.background ?? "var(--color-ink-2)" }}
     >
       <span className="absolute right-0 top-0 z-10 overflow-hidden">
@@ -79,10 +83,18 @@ export function ProjectMedia({ project }: { project: Project }) {
     </div>
   );
 
-  if (!link) return visual;
-  return (
+  const linked = link ? (
     <a href={link.href} target="_blank" rel="noopener noreferrer" className="block" aria-label={`${project.title}: ${link.label} (opens in a new tab)`}>
       {visual}
     </a>
+  ) : (
+    visual
+  );
+  if (!listing) return linked;
+  return (
+    <div>
+      {linked}
+      <ListingStrip title={project.title} slides={listing.slides} label={listing.label} notice={listingNotice(listing, project.client !== null)} />
+    </div>
   );
 }
