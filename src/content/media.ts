@@ -1,8 +1,8 @@
 import type { StaticImageData } from "next/image";
 
 import portrait from "@/assets/images/portrait.webp";
-import bookmateListing from "@/assets/images/bookmate-listing.webp";
 import marketivDashboard from "@/assets/images/marketiv-dashboard.webp";
+import { listings } from "@/content/listings";
 
 export type ProjectMedia = {
   src: StaticImageData;
@@ -16,14 +16,11 @@ export const portraitImage = {
   alt: "Portrait of M Sechan Alfarisi in a black suit and red tie against a red backdrop",
 };
 
-// Only screenshots logged in assumption A-002 are listed; every other project renders a placeholder.
+// Listing covers (F-010) replace the posters; Marketiv keeps its dashboard until its landing page is revamped.
 export const projectMedia: Partial<Record<string, ProjectMedia>> = {
-  bookmate: {
-    src: bookmateListing,
-    alt: "BookMate Google Play listing showing the home screen with reading activity, categories, and recommendations",
-    fit: "contain",
-    background: "#dfe5f7",
-  },
+  ...Object.fromEntries(
+    Object.entries(listings).map(([slug, listing]) => [slug, { src: listing!.cover, alt: listing!.coverAlt, fit: "cover", background: "#0c0c0b" }]),
+  ),
   marketiv: {
     src: marketivDashboard,
     alt: "Marketiv MSME dashboard with demo campaigns, escrow balance, and creator submissions",
