@@ -62,6 +62,18 @@ export const listingCopy: Record<string, ListingCopy> = {
       "Open any school to see its name and photo on the map",
     ],
   },
+  "welling-ayah-hebat": {
+    coverAlt: "Welling community screen inside a phone frame, with user names and photos replaced by sample values",
+    label: "UI slicing",
+    sampleData: true,
+    captions: [
+      "Welling: the Community screen with search, events, category filters and the post feed",
+      "Welling: a camera guide for placing the test strip before the scan",
+      "Welling: a failed photo tells the user why and offers a retake",
+      "Welling: the scan result screen, showing the analysis from the client's backend",
+      "Ayah Hebat: Daily, Monthly and Ever rankings with the user's own position on top",
+    ],
+  },
   bookmate: {
     coverAlt: "BookMate home screen with the current book, recent reading activity and book categories",
     label: "Full-stack",
