@@ -121,7 +121,8 @@ const project = {
     label: null,
     sampleData: false,
     title: 'Gunung Puyuh WebGIS',
-    tagline: 'An interactive map of which Gunung Puyuh neighbourhoods sit too far from schools and health facilities.',
+    hook: 'Fifteen minutes is too far.',
+    tagline: '5, 10 and 15 minute service areas show which neighbourhoods sit beyond easy reach of schools and clinics.',
     cover: { shot: 'service-area' },
     slides: [
       { shot: 'landing', caption: 'Read the background, goals and benefits of the study before opening the map' },

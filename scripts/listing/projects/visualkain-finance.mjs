@@ -107,7 +107,8 @@ const project = {
     label: null,
     sampleData: true,
     title: 'VisualKain Finance',
-    tagline: 'A finance system for a garment manufacturer that separates real cash from money that belongs to vendors.',
+    hook: 'Money in is not money earned.',
+    tagline: 'Every customer payment is split into vendor cost and margin, so the owner sees the cash that is really theirs.',
     cover: { shot: 'dashboard' },
     slides: [
       { shot: 'cash-in', caption: 'Track every customer payment against the 70% down payment rule' },

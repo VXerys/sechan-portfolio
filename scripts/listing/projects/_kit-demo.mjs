@@ -39,6 +39,7 @@ const project = {
     label: null,
     sampleData: true,
     title: 'Harbor Ledger',
+    hook: 'Orders that add up.',
     tagline: 'A kit demo with invented orders, payments, and margins.',
     cover: { shot: 'overview' },
     slides: [

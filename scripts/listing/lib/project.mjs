@@ -106,6 +106,7 @@ export function checkListingConfig(project) {
   if (!LABELS.includes(listing.label ?? null)) fail(slug, `listing.label must be one of ${LABELS.map(String).join(', ')}`);
   if (typeof listing.sampleData !== 'boolean') fail(slug, 'listing.sampleData must be true or false');
   checkCopy(slug, 'listing.title', listing.title);
+  checkCopy(slug, 'listing.hook', listing.hook);
   checkCopy(slug, 'listing.tagline', listing.tagline);
 
   const sources = {};

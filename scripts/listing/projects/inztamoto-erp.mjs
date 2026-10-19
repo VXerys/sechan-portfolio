@@ -126,7 +126,8 @@ const project = {
     label: null,
     sampleData: true,
     title: 'InztaMoto ERP',
-    tagline: 'An internal ERP for a motorcycle bag and riding gear brand, moved into a Next.js shell without stopping daily operations.',
+    hook: 'Rebuilt while the shop kept selling.',
+    tagline: 'A 9,400-line ERP moved into Next.js step by step, with Shopee, Tokopedia and store stock in one place.',
     cover: { shot: 'dashboard' },
     slides: [
       { shot: 'penjualan', caption: 'Log sales from Shopee, Tokopedia, resellers and the shop in one list' },
