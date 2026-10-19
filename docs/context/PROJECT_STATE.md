@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4 -->
+source_hash: 0168c0fd58a47fb5d3741568db19df02d281e29945d874b6b07d412eb29417dc -->
 
 # Project State
 
-- Generated at: 2026-10-19T05:22:40.426Z
+- Generated at: 2026-10-19T12:52:04.890Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 1
@@ -29,15 +29,15 @@ source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4 --
 <!-- GENERATED:GIT_FACTS:START -->
 ## Git
 
-- Branch: `fix/more-work-gallery-copy`
-- HEAD: `f66e72c`
+- Branch: `fix/intro-greeting`
+- HEAD: `b3ac4bc`
 - Worktree: dirty
 
 Recent commits:
 
+- `b3ac4bc Merge pull request #14 from VXerys/fix/more-work-gallery-copy`
+- `f0d2257 feat(F-010): story-led listing covers instead of a repeated title`
+- `6aef67f Merge pull request #13 from VXerys/fix/more-work-gallery-copy`
 - `f66e72c docs(F-010): point the handoff at an F-010 task`
 - `25d08a5 fix(F-010): show panel covers on desktop, hold tapped row, Cartify cover, manifesto copy`
-- `78d8812 Merge pull request #11 from VXerys/feat/F-011-experience-highlights`
-- `c4fbf26 Merge main (F-010) into F-011 and resolve conflicts`
-- `8b24980 Merge pull request #12 from VXerys/feat/F-010-listing-images`
 <!-- GENERATED:GIT_FACTS:END -->
