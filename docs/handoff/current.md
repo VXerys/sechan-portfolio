@@ -1,53 +1,54 @@
 ---
 status: active
 owner: "M Sechan Alfarisi"
-session_date: "2026-10-17"
+session_date: "2026-10-19"
 branch: "feat/F-011-experience-highlights"
-base_commit: "0733e02"
-current_commit: "5f272df"
+base_commit: "8b24980"
+current_commit: "8b24980"
 feature_id: "F-011"
 task_id: "T-039"
-expires_after: "2026-10-24"
+expires_after: "2026-10-26"
 ---
 
 # Session Handoff
 
 ## Session objective
 
-F-011: highlight the Asah fellowship in Experience, add Universitas Nusa Putra with the projects built while studying, and name Klinik Cikidang Medika now that the clinic approved it (A-001 confirmed 2026-10-17).
+Land F-011 (Asah highlight, Universitas Nusa Putra row with projects built while studying, Klinik Cikidang Medika named) on top of F-010, which merged first (PR #12).
 
 ## Completed
 
-- T-037 to T-039 `done` with EV-029 to EV-031, built through subagent-driven development: one implementer per task, a task review after each, a whole-branch review, one fix wave, and a scoped re-review (all findings addressed).
-- The final fix wave also moves focus to the target after any slice-transition jump, which fixes the same gap in the header nav.
-- F-002 AC-013 is marked superseded; F-001, F-002, and F-006 note A-001 as confirmed.
+- F-010 merged into `main` (8b24980): listing kit, eight listing sets, site gallery; EV-040 to EV-043.
+- F-011: T-037 to T-039 `done` with EV-029 to EV-031; `main` merged into the branch and the conflicts resolved (rendered views re-rendered, both `_index.md` rows kept, `project-index.tsx` keeps the F-011 chip listener and anchors plus the F-010 strip and preview guard).
+- A-001 and A-004 confirmed.
 
 ## Changed files
 
-`src/content/portfolio.ts` and its test, `src/content/testimonials.test.ts`, `src/components/sections/{experience,work,project-index}.tsx`, `src/components/site/project-chip.tsx` (new), `src/components/motion/slice-transition.tsx`, `src/app/{page.tsx,globals.css}`, F-011 spec, notes in F-001, F-002, F-006, `docs/context/ASSUMPTIONS.md`.
+Merge resolution only: `docs/context/ASSUMPTIONS.md`, `docs/specs/_index.md`, `docs/handoff/current.md`, `src/components/sections/project-index.tsx`, rendered `docs/context/*`.
 
 ## Commands executed
 
-`npm test` (25 pass), `npm run lint`, `npm run typecheck`, `npm run build`, `next start -p 3006` with the in-app browser at 360, 375, 768, 1280 px, `npm run context:render`, `npm run context:validate -- --strict`.
+`npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run context:render`, `npm run context:validate -- --strict` on the merged branch.
 
 ## Uncommitted work
 
-None after the closing docs commit on `feat/F-011-experience-highlights`; the branch is not pushed.
+None after the merge commit.
 
 ## Blockers
 
-- A-003 (testimonials) stays open; the owner is holding the clinic's review until the others arrive. A-004 (Mangcoding permission) affects F-010 only.
+- A-003 (testimonials) stays open; the owner holds the reviews.
 
 ## Exact next step
 
-Owner approves the push and pull request for F-011. Owner follow-ups in about-me: 07:534 still labels the clinic permission `NEEDS_VERIFICATION`; 07:132 names ArtConnect's course "Pengembangan Aplikasi Berbasis Web" while 03:68 and 07:148 say "Pemrograman Berbasis Web" (the site uses "Web Programming course"). F-010 continues on `feat/F-010-listing-images`.
+Owner merges PR #11. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 (clinic permission) and 07:132 (ArtConnect course name); push or close `chore/F-008-renumber-ids` (unpushed, ids FR-030..032, AC-051..053, T-035..036, EV-025..027).
 
 ## Do not do next
 
+- Never run a client app with its real env, its `predev`, or `dev:prod`; never use VisualKain's `seed-data.ts`.
 - Do not put a Tailwind `transition-transform` on an element GSAP animates.
 - Do not add the Asah capstone partner before about-me records it as VERIFIED.
 - Do not commit placeholder testimonials.
 
 ## Validity
 
-Valid until 2026-10-24 or the next commit.
+Valid until 2026-10-26 or the next commit.

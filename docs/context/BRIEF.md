@@ -1,6 +1,6 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 8e50398b083743251ab7b66a24a498496667630b7418ab2e38cab185e3e8798f -->
+source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b -->
 
 # Brief
 
@@ -50,7 +50,7 @@ None.
 ## Handoff
 Next step:
 
-Owner approves the push and pull request for F-011. Owner follow-ups in about-me: 07:534 still labels the clinic permission `NEEDS_VERIFICATION`; 07:132 names ArtConnect's course "Pengembangan Aplikasi Berbasis Web" while 03:68 and 07:148 say "Pemrograman Berbasis Web" (the site uses "Web Programming course"). F-010 continues on `feat/F-010-listing-images`.
+Owner merges PR #11. Owner follow-ups: rotate the clinic's old staging keys (history commit e703484 in the clinic repo); update about-me 07:534 (clinic permission) and 07:132 (ArtConnect course name); push or close `chore/F-008-renumber-ids` (unpushed, ids FR-030..032, AC-051..053, T-035..036, EV-025..027).
 
 ## Other open tasks
 None.
@@ -67,4 +67,5 @@ None.
 | F-007 Stack marquee redesign | implementing | in_progress | 1/2 |
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 2/2 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 4/5 |
+| F-010 Project listing images | verification | complete | 10/11 |
 | F-011 Experience highlights and clinic naming | verification | complete | 3/3 |

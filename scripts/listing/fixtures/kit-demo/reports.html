@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Harbor Ledger · Reports</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="side">
+        <div class="brand"><i></i>Harbor Ledger</div>
+        <nav class="nav">
+          <a href="index.html"><i></i>Overview</a>
+          <a href="orders.html"><i></i>Orders</a>
+          <a href="order.html"><i></i>Payments</a>
+          <a class="on" href="reports.html"><i></i>Reports</a>
+        </nav>
+        <div class="side-foot">Kit demo fixture. Every name and amount here is invented.</div>
+      </aside>
+      <main class="main">
+        <div class="top">
+          <div>
+            <h1>Cost and profit</h1>
+            <div class="sub">September · closed books</div>
+          </div>
+          <span class="grow"></span>
+          <span class="btn">September</span>
+          <span class="btn primary">Download PDF</span>
+          <span class="avatar">SA</span>
+        </div>
+        <section class="kpis">
+          <div class="card kpi"><div class="k">Revenue</div><div class="v">Rp 642.900.000</div><div class="d">+8.2% vs August</div></div>
+          <div class="card kpi"><div class="k">Cost of goods</div><div class="v">Rp 438.100.000</div><div class="d down">+5.0% vs August</div></div>
+          <div class="card kpi"><div class="k">Gross profit</div><div class="v">Rp 204.800.000</div><div class="d">31.9% margin</div></div>
+          <div class="card kpi"><div class="k">Orders closed</div><div class="v">126</div><div class="d">+14 vs August</div></div>
+        </section>
+        <section class="grid-2">
+          <div class="card">
+            <div class="card-head"><h2>Profit by product line</h2><span>Rp million</span></div>
+            <table>
+              <thead><tr><th>Line</th><th class="num">Revenue</th><th class="num hide-sm">Cost</th><th class="num">Profit</th><th class="num">Margin</th></tr></thead>
+              <tbody>
+                <tr><td>Tote bags</td><td class="num">186.4</td><td class="num hide-sm">118.2</td><td class="num">68.2</td><td class="num">36.6%</td></tr>
+                <tr><td>Uniforms</td><td class="num">214.7</td><td class="num hide-sm">152.9</td><td class="num">61.8</td><td class="num">28.8%</td></tr>
+                <tr><td>Jerseys</td><td class="num">131.5</td><td class="num hide-sm">91.6</td><td class="num">39.9</td><td class="num">30.3%</td></tr>
+                <tr><td>Aprons</td><td class="num">72.0</td><td class="num hide-sm">49.3</td><td class="num">22.7</td><td class="num">31.5%</td></tr>
+                <tr><td>Printing only</td><td class="num">38.3</td><td class="num hide-sm">26.1</td><td class="num">12.2</td><td class="num">31.9%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-head"><h2>Cost mix</h2><span>September</span></div>
+            <div class="donut"></div>
+            <div class="legend">
+              <div><i style="background: var(--brand)"></i>Fabric and blanks<b>46%</b></div>
+              <div><i style="background: #7f9cf2"></i>Vendor sewing<b>25%</b></div>
+              <div><i style="background: #b9c6f6"></i>Printing<b>17%</b></div>
+              <div><i style="background: #dfe5f5"></i>Shipping<b>12%</b></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <nav class="tabs">
+      <a href="index.html"><i></i>Overview</a>
+      <a href="orders.html"><i></i>Orders</a>
+      <a href="order.html"><i></i>Payments</a>
+      <a class="on" href="reports.html"><i></i>Reports</a>
+    </nav>
+  </body>
+</html>

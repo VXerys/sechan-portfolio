@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 8e50398b083743251ab7b66a24a498496667630b7418ab2e38cab185e3e8798f -->
+source_hash: e9673eac97500ad07b7fbb7ba64b7644fc3fd9183cf9bee6120b19cfb1aed21b -->
 
 # Project State
 
-- Generated at: 2026-10-17T11:34:44.308Z
+- Generated at: 2026-10-19T04:08:09.104Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 1
@@ -23,20 +23,21 @@ source_hash: 8e50398b083743251ab7b66a24a498496667630b7418ab2e38cab185e3e8798f --
 | F-007 Stack marquee redesign | implementing | in_progress | 1 | 0 | 0 | 0 | 1 | 0 |
 | F-008 Content corrections: name, Mangcoding, project list | implementing | complete | 0 | 0 | 0 | 0 | 2 | 0 |
 | F-009 Mobile polish, section indicator, motion set 2 | implementing | in_progress | 0 | 0 | 0 | 1 | 4 | 0 |
+| F-010 Project listing images | verification | complete | 0 | 0 | 0 | 0 | 10 | 1 |
 | F-011 Experience highlights and clinic naming | verification | complete | 0 | 0 | 0 | 0 | 3 | 0 |
 
 <!-- GENERATED:GIT_FACTS:START -->
 ## Git
 
 - Branch: `feat/F-011-experience-highlights`
-- HEAD: `5f272df`
+- HEAD: `4b31c17`
 - Worktree: dirty
 
 Recent commits:
 
+- `4b31c17 docs(F-011): record verification, close tasks, update handoff`
 - `5f272df fix(F-011): move focus with in-page jumps and tidy project chips`
 - `3927180 docs(F-011): align design with the chip flow, supersede F-002 AC-013`
 - `d0877b9 feat(F-011): render Asah highlight, education row, and project chips`
 - `4e6515a fix(F-011): use about-me wording for program and degree`
-- `9f00309 docs(F-011): match program and degree wording to about-me`
 <!-- GENERATED:GIT_FACTS:END -->

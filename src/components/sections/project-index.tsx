@@ -4,9 +4,12 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { LineRows } from "@/components/motion/line-rows";
+import { ListingStrip } from "@/components/sections/listing-strip";
 import { ProjectPoster } from "@/components/sections/project-poster";
 import { ProjectQuote } from "@/components/sections/project-quote";
 import { PROJECT_OPEN } from "@/components/site/project-chip";
+import { listingNotice } from "@/content/listing-copy";
+import { listings } from "@/content/listings";
 import { projectMedia } from "@/content/media";
 import type { Project } from "@/content/portfolio";
 import { gsap, MOTION_OK, ScrollTrigger, useGSAP } from "@/lib/motion/gsap";
@@ -57,7 +60,14 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
         const tilt = gsap.quickTo(card, "rotate", { duration: 0.9, ease: "power3" });
         let lastX = 0;
 
+        let overPanel = false;
         const move = (event: PointerEvent) => {
+          // An open panel holds the screen strip; a preview card over it would hide the very slide under the pointer.
+          const inPanel = event.target instanceof Element && event.target.closest("[data-panel]") !== null;
+          if (inPanel !== overPanel) {
+            overPanel = inPanel;
+            gsap.to(card, { scale: inPanel ? 0.6 : 1, autoAlpha: inPanel ? 0 : 1, duration: 0.3, ease: "power3.out", overwrite: "auto" });
+          }
           x(event.clientX);
           y(event.clientY);
           // Horizontal speed tilts the card, so it swings like something carried rather than glued to the pointer.
@@ -65,6 +75,7 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
           lastX = event.clientX;
         };
         const enter = (event: PointerEvent) => {
+          overPanel = false;
           lastX = event.clientX;
           gsap.set(card, { x: event.clientX, y: event.clientY });
           gsap.to(card, { scale: 1, autoAlpha: 1, duration: 0.6, ease: "expo.out", overwrite: "auto" });
@@ -131,13 +142,14 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
                 </h4>
                 <div
                   id={panelId}
+                  data-panel
                   className={`grid transition-[grid-template-rows] duration-700 ease-[var(--ease-expo)] ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                 >
                   <div className="overflow-hidden" inert={!open}>
                     <div className="grid gap-8 pb-10 md:grid-cols-[3.5rem_1fr_1fr] md:gap-10">
                       <div className="hidden md:block" />
                       {/* Touch screens never see the floating preview, so the visual sits inside the open panel. */}
-                      <div className="relative aspect-[4/3] w-full overflow-hidden md:hidden" aria-hidden="true">
+                      <div className="relative aspect-[16/10] w-full overflow-hidden md:hidden" aria-hidden="true">
                         {projectMedia[project.slug] ? (
                           <Image src={projectMedia[project.slug]!.src} alt="" fill sizes="100vw" className="object-cover" />
                         ) : (
@@ -170,6 +182,16 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
                         {quote && <ProjectQuote quote={quote} className="mt-8 border-t border-line pt-6" />}
                       </div>
                     </div>
+                    {listings[project.slug] && (
+                      <div className="pb-10 md:pl-[6rem]">
+                        <ListingStrip
+                          title={project.title}
+                          slides={listings[project.slug]!.slides}
+                          label={listings[project.slug]!.label}
+                          notice={listingNotice(listings[project.slug]!, project.client !== null)}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -183,7 +205,7 @@ export function ProjectIndex({ projects, offset, quotes }: Props) {
       <div
         ref={preview}
         aria-hidden="true"
-        className="pointer-events-none fixed left-0 top-0 z-[60] hidden aspect-[4/3] w-[22rem] overflow-hidden rounded-sm opacity-0 shadow-2xl shadow-black/60 md:block"
+        className="pointer-events-none fixed left-0 top-0 z-[60] hidden aspect-[16/10] w-[22rem] overflow-hidden rounded-sm opacity-0 shadow-2xl shadow-black/60 md:block"
       >
         {projects.map((project) => {
           const media = projectMedia[project.slug];

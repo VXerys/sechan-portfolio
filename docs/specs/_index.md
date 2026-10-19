@@ -23,6 +23,7 @@ Task status belongs in each feature's `tasks.md`; `docs/context/state.yaml` and 
 | `F-007` | stack marquee redesign | `docs/specs/F-007-marquee-redesign/` | P2 | approved | M1 |
 | `F-008` | content corrections: name, Mangcoding, project list | `docs/specs/F-008-content-corrections/` | P1 | approved | M1 |
 | `F-009` | mobile polish, section indicator, motion set 2 | `docs/specs/F-009-mobile-indicator-motion/` | P2 | approved | M1 |
+| `F-010` | project listing images | `docs/specs/F-010-listing-images/` | P1 | approved | M1 |
 | `F-011` | experience highlights and clinic naming | `docs/specs/F-011-experience-highlights/` | P1 | approved | M1 |
 
 ## Lifecycle gate meaning
