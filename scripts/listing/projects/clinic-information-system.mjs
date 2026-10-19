@@ -108,7 +108,8 @@ const project = {
     label: null,
     sampleData: true,
     title: 'Klinik Cikidang Medika',
-    tagline: 'A clinic information system that replaced spreadsheets for registration, queue, medical records, billing and reports.',
+    hook: 'From spreadsheets to one patient record.',
+    tagline: '7,493 legacy rows moved into PostgreSQL, with row-level security and two roles guarding patient data.',
     cover: { shot: 'dashboard' },
     slides: [
       { shot: 'buku-kas', caption: 'Keep the cash book and drawer balance in step every day' },

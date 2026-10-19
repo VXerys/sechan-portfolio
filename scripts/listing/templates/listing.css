@@ -218,6 +218,11 @@ body > :not(.ghost) {
 .cover.type-mobile .copy {
   width: 700px;
 }
+/* The site already sets the project name and summary beside every cover, so the cover names the project quietly and
+   spends its headline on the moment the app changes for its user. */
+.cover-name {
+  color: var(--paper);
+}
 .cover-title {
   max-height: 318px;
   font-size: 116px;

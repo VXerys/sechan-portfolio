@@ -61,7 +61,8 @@ const project = {
     label: null,
     sampleData: true,
     title: 'ArtConnect',
-    tagline: 'A CRM and workspace for visual artists to keep artworks, collectors and sales in one place.',
+    hook: 'From concept to sold, on one board.',
+    tagline: 'Artworks move across the board instantly and roll back on their own if the save fails.',
     cover: { shot: 'pipeline' },
     slides: [
       { shot: 'landing', caption: 'Introduce the workspace to artists before they sign in' },

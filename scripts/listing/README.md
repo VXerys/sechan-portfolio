@@ -34,7 +34,7 @@ const project = {
     type: "web",                            // "web" (4 slides) | "mobile" (4 or 5 slides)
     label: null,                            // "Full-stack" | "UI slicing" | null
     sampleData: true,                       // adds the tag "Sample data · client records replaced"
-    title: "Project title", tagline: "One line",
+    title: "Project title", hook: "The moment it changes for the user", tagline: "One line on how",
     cover: { shot: "dashboard" },
     slides: [{ shot: "dashboard", caption: "One-line benefit" }], // caption doubles as alt text (BR-016)
     sources: {},                            // shot name -> absolute path of an existing screenshot (mobile), or { file, cover }

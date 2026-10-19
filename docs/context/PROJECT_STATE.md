@@ -1,10 +1,10 @@
 <!-- GENERATED FILE — DO NOT EDIT. Rendered by `npm run context:render`.
 Source: sdd.config.json, docs/steering/, docs/specs/F-*/, docs/context/ASSUMPTIONS.md, docs/handoff/current.md.
-source_hash: 532b09a269805c4ad2db00d31352c5223a50009a9f3302899b47cbe94c29e8f1 -->
+source_hash: da01058ff3f3b2fad803b9c0590701db34f06aeb7a15cae8afac4459885de2a4 -->
 
 # Project State
 
-- Generated at: 2026-10-19T05:03:52.992Z
+- Generated at: 2026-10-19T05:22:40.426Z
 - Project: Sechan Portfolio (tier `lite`)
 - Active: F-001 / T-005
 - Open assumptions: 1
@@ -30,14 +30,14 @@ source_hash: 532b09a269805c4ad2db00d31352c5223a50009a9f3302899b47cbe94c29e8f1 --
 ## Git
 
 - Branch: `fix/more-work-gallery-copy`
-- HEAD: `25d08a5`
+- HEAD: `f66e72c`
 - Worktree: dirty
 
 Recent commits:
 
+- `f66e72c docs(F-010): point the handoff at an F-010 task`
 - `25d08a5 fix(F-010): show panel covers on desktop, hold tapped row, Cartify cover, manifesto copy`
 - `78d8812 Merge pull request #11 from VXerys/feat/F-011-experience-highlights`
 - `c4fbf26 Merge main (F-010) into F-011 and resolve conflicts`
 - `8b24980 Merge pull request #12 from VXerys/feat/F-010-listing-images`
-- `207a3e2 fix(F-010): address the final review of the listing gallery`
 <!-- GENERATED:GIT_FACTS:END -->

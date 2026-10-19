@@ -106,7 +106,7 @@ function buildJobs(listing, images) {
   const cover = {
     name: 'cover.webp',
     format: FORMATS.cover,
-    values: { ...shared, tagline: listing.tagline, frame: frame(listing.cover.shot) },
+    values: { ...shared, hook: listing.hook, tagline: listing.tagline, frame: frame(listing.cover.shot) },
   };
   const slides = listing.slides.map((slide, index) => ({
     name: `${pad(index + 1)}.webp`,

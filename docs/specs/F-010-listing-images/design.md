@@ -6,7 +6,7 @@ status: verification
 tier: full
 owner: "M Sechan Alfarisi"
 created: 2026-10-17
-last_updated: 2026-10-17
+last_updated: 2026-10-19
 last_verified: 2026-10-17
 requirements: [FR-036, FR-037, FR-038, FR-039]
 supersedes: null
@@ -32,8 +32,8 @@ A small kit in `scripts/listing/*` (new) captures each app on localhost through 
 | `.gitignore` | `.listing-cache/` | raw captures never committed |
 | scripts/listing/capture.mjs (new) | launch Chrome (`CHROME_PATH` or the default path), apply guard and stubs, run the shot list, write PNGs and `hosts.json` | AC-061, AC-062 |
 | scripts/listing/compose.mjs (new) | fill templates, screenshot at device scale 2, convert with sharp, fail when a file exceeds NFR-001 | AC-063 |
-| scripts/listing/templates/ (new) | `cover.html`, `slide-web.html` (browser frame, 4:5), `slide-mobile.html` (phone frame, 9:16); site tokens and fonts; sample-data tag slot; label chip ("Full-stack", "UI slicing") | BR-015 |
-| `scripts/listing/projects/<slug>.mjs` | shot list (path, viewport, actions, wait), allowlist extras, fixtures, captions, label, `sampleData` flag | one file per project |
+| scripts/listing/templates/ (new) | `cover.html`, `slide-web.html` (browser frame, 4:5), `slide-mobile.html` (phone frame, 9:16); site tokens and fonts; sample-data tag slot; label chip ("Full-stack", "UI slicing"); the cover headline is a `hook` (the user's moment) with a how-it-works line, and the project name sits in the meta row, because the site shows the title and summary beside every cover | BR-015 |
+| `scripts/listing/projects/<slug>.mjs` | shot list (path, viewport, actions, wait), allowlist extras, fixtures, captions, hook, label, `sampleData` flag | one file per project |
 | `src/content/listings.ts` | per slug: cover and slides as static imports, caption per slide, label, `sampleData` | site data |
 | `src/content/listings.test.ts` | captions obey copy rules; 4 or 5 slides; every set with `sampleData` renders the notice; slugs exist in `projects` | BR-016 |
 | `src/content/media.ts` | cover from `listings` for each slug that has a set | poster fallback stays |

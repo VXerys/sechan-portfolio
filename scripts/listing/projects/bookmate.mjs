@@ -20,7 +20,8 @@ const project = {
     label: 'Full-stack',
     sampleData: true,
     title: 'BookMate',
-    tagline: 'A reading-community app on Google Play for tracking reading progress, writing reflections and borrowing books.',
+    hook: 'Pick up the book where you left it.',
+    tagline: 'Every page, chapter and reflection is saved in one atomic step, so two updates at once never reset a book.',
     cover: { shot: 'home' },
     slides: [
       { shot: 'home', caption: 'Resume the current book and see recent reading from the home screen' },

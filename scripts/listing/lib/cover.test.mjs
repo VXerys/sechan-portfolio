@@ -22,6 +22,7 @@ function listingWith(sources, type = 'mobile') {
       label: null,
       sampleData: true,
       title: 'Cover test',
+      hook: 'Covers stay covered',
       tagline: 'Checks cover regions',
       cover: { shot: 'a' },
       slides: Array.from({ length: type === 'web' ? 4 : 5 }, () => ({ shot: 'a', caption: 'A caption' })),

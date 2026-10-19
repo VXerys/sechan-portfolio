@@ -24,7 +24,8 @@ const project = {
     label: 'UI slicing',
     sampleData: true,
     title: 'Welling and Ayah Hebat',
-    tagline: "UI work on two Mangcoding client apps: a women's health app for a South Korean client and an Islamic parenting app.",
+    hook: "Community feeds, test-strip scans and rankings.",
+    tagline: "Screens for Welling, a women's health app for a South Korean client, and Ayah Hebat, an Islamic parenting app.",
     cover: { shot: 'community' },
     slides: [
       { shot: 'community', caption: 'Welling: the Community screen with search, events, category filters and the post feed' },
