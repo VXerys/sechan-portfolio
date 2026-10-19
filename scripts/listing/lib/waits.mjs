@@ -22,7 +22,9 @@ export async function settle(page, ms = DEFAULT_SETTLE_MS) {
 }
 
 async function attempt(page, url, shot, timeout) {
-  const response = await page.goto(url, { waitUntil: 'networkidle', timeout });
+  // Apps that hold a request open for good (a Firestore listen channel) never reach network idle; they wait on 'load'
+  // and prove their data arrived in `before` instead.
+  const response = await page.goto(url, { waitUntil: shot.waitUntil ?? 'networkidle', timeout });
   // Only errors fail the shot: a dev server answers a repeat load in the same context with 304, which is a good page.
   if (response && response.status() >= 400) {
     throw new Error(`${url} answered ${response.status()}`);

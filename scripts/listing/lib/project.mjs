@@ -11,6 +11,7 @@ const SLUG = /^_?[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SHOT_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const LABELS = [null, 'Full-stack', 'UI slicing'];
 const SLIDE_COUNTS = { web: [4], mobile: [4, 5] };
+const WAIT_UNTIL = ['networkidle', 'load', 'domcontentloaded'];
 // Same rule as the site's copy test (BR-016); captions double as alt text, so they follow the site's copy.
 const COPY_RULE = /passionate|cutting-edge|seamless|leverage|award-winning|—/i;
 
@@ -53,6 +54,7 @@ export function checkCaptureConfig(project) {
     fail(slug, 'viewport needs width, height, and deviceScaleFactor');
   }
   if (project.setup !== undefined && typeof project.setup !== 'function') fail(slug, 'setup must be a function');
+  if (project.teardown !== undefined && typeof project.teardown !== 'function') fail(slug, 'teardown must be a function');
   if (project.serve !== undefined && !(typeof project.serve === 'string' && path.isAbsolute(project.serve) && fs.existsSync(project.serve))) {
     fail(slug, 'serve must be an absolute path to an existing fixture folder');
   }
@@ -65,6 +67,7 @@ export function checkCaptureConfig(project) {
     if (typeof shot.path !== 'string' || !shot.path.startsWith('/')) fail(slug, `shot "${shot.name}" needs a path starting with /`);
     if (shot.waitFor !== undefined && typeof shot.waitFor !== 'string') fail(slug, `shot "${shot.name}" waitFor must be a selector`);
     if (shot.before !== undefined && typeof shot.before !== 'function') fail(slug, `shot "${shot.name}" before must be a function`);
+    if (shot.waitUntil !== undefined && !WAIT_UNTIL.includes(shot.waitUntil)) fail(slug, `shot "${shot.name}" waitUntil must be one of ${WAIT_UNTIL.join(', ')}`);
   }
   return project;
 }

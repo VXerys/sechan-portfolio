@@ -69,6 +69,12 @@ async function capture(slug) {
   } finally {
     await session?.close();
     await server?.close();
+    // Runs even when setup threw, so an emulator a project started is never left running.
+    if (project.teardown) {
+      await project.teardown().catch((error) => {
+        failure ??= error;
+      });
+    }
   }
 
   const blocked = reportHosts(dir, guard);
