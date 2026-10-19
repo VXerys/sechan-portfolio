@@ -61,7 +61,7 @@ sources: {
 },
 ```
 
-- `name`: a `fill` rectangle matched to the surrounding UI with the sample `value` left-aligned and vertically centred in the site sans; `size` (default 70% of `h`), `weight` (600) and `color` (`#18181b`) are in source pixels and CSS terms.
+- `name`: a `fill` rectangle matched to the surrounding UI with the sample `value` vertically centred in the site sans, left-aligned or, with `align: 'center'`, centred on the region; `size` (default 70% of `h`), `weight` (600) and `color` (`#18181b`) are in source pixels and CSS terms.
 - `avatar`: a neutral grey circle as wide as the shorter side, with the first letter of `value` if given; an optional `fill` paints the square behind it to hide the rim of a round photo.
 - `block`: a `fill` rectangle with an optional corner `radius`, for photos, development traces, or anything with no sensible sample value.
 - Colors are hex only. A region outside the image, an unknown kind, a name without a value, or a `cover` on a web listing fails compose. Set `sampleData: true` on a set with covered values.

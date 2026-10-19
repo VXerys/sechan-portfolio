@@ -77,13 +77,14 @@ const COVER_KINDS = ['name', 'avatar', 'block'];
 const HEX = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
 
 function checkCoverRegion(slug, field, region) {
-  const { x, y, w, h, kind, value, fill, color, size, weight, radius } = region ?? {};
+  const { x, y, w, h, kind, value, fill, color, size, weight, radius, align } = region ?? {};
   if (![x, y].every((n) => Number.isFinite(n) && n >= 0) || ![w, h].every((n) => Number.isFinite(n) && n > 0)) {
     fail(slug, `${field} needs x, y, w, h in source pixels`);
   }
   if (!COVER_KINDS.includes(kind)) fail(slug, `${field}.kind must be one of ${COVER_KINDS.join(', ')}`);
   if (kind === 'name' && !(typeof value === 'string' && value.trim())) fail(slug, `${field} is a name and needs a sample value`);
   if (value !== undefined && typeof value !== 'string') fail(slug, `${field}.value must be a string`);
+  if (align !== undefined && !['start', 'center'].includes(align)) fail(slug, `${field}.align must be start or center`);
   if (kind !== 'avatar' && fill === undefined) fail(slug, `${field} needs a fill matched to the surrounding UI`);
   for (const [key, paint] of Object.entries({ fill, color })) {
     if (paint !== undefined && !HEX.test(String(paint))) fail(slug, `${field}.${key} must be a hex color`);

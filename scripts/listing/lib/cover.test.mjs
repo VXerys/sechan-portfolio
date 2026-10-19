@@ -42,6 +42,7 @@ test('cover regions are rejected when they could leave a value uncovered or inje
     { x: 0, y: 0, w: 10, kind: 'block', fill: '#fff' },
     { x: -1, y: 0, w: 10, h: 10, kind: 'block', fill: '#fff' },
     { x: 0, y: 0, w: 10, h: 10, kind: 'block' },
+    { x: 0, y: 0, w: 10, h: 10, kind: 'name', value: 'Mina', fill: '#fff', align: 'right' },
     { x: 0, y: 0, w: 10, h: 10, kind: 'block', fill: 'red" onload="x' },
   ];
   for (const region of bad) {
@@ -63,6 +64,8 @@ test('the overlay uses the source pixel grid and escapes sample values', () => {
   assert.match(svg, /&lt;Mina &amp; Co&gt;/);
   assert.match(svg, /<circle cx="120" cy="40" r="20"/);
   assert.match(svg, />M<\/text>/);
+  const centred = coverOverlay({ ...SOURCE, cover: [{ x: 10, y: 0, w: 100, h: 20, kind: 'name', value: 'Mina', fill: '#fff', align: 'center' }] });
+  assert.match(centred, /<text x="60" text-anchor="middle"/);
   assert.equal(coverOverlay({ ...SOURCE, cover: [] }), '');
   assert.throws(() => coverOverlay({ ...SOURCE, cover: [{ x: 190, y: 0, w: 20, h: 10, kind: 'block', fill: '#000' }] }), /outside/);
 });

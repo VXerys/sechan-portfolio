@@ -40,12 +40,13 @@ const AVATAR_FILL = '#e4e4e7';
 const AVATAR_INK = '#71717a';
 const round = (value) => Math.round(value * 100) / 100;
 
-function coverShape({ x, y, w, h, kind, value, fill, color = '#18181b', size, weight = 600, radius = 0 }) {
+function coverShape({ x, y, w, h, kind, value, fill, color = '#18181b', size, weight = 600, radius = 0, align = 'start' }) {
   const rect = (paint, rx = radius) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${paint}"/>`;
   if (kind === 'block') return rect(fill);
   if (kind === 'name') {
     const fontSize = round(size ?? h * 0.7);
-    return `${rect(fill)}<text x="${x}" y="${round(y + h / 2)}" dominant-baseline="central" font-size="${fontSize}" font-weight="${weight}" fill="${color}">${escapeHtml(value)}</text>`;
+    const anchor = align === 'center' ? `x="${round(x + w / 2)}" text-anchor="middle"` : `x="${x}"`;
+    return `${rect(fill)}<text ${anchor} y="${round(y + h / 2)}" dominant-baseline="central" font-size="${fontSize}" font-weight="${weight}" fill="${color}">${escapeHtml(value)}</text>`;
   }
   const r = round(Math.min(w, h) / 2);
   const cx = round(x + w / 2);
