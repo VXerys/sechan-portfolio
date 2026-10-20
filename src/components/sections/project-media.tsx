@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import { ListingStrip } from "@/components/sections/listing-strip";
 import { ProjectPoster } from "@/components/sections/project-poster";
@@ -10,6 +10,32 @@ import { listings } from "@/content/listings";
 import type { Project } from "@/content/portfolio";
 import { projectMedia } from "@/content/media";
 import { DESKTOP_MOTION, gsap, MOTION_OK, useGSAP } from "@/lib/motion/gsap";
+
+// Plays only while at least a third of the frame is on screen, so an off-screen loop never costs CPU or battery.
+// preload="none" keeps the file off the network until the frame first comes into view. Reduced motion keeps the poster.
+function LoopVideo({ src, type, poster, label }: { src: string; type: string; poster: string; label: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || !window.matchMedia(MOTION_OK).matches) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video ref={ref} aria-label={label} poster={poster} muted loop playsInline preload="none" className="absolute inset-0 size-full object-cover object-left-top">
+      <source src={src} type={type} />
+    </video>
+  );
+}
 
 export function ProjectMedia({ project }: { project: Project }) {
   const frame = useRef<HTMLDivElement>(null);
@@ -66,14 +92,18 @@ export function ProjectMedia({ project }: { project: Project }) {
       {media ? (
         <div data-parallax="image" className="absolute inset-0">
           <div className={`absolute inset-0 ${media?.composed ? "" : "transition-transform duration-1000 ease-[var(--ease-expo)] group-hover:scale-[1.05]"}`}>
-            <Image
-              src={media.src}
-              alt={media.alt}
-              fill
-              sizes="(min-width: 768px) 58vw, 100vw"
-              placeholder="blur"
-              className={media.fit === "cover" ? "object-cover object-left-top" : "object-contain p-[6%]"}
-            />
+            {media.video ? (
+              <LoopVideo src={media.video.src} type={media.video.type} poster={media.src.src} label={media.alt} />
+            ) : (
+              <Image
+                src={media.src}
+                alt={media.alt}
+                fill
+                sizes="(min-width: 768px) 58vw, 100vw"
+                placeholder="blur"
+                className={media.fit === "cover" ? "object-cover object-left-top" : "object-contain p-[6%]"}
+              />
+            )}
           </div>
         </div>
       ) : (

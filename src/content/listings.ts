@@ -7,6 +7,11 @@ import artconnect01 from "@/assets/images/listings/artconnect/01.webp";
 import artconnect02 from "@/assets/images/listings/artconnect/02.webp";
 import artconnect03 from "@/assets/images/listings/artconnect/03.webp";
 import artconnect04 from "@/assets/images/listings/artconnect/04.webp";
+import marketivCover from "@/assets/images/listings/marketiv/cover.webp";
+import marketiv01 from "@/assets/images/listings/marketiv/01.webp";
+import marketiv02 from "@/assets/images/listings/marketiv/02.webp";
+import marketiv03 from "@/assets/images/listings/marketiv/03.webp";
+import marketiv04 from "@/assets/images/listings/marketiv/04.webp";
 import bookmateCover from "@/assets/images/listings/bookmate/cover.webp";
 import bookmate01 from "@/assets/images/listings/bookmate/01.webp";
 import bookmate02 from "@/assets/images/listings/bookmate/02.webp";
@@ -49,6 +54,7 @@ const images: Record<string, { cover: StaticImageData; slides: StaticImageData[]
   "webgis-gunung-puyuh": { cover: webgisCover, slides: [webgis01, webgis02, webgis03, webgis04] },
   welling: { cover: wellingCover, slides: [welling01, welling02, welling03, welling04] },
   bookmate: { cover: bookmateCover, slides: [bookmate01, bookmate02, bookmate03, bookmate04] },
+  marketiv: { cover: marketivCover, slides: [marketiv01, marketiv02, marketiv03, marketiv04] },
 };
 
 export const listings: Partial<Record<string, Listing>> = Object.fromEntries(
