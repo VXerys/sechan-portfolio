@@ -27,12 +27,11 @@ import visualkain01 from "@/assets/images/listings/visualkain-finance/01.webp";
 import visualkain02 from "@/assets/images/listings/visualkain-finance/02.webp";
 import visualkain03 from "@/assets/images/listings/visualkain-finance/03.webp";
 import visualkain04 from "@/assets/images/listings/visualkain-finance/04.webp";
-import wellingCover from "@/assets/images/listings/welling-ayah-hebat/cover.webp";
-import welling01 from "@/assets/images/listings/welling-ayah-hebat/01.webp";
-import welling02 from "@/assets/images/listings/welling-ayah-hebat/02.webp";
-import welling03 from "@/assets/images/listings/welling-ayah-hebat/03.webp";
-import welling04 from "@/assets/images/listings/welling-ayah-hebat/04.webp";
-import welling05 from "@/assets/images/listings/welling-ayah-hebat/05.webp";
+import wellingCover from "@/assets/images/listings/welling/cover.webp";
+import welling01 from "@/assets/images/listings/welling/01.webp";
+import welling02 from "@/assets/images/listings/welling/02.webp";
+import welling03 from "@/assets/images/listings/welling/03.webp";
+import welling04 from "@/assets/images/listings/welling/04.webp";
 import webgisCover from "@/assets/images/listings/webgis-gunung-puyuh/cover.webp";
 import webgis01 from "@/assets/images/listings/webgis-gunung-puyuh/01.webp";
 import webgis02 from "@/assets/images/listings/webgis-gunung-puyuh/02.webp";
@@ -48,7 +47,7 @@ const images: Record<string, { cover: StaticImageData; slides: StaticImageData[]
   "inztamoto-erp": { cover: inztamotoCover, slides: [inztamoto01, inztamoto02, inztamoto03, inztamoto04] },
   artconnect: { cover: artconnectCover, slides: [artconnect01, artconnect02, artconnect03, artconnect04] },
   "webgis-gunung-puyuh": { cover: webgisCover, slides: [webgis01, webgis02, webgis03, webgis04] },
-  "welling-ayah-hebat": { cover: wellingCover, slides: [welling01, welling02, welling03, welling04, welling05] },
+  welling: { cover: wellingCover, slides: [welling01, welling02, welling03, welling04] },
   bookmate: { cover: bookmateCover, slides: [bookmate01, bookmate02, bookmate03, bookmate04] },
 };
 
