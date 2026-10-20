@@ -72,7 +72,7 @@ export function checkCaptureConfig(project) {
   return project;
 }
 
-const COVER_KINDS = ['name', 'avatar', 'block'];
+const COVER_KINDS = ['name', 'avatar', 'block', 'art'];
 // Colors land in SVG attributes, so only plain hex is accepted.
 const HEX = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
 
@@ -86,11 +86,26 @@ function checkCoverRegion(slug, field, region) {
   if (value !== undefined && typeof value !== 'string') fail(slug, `${field}.value must be a string`);
   if (align !== undefined && !['start', 'center'].includes(align)) fail(slug, `${field}.align must be start or center`);
   if (kind !== 'avatar' && fill === undefined) fail(slug, `${field} needs a fill matched to the surrounding UI`);
+  if (kind === 'art') checkArt(slug, field, region);
   for (const [key, paint] of Object.entries({ fill, color })) {
     if (paint !== undefined && !HEX.test(String(paint))) fail(slug, `${field}.${key} must be a hex color`);
   }
   for (const [key, number] of Object.entries({ size, weight, radius })) {
     if (number !== undefined && !(Number.isFinite(number) && number >= 0)) fail(slug, `${field}.${key} must be a non-negative number`);
+  }
+}
+
+// Art replaces a hidden area with a drawing, never with a photo: only SVG files kept inside the kit are accepted, so
+// every pixel that stands in for client content is reviewable in the repository.
+function checkArt(slug, field, { art, frame }) {
+  const file = typeof art === 'string' ? path.resolve(kitDir, art) : null;
+  if (!file || !file.startsWith(path.resolve(kitDir) + path.sep) || path.extname(file) !== '.svg' || !fs.existsSync(file)) {
+    fail(slug, `${field}.art must name an existing .svg inside scripts/listing`);
+  }
+  if (frame === undefined) return;
+  const { x, y, w, h } = frame ?? {};
+  if (![x, y].every((n) => Number.isFinite(n) && n >= 0) || ![w, h].every((n) => Number.isFinite(n) && n > 0)) {
+    fail(slug, `${field}.frame needs x, y, w, h in source pixels`);
   }
 }
 

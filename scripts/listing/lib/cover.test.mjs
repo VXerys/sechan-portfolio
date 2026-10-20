@@ -74,6 +74,28 @@ test('the overlay uses the source pixel grid and escapes sample values', () => {
   assert.throws(() => coverOverlay({ ...SOURCE, cover: [{ x: 190, y: 0, w: 20, h: 10, kind: 'block', fill: '#000' }] }), /outside/);
 });
 
+test('art regions draw a kit SVG on a shared frame, clipped to each region', () => {
+  const art = 'fixtures/test/dot.svg';
+  const frame = { x: 0, y: 0, w: 100, h: 50 };
+  const ok = { x: 10, y: 10, w: 40, h: 20, kind: 'art', art, frame, fill: '#000000', radius: 4 };
+  assert.deepEqual(checkListingConfig(listingWith({ a: { file: SHOT, cover: [ok] } })).sources.a.cover, [ok]);
+  const bad = [
+    { ...ok, art: undefined },
+    { ...ok, art: 'fixtures/test/missing.svg' },
+    { ...ok, art: '../outside.svg' },
+    { ...ok, art: 'fixtures/test/dot.png' },
+    { ...ok, frame: { x: 0, y: 0, w: 0, h: 10 } },
+  ];
+  for (const region of bad) {
+    assert.throws(() => checkListingConfig(listingWith({ a: { file: SHOT, cover: [region] } })), /cover\[0\]/);
+  }
+  const svg = coverOverlay({ ...SOURCE, cover: [ok, { ...ok, x: 60, radius: 0 }] });
+  assert.equal((svg.match(/<image /g) ?? []).length, 2);
+  assert.match(svg, /<image href="data:image\/svg\+xml;base64,[^"]+" x="0" y="0" width="100" height="50"/);
+  assert.match(svg, /<clipPath id="art-0"><rect x="10" y="10" width="40" height="20" rx="4"\/><\/clipPath>/);
+  assert.match(svg, /clip-path="url\(#art-1\)"/);
+});
+
 // Draws a red mark into a synthetic screenshot, covers exactly its pixels, and renders the phone at two sizes: no red
 // may survive at either scale, which is what "over the original pixels at any scale" has to mean.
 test('a cover region hides its source pixels at any rendered size', async () => {

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 643 343" width="643" height="343">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe3d8"/>
+      <stop offset="1" stop-color="#f6a48c"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#fff5f1"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#c4583e" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="643" height="343" fill="url(#bg)"/>
+  <circle cx="560" cy="40" r="150" fill="#ffffff" opacity="0.22"/>
+  <circle cx="610" cy="300" r="90" fill="#ffffff" opacity="0.18"/>
+  <circle cx="40" cy="330" r="70" fill="#ffffff" opacity="0.14"/>
+
+  <g transform="translate(418 64) rotate(6)" filter="url(#soft)">
+    <rect width="168" height="190" rx="22" fill="url(#card)"/>
+    <rect width="168" height="46" rx="22" fill="#f47b6a"/>
+    <rect y="24" width="168" height="22" fill="#f47b6a"/>
+    <circle cx="44" cy="16" r="6" fill="#ffd9cf"/>
+    <circle cx="124" cy="16" r="6" fill="#ffd9cf"/>
+    <text x="84" y="36" text-anchor="middle" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="17" font-weight="700" fill="#ffffff">NOV</text>
+    <text x="84" y="118" text-anchor="middle" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="64" font-weight="800" fill="#3a2a28">8</text>
+    <path d="M84 168 c-14 -12 -26 -20 -26 -31 a12 12 0 0 1 26 -6 a12 12 0 0 1 26 6 c0 11 -12 19 -26 31z" fill="#f47b6a"/>
+  </g>
+  <g fill="#7fb894">
+    <path d="M396 262 c18 -34 50 -48 78 -46 c-6 26 -34 50 -78 46z"/>
+    <path d="M404 250 c-4 -30 10 -56 34 -70 c8 24 -6 54 -34 70z" opacity="0.8"/>
+  </g>
+  <g fill="#ffffff">
+    <path d="M372 96 l5 13 l13 5 l-13 5 l-5 13 l-5 -13 l-13 -5 l13 -5z" opacity="0.9"/>
+    <path d="M600 214 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3z" opacity="0.9"/>
+  </g>
+
+  <g font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif">
+    <rect x="34" y="40" width="104" height="32" rx="16" fill="#ffffff" opacity="0.85"/>
+    <text x="86" y="62" text-anchor="middle" font-size="16" font-weight="700" fill="#e0624d">11월 클래스</text>
+    <text x="34" y="128" font-size="38" font-weight="800" fill="#3a2a28">건강한 임신 준비,</text>
+    <text x="34" y="176" font-size="38" font-weight="800" fill="#3a2a28">함께 시작해요</text>
+    <text x="34" y="222" font-size="19" font-weight="600" fill="#6b4a44">11.8 (토) 오후 2시 · 온라인 라이브</text>
+    <rect x="34" y="246" width="150" height="40" rx="20" fill="#3a2a28"/>
+    <text x="109" y="272" text-anchor="middle" font-size="17" font-weight="700" fill="#ffffff">무료로 신청하기</text>
+  </g>
+
+  <rect x="290" y="316" width="26" height="8" rx="4" fill="#ffffff"/>
+  <circle cx="330" cy="320" r="4" fill="#ffffff" opacity="0.6"/>
+  <circle cx="346" cy="320" r="4" fill="#ffffff" opacity="0.6"/>
+</svg>

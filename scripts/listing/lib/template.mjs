@@ -40,9 +40,18 @@ const AVATAR_FILL = '#e4e4e7';
 const AVATAR_INK = '#71717a';
 const round = (value) => Math.round(value * 100) / 100;
 
-function coverShape({ x, y, w, h, kind, value, fill, color = '#18181b', size, weight = 600, radius = 0, align = 'start' }) {
+// Regions that share a frame draw the same art at the same place, so several clipped regions read as one picture.
+function artShape({ x, y, w, h, art, frame = { x, y, w, h }, radius = 0 }, index) {
+  const data = fs.readFileSync(path.join(kitDir, art)).toString('base64');
+  const id = `art-${index}`;
+  return `<clipPath id="${id}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${radius}"/></clipPath><image href="data:image/svg+xml;base64,${data}" x="${frame.x}" y="${frame.y}" width="${frame.w}" height="${frame.h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${id})"/>`;
+}
+
+function coverShape(region, index) {
+  const { x, y, w, h, kind, value, fill, color = '#18181b', size, weight = 600, radius = 0, align = 'start' } = region;
   const rect = (paint, rx = radius) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${paint}"/>`;
   if (kind === 'block') return rect(fill);
+  if (kind === 'art') return rect(fill) + artShape(region, index);
   if (kind === 'name') {
     const fontSize = round(size ?? h * 0.7);
     const anchor = align === 'center' ? `x="${round(x + w / 2)}" text-anchor="middle"` : `x="${x}"`;
