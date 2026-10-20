@@ -7,6 +7,17 @@ export type ListingCopy = {
 };
 
 export const listingCopy: Record<string, ListingCopy> = {
+  marketiv: {
+    coverAlt: "Marketiv landing page hero: local creators promote MSME products, and the money is held until the content is live",
+    label: null,
+    sampleData: false,
+    captions: [
+      "Three promises for MSMEs: funds held first, pay for results, work for creators",
+      "Two ways to hire: pay-per-view campaigns or fixed-price rate cards",
+      "Escrow step by step, from Midtrans payment to the creator wallet",
+      "Previews of the MSME dashboard and the creator job board",
+    ],
+  },
   "clinic-information-system": {
     coverAlt: "Klinik Cikidang Medika owner dashboard with visits, income, BPJS capitation and cash balance, using sample data",
     label: null,
