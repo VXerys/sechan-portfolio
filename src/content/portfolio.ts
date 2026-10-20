@@ -106,7 +106,9 @@ export const projects: Project[] = [
     stack: ["Flutter", "Dart", "GetX", "Supabase", "PostgreSQL"],
     outcomes: ["Live on Google Play (developer: Mangcoding)"],
     status: "Live on Google Play",
+    // The website comes first: it is what the case study's recording shows, so the frame opens it.
     links: [
+      { label: "Website", href: "https://bookmate-web.vercel.app" },
       {
         label: "Google Play",
         href: "https://play.google.com/store/apps/details?id=com.mangcoding.bookmate2",
@@ -140,7 +142,7 @@ export const projects: Project[] = [
       "Team award: Juara Harapan 2, KMI EXPO 2026, Digital Business (Early Stage)",
     ],
     status: "MVP, in active development",
-    links: [],
+    links: [{ label: "Website", href: "https://marketiv.id" }],
     featured: true,
     imageHint: "MSME or creator dashboard in a desktop browser, or the KMI EXPO 2026 booth",
   },
