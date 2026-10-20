@@ -1,10 +1,13 @@
 // No capture step: Welling belongs to a Mangcoding client, so the set is composed from screenshots Sechan took during
-// the internship (Mangcoding allowed it, A-004). The sources stay where they are; a real end user's name and photo,
-// a stock photo of a person, and the dev terminal seen through the scan camera are covered in the frame instead.
+// the internship (Mangcoding allowed it, A-004). The sources stay where they are; a real end user's name and photo are
+// covered in the frame, and two areas get drawn stand-ins from fixtures/welling: the event banner (a stock photo of a
+// person) and the scan camera's view (it showed the dev terminal), which now shows a test strip being recognised.
 const MANGCODING = 'D:/Projects/about-me/assets/mangcoding';
 
 const PHOTO_PLACEHOLDER = '#ece6e3';
 const VIEWFINDER = '#1c1c1c';
+const CAMERA_FRAME = { x: 36, y: 601, w: 637, h: 295 };
+const cameraView = (region) => ({ ...region, kind: 'art', art: 'fixtures/welling/camera-view.svg', frame: CAMERA_FRAME, fill: VIEWFINDER });
 
 const project = {
   slug: 'welling',
@@ -31,20 +34,20 @@ const project = {
         file: `${MANGCODING}/welling_7.jpg`,
         cover: [
           // Event banner: a photo of a real person, and the edge of the next banner beside it.
-          { x: 36, y: 428, w: 643, h: 343, kind: 'block', fill: PHOTO_PLACEHOLDER, radius: 28 },
-          { x: 694, y: 428, w: 15, h: 343, kind: 'block', fill: PHOTO_PLACEHOLDER, radius: 10 },
+          { x: 36, y: 428, w: 643, h: 343, kind: 'art', art: 'fixtures/welling/event-banner.svg', fill: PHOTO_PLACEHOLDER, radius: 28 },
+          { x: 694, y: 428, w: 15, h: 343, kind: 'block', fill: '#d9d2f3', radius: 10 },
           { x: 66, y: 1068, w: 80, h: 80, kind: 'avatar', value: 'Jiwoo Han', fill: '#ffffff' },
           { x: 154, y: 1072, w: 140, h: 36, kind: 'name', value: 'Jiwoo Han', fill: '#ffffff', color: '#111111', size: 25, weight: 700 },
         ],
       },
       'scan-guide': {
         file: `${MANGCODING}/welling_4.jpg`,
-        // The camera preview shows the Expo dev server terminal; three overlapping blocks blank it while the guide
-        // brackets at its corners stay visible.
+        // The camera preview showed the Expo dev server terminal. Three overlapping regions share one camera frame, so
+        // the drawn view replaces it while the guide brackets at its corners stay visible.
         cover: [
-          { x: 45, y: 609, w: 620, h: 279, kind: 'block', fill: VIEWFINDER, radius: 22 },
-          { x: 116, y: 601, w: 478, h: 295, kind: 'block', fill: VIEWFINDER },
-          { x: 36, y: 680, w: 637, h: 136, kind: 'block', fill: VIEWFINDER },
+          cameraView({ x: 45, y: 609, w: 620, h: 279, radius: 22 }),
+          cameraView({ x: 116, y: 601, w: 478, h: 295 }),
+          cameraView({ x: 36, y: 680, w: 637, h: 136 }),
         ],
       },
       'scan-failed': `${MANGCODING}/welling_5.jpg`,

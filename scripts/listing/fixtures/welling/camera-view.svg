@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 637 295" width="637" height="295">
+  <defs>
+    <linearGradient id="table" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e2ddd6"/>
+      <stop offset="1" stop-color="#bdb4aa"/>
+    </linearGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.45"/>
+    </radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.26  0 0 0 0.18 0"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-60%" width="120%" height="220%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#3b2f25" flood-opacity="0.35"/>
+    </filter>
+    <filter id="glow" x="-10%" y="-60%" width="120%" height="220%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+  <rect width="637" height="295" fill="url(#table)"/>
+  <rect width="637" height="295" filter="url(#grain)"/>
+  <ellipse cx="200" cy="70" rx="260" ry="90" fill="#ffffff" opacity="0.18"/>
+
+  <g transform="translate(318.5 152) rotate(-2.5)">
+    <rect x="-258" y="-40" width="516" height="80" rx="16" fill="none" stroke="#5be3a0" stroke-width="6" opacity="0.55" filter="url(#glow)"/>
+    <rect x="-258" y="-40" width="516" height="80" rx="16" fill="none" stroke="#5be3a0" stroke-width="2.5"/>
+    <g filter="url(#shadow)">
+      <rect x="-245" y="-29" width="490" height="58" rx="9" fill="#fbfaf8"/>
+    </g>
+    <path d="M-245 -20 a9 9 0 0 1 9 -9 h34 v58 h-34 a9 9 0 0 1 -9 -9z" fill="#f2707f"/>
+    <text x="-150" y="7" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#3d3d3d">← MAX</text>
+    <rect x="-62" y="-14" width="124" height="28" rx="14" fill="#e7e3e1"/>
+    <rect x="-58" y="-11" width="116" height="22" rx="11" fill="#f1edeb"/>
+    <rect x="-14" y="-10" width="5" height="20" rx="1" fill="#d8466a"/>
+    <rect x="12" y="-10" width="5" height="20" rx="1" fill="#e17d97" opacity="0.85"/>
+    <path d="M143 -29 h93 a9 9 0 0 1 9 9 v40 a9 9 0 0 1 -9 9 h-93z" fill="#f2707f"/>
+    <text x="194" y="7" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#7a2733">LH</text>
+    <rect x="-245" y="-29" width="490" height="30" rx="9" fill="url(#sheen)" opacity="0.5"/>
+  </g>
+
+  <g transform="translate(64 34)" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif">
+    <rect width="138" height="34" rx="17" fill="#13261c" opacity="0.72"/>
+    <circle cx="20" cy="17" r="6" fill="#5be3a0"/>
+    <text x="34" y="23" font-size="16" font-weight="700" fill="#ffffff">스트립 인식됨</text>
+  </g>
+  <rect width="637" height="295" fill="url(#vignette)"/>
+</svg>
