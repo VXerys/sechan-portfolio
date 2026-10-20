@@ -2,6 +2,7 @@ import type { StaticImageData } from "next/image";
 
 import portrait from "@/assets/images/portrait.webp";
 import cartifyCover from "@/assets/images/cartify-cover.webp";
+import bookmatePoster from "@/assets/images/bookmate-web-poster.webp";
 import marketivPoster from "@/assets/images/marketiv-landing-poster.webp";
 import { listings } from "@/content/listings";
 
@@ -21,7 +22,8 @@ export const portraitImage = {
   alt: "Portrait of M Sechan Alfarisi in a black suit and red tie against a red backdrop",
 };
 
-// Listing covers (F-010) replace the posters; Marketiv's revamped landing page plays as a recording instead.
+// Listing covers (F-010) replace the posters; Marketiv and BookMate play recordings of their live websites instead,
+// and keep their listing slides in the strip.
 export const projectMedia: Partial<Record<string, ProjectMedia>> = {
   ...Object.fromEntries(
     Object.entries(listings).map(([slug, listing]) => [slug, { src: listing!.cover, alt: listing!.coverAlt, fit: "cover", background: "#0c0c0b", composed: true }]),
@@ -32,6 +34,14 @@ export const projectMedia: Partial<Record<string, ProjectMedia>> = {
     fit: "cover",
     background: "#0c0c0b",
     composed: true,
+  },
+  bookmate: {
+    src: bookmatePoster,
+    alt: "Screen recording of the BookMate website, from the loading screen and hero through the books, borrowing, app, community and badge chapters",
+    fit: "cover",
+    background: "#3f6df6",
+    composed: true,
+    video: { src: "/media/bookmate-web.mp4", type: "video/mp4" },
   },
   marketiv: {
     src: marketivPoster,
